@@ -1,0 +1,6 @@
+example_id                                        | status | run_time        |
+------------------------------------------------- | ------ | --------------- |
+./spec/controllers/home_controller_spec.rb[1:1:1] | passed | 0.06321 seconds |
+./spec/controllers/user_controller_spec.rb[1:1:1] | passed | 0.07181 seconds |
+./spec/system/navbar_spec.rb[1:1]                 | failed | 0.16666 seconds |
+./spec/system/user_spec.rb[1:1]                   | passed | 0.27644 seconds |

@@ -2,7 +2,7 @@
   "name": "app",
   "private": true,
   "scripts": {
-    "test": "jest",
+    "yarn test": "jest",
     "yarn install": "yarn install --check-files",
     "rails assets:precompile": "yarn install --check-files; rails assets:precompile",
     "rails server": "rails server",
