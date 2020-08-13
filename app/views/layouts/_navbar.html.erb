@@ -2,5 +2,6 @@
   <div id="session_actions">
     <%= link_to 'Iniciar sesión', new_user_session_path, class: 'login_button' %>
     <%= link_to 'Registrarse', new_user_registration_path, class: 'sign_up_button' %>
+    <%= link_to 'Cerrar sesión', destroy_user_session_path, class: 'logout_button', method: :delete %>
   </div>
 </header>

@@ -25,4 +25,18 @@ RSpec.describe 'Navbar', type: :system do
 
     expect(current_path).to eq(new_user_registration_path)
   end
+
+  it 'have only logout button when user is logged in', :aggregate_failures do
+    sign_in user
+    visit root_path
+
+    within('#navbar #session_actions') do
+      expect(page).to_not have_selector('.login_button', text: 'Iniciar sesión')
+      expect(page).to_not have_selector('.sign_up_button', text: 'Registrarse')
+      expect(page).to have_selector('.logout_button', text: 'Cerrar sesión')
+      click_on('Cerrar sesión')
+    end
+
+    expect(current_path).to eq(root_path)
+  end
 end
