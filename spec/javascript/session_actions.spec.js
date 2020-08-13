@@ -7,7 +7,7 @@ import App from '@/session_actions.vue'
 describe('session_actions.vue', () => {
   const loginProps = {
     isLogged: true,
-    name: 'Carlos Santana'
+    user_name: 'Carlos Santana'
   }
 
   it('with no props is not logged in', () => {
@@ -32,10 +32,12 @@ describe('session_actions.vue', () => {
     const loginButton = container.find('a.login_button');
     const signUpButton = container.find('a.sign_up_button');
     const logoutButton = container.find('a.logout_button');
+    const userName = container.find('.user_name');
 
     expect(loginButton.exists()).toBe(false);
     expect(signUpButton.exists()).toBe(false);
     expect(logoutButton.text()).toBe('Cerrar sesión');
+    expect(userName.text()).toBe(loginProps.user_name)
   })
 
 })
