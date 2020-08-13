@@ -5,6 +5,10 @@ import { shallowMount } from '@vue/test-utils'
 import App from '@/session_actions.vue'
 
 describe('session_actions.vue', () => {
+  const loginProps = {
+    isLogged: true,
+    name: 'Carlos Santana'
+  }
 
   it('with no props is not logged in', () => {
     const wrapper = shallowMount(App);
@@ -17,6 +21,21 @@ describe('session_actions.vue', () => {
     expect(loginButton.text()).toBe('Iniciar sesión');
     expect(signUpButton.text()).toBe('Registrarse');
     expect(logoutButton.exists()).toBe(false);
+  })
+
+  it('with loginProps is logged in', () => {
+    const wrapper = shallowMount(App, {
+      propsData : loginProps
+    });
+
+    const container = wrapper.find('#session_actions');
+    const loginButton = container.find('a.login_button');
+    const signUpButton = container.find('a.sign_up_button');
+    const logoutButton = container.find('a.logout_button');
+
+    expect(loginButton.exists()).toBe(false);
+    expect(signUpButton.exists()).toBe(false);
+    expect(logoutButton.text()).toBe('Cerrar sesión');
   })
 
 })
