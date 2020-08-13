@@ -2,15 +2,19 @@
   "name": "app",
   "private": true,
   "scripts": {
-    "yarn test": "jest",
+    "test": "jest",
     "yarn install": "yarn install --check-files",
     "rails assets:precompile": "yarn install --check-files; rails assets:precompile",
     "rails server": "rails server",
     "webpack-dev-server": "./bin/webpack-dev-server"
   },
   "jest": {
+    "roots": [
+      "spec/javascript"
+    ],
     "moduleFileExtensions": [
       "js",
+      "json",
       "vue"
     ],
     "moduleNameMapper": {
@@ -38,7 +42,9 @@
     "vue-turbolinks": "^2.1.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.1",
     "@vue/test-utils": "^1.0.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^26.3.0",
     "jest": "^26.3.0",
     "jest-serializer-vue": "^2.0.2",

@@ -17,4 +17,4 @@
 
 console.log('Hello World from Webpacker')
 
-import './hello_vue'
+import './session_actions'
