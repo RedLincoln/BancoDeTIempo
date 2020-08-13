@@ -1,0 +1,73 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+$navbar-height: 50px;
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.login_button, .logout_button, .sign_up_button {
+  display: block;
+  padding: 15px 10px;
+  color: black;
+}
+
+.login_button {
+  background-color: #2196F3;
+
+  &:hover {
+    background-color: #1976D2;
+  }
+}
+
+.sign_up_button:hover {
+  background-color: #dddddd;
+}
+
+.logout_button {
+  background-color: #F00100;
+
+  &:hover{
+    background-color: #E00100;
+  }
+}
+
+
+#navbar {
+  display: flex;
+  justify-content: space-between;
+
+  .left-content {
+    height: $navbar-height;
+    line-height: $navbar-height;
+  }
+
+  .brand {
+    font-size: large;
+    font-weight: bold;
+    border-bottom: dotted thin #aaaaaa;
+  }
+
+  #session_actions {
+    display: flex;
+    flex-direction: row;
+  }
+}
