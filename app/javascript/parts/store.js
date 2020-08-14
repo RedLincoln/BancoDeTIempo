@@ -4,7 +4,8 @@
 var store = {
   debug: true,
   state: {
-    message: "Hello from Simple Store!"
+    message: "Hello from Simple Store!",
+    paths: {}
   },
   setMessageAction(newValue) {
     if (this.debug) console.log("setMessageAction triggered with", newValue);
