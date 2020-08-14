@@ -7,10 +7,14 @@ import App from '@/session_actions.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 Vue.use(TurbolinksAdapter);
 
+
 document.addEventListener('turbolinks:load', () => {
-  document.body.appendChild(document.createElement('session_actions'));
+  const element = document.getElementById('session_actions');
+  const props = JSON.parse(element.getAttribute('data'));
+
   const session_actions = new Vue({
-    render: h => h(App)
-  }).$mount('session_actions');
+    el : '#session_actions',
+    render: h => h(App, { props: props }),
+  })
   console.log({session_actions})
 });

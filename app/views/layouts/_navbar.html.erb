@@ -1,13 +1,12 @@
+<% props = {
+    isLogged: user_signed_in?,
+    user_name: user_signed_in? ? current_user.name : ""
+  }.to_json
+%>
+
 <header class="navbar" id="navbar">
   <div class="left-content">
     <%= link_to 'BancoDeTiempo', root_path, class: 'brand' %>
   </div>
-  <div id="session_actions">
-    <% unless user_signed_in? %>
-    <%= link_to 'Iniciar sesión', new_user_session_path, class: 'login_button' %>
-    <%= link_to 'Registrarse', new_user_registration_path, class: 'sign_up_button' %>
-    <% else %>
-    <%= link_to 'Cerrar sesión', destroy_user_session_path, class: 'logout_button', method: :delete %>
-    <% end %>
-  </div>
+  <div id="session_actions" data="<%= props %>"> </div>
 </header>

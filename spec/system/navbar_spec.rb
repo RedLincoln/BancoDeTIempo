@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Navbar', type: :system do
+RSpec.describe 'Navbar', type: :system, js: true do
   let(:user) { create(:user) }
 
 
@@ -34,7 +34,7 @@ RSpec.describe 'Navbar', type: :system do
       expect(page).to_not have_selector('.login_button', text: 'Iniciar sesión')
       expect(page).to_not have_selector('.sign_up_button', text: 'Registrarse')
       expect(page).to have_selector('.logout_button', text: 'Cerrar sesión')
-      click_on('Cerrar sesión')
+      find('.logout_button', :text => 'Cerrar sesión').click
     end
 
     expect(current_path).to eq(root_path)
