@@ -5,6 +5,7 @@
 <template>
   <div id="service_form">
     <h2>Crear servicio</h2>
+    <div id="errors"></div>
     <form>
       <div class="field">
         <label for="service_name">Nombre: </label>

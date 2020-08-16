@@ -63,6 +63,7 @@ describe('service_form.vue', () => {
     it('show errors with the fields',  async () => {
         const wrapper = shallowMount(App)
 
+        mockAxios.onPost(Route.services_path()).reply(400, errorMessage)
         wrapper.find('input[type="submit"]').trigger('click')
 
         await wrapper.vm.$nextTick()
