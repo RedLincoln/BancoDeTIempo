@@ -5,12 +5,15 @@
 import Vue from 'vue'
 import App from '@/service_form.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
+import { isView } from "vueonrails";
+
 Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
-  document.body.appendChild(document.createElement('service_form'))
-  const service_form = new Vue({
-    render: h => h(App)
-  }).$mount('service_form')
-  console.log({service_form})
+  if (isView('services#new') || isView('services#edit')){
+    const service_form = new Vue({
+      el: '#service_form',
+      render: h => h(App)
+    })
+  }
 })

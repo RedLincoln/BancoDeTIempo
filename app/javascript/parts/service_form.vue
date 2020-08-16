@@ -14,6 +14,9 @@
         <label for="service_description">Descripción: </label>
         <textarea v-model="description" id="service_description" name="description" cols="40" rosw="4"></textarea>
       </div>
+      <div class="actions">
+        <input type="submit" value="Crear servicio">
+      </div>
     </form>
   </div>
 </template>
@@ -32,12 +35,10 @@ export default {
   },
   created() {
     if (this.edit){
-      axios.get(Route.service_path(this.id))
-              .then(response => {
-                this.name = response.data.service.name
-                this.description = response.data.service.description
-              })
-              .catch(err => {})
+      axios.get(Route.service_path(this.id)).then(response => {
+        this.name = response.data.name
+        this.description = response.data.description
+      }).catch(err => console.log(err))
     }
   }
 };
