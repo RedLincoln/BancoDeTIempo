@@ -60,20 +60,18 @@ describe('service_form.vue', () => {
         })
     })
 
-    it('show errors with the fields', async () => {
+    it('show errors with the fields',  async () => {
         const wrapper = shallowMount(App)
-
 
         wrapper.find('input[type="submit"]').trigger('click')
 
-        const errors = wrapper.find('div#errors')
+        await wrapper.vm.$nextTick()
 
-        await setTimeout(() => {
-            expect(false).toBe(true)
-            expect(errors.exists()).toBe(true)
-            expect(errors.find('.name').text()).toBe(errorMessage.name)
-            expect(errors.find('.description').text()).toBe(errorMessage.description)
-        })
+        const errors = wrapper.find('div#errors')
+        expect(errors.exists()).toBe(true)
+        expect(errors.find('.name').text()).toBe(errorMessage.name)
+        expect(errors.find('.description').text()).toBe(errorMessage.description)
+
     })
 
 
