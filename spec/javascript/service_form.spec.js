@@ -2,12 +2,23 @@
 // Generate a component part with test by running command `rails generate vue something --test`
 
 import { shallowMount } from '@vue/test-utils'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 import App from '@/service_form.vue'
+import Route from '../../app/javascript/routes'
+jest.mock('../../app/javascript/routes');
+
+const axiosMock = new MockAdapter(axios)
 
 describe('service_form.vue', () => {
     const editProps = {
         edit: true,
         id: 1
+    }
+
+    const serviceData = {
+        name: 'Pintar',
+        description: 'pintar exteriores e interioes'
     }
 
     it('no props means new service', () => {
@@ -18,5 +29,21 @@ describe('service_form.vue', () => {
 
         expect(name.text()).toBe('')
         expect(description.text()).toBe('')
+    })
+
+    it('editProps initial state', () => {
+        const wrapper = shallowMount(App, {
+            propsData: editProps
+        })
+
+        axiosMock.onGet(Route.service_path(1)).reply(200, {
+            service: serviceData
+        })
+
+        const name = wrapper.find('input#service_name')
+        const description = wrapper.find('textarea#service_description')
+
+        expect(name.text()).toBe(serviceData.name)
+        expect(description.text()).toBe(serviceData.description)
     })
 })
