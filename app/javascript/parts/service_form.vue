@@ -8,24 +8,38 @@
     <form>
       <div class="field">
         <label for="service_name">Nombre: </label>
-        <input type=text id="service_name" name="name" cols="40">
+        <input v-model="name" type=text id="service_name" name="name" cols="40">
       </div>
       <div class="field">
         <label for="service_description">Descripción: </label>
-        <textarea id="service_description" name="description" cols="40" rosw="4"></textarea>
+        <textarea v-model="description" id="service_description" name="description" cols="40" rosw="4"></textarea>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import Route from '../routes'
+import axios from 'axios'
 
 export default {
+  props: ['edit', 'id'],
   data: function() {
     return {
-      message: "Hello service_form!"
+      name: '',
+      description: ''
     };
   },
+  created() {
+    if (this.edit){
+      axios.get(Route.service_path(this.id))
+              .then(response => {
+                this.name = response.data.service.name
+                this.description = response.data.service.description
+              })
+              .catch(err => {})
+    }
+  }
 };
 </script>
 

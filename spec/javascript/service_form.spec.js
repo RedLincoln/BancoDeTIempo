@@ -43,7 +43,9 @@ describe('service_form.vue', () => {
         const name = wrapper.find('input#service_name')
         const description = wrapper.find('textarea#service_description')
 
-        expect(name.text()).toBe(serviceData.name)
-        expect(description.text()).toBe(serviceData.description)
+        setTimeout(() => {
+            expect(name.text()).toBe(serviceData.name)
+            expect(description.text()).toBe(serviceData.description)
+        })
     })
 })
