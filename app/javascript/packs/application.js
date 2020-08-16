@@ -18,3 +18,4 @@
 console.log('Hello World from Webpacker')
 
 import './session_actions'
+import './service_form'
