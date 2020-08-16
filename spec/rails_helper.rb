@@ -6,6 +6,7 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 system 'rails assets:precompile'
 require 'rspec/rails'
+require 'support/shoulda'
 require 'support/system'
 require 'support/devise'
 require 'support/factory_bot'

@@ -44,6 +44,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'capybara', '>= 2.15'
   gem 'webdrivers', '~> 3.0'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 group :development do
