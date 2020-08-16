@@ -5,7 +5,11 @@
 <template>
   <div id="service_form">
     <h2>Crear servicio</h2>
-    <div id="errors"></div>
+    <div id="errors">
+      <ul v-for="(value, name) in errors">
+        <li :class="name"><strong>{{ name }}</strong> : {{ value }}</li>
+      </ul>
+    </div>
     <form>
       <div class="field">
         <label for="service_name">Nombre: </label>
@@ -16,7 +20,7 @@
         <textarea v-model="description" id="service_description" name="description" cols="40" rosw="4"></textarea>
       </div>
       <div class="actions">
-        <input type="submit" value="Crear servicio">
+        <input type="submit" @click="submitForm" value="Crear servicio">
       </div>
     </form>
   </div>
@@ -31,7 +35,8 @@ export default {
   data: function() {
     return {
       name: '',
-      description: ''
+      description: '',
+      errors: {}
     };
   },
   created() {
@@ -40,6 +45,17 @@ export default {
         this.name = response.data.name
         this.description = response.data.description
       }).catch(err => console.log(err))
+    }
+  },
+  methods: {
+    submitForm: function()  {
+      const params = {
+        name: this.name,
+        description: this.description
+      }
+      axios.post(Route.services_path(), params).then(response => console.log(response)).catch(err => {
+        this.errors = err.response.data
+      })
     }
   }
 };
