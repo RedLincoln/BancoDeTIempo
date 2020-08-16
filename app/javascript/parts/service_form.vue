@@ -4,7 +4,17 @@
 
 <template>
   <div id="service_form">
-
+    <h2>Crear servicio</h2>
+    <form>
+      <div class="field">
+        <label for="service_name">Nombre: </label>
+        <input type=text id="service_name" name="name" cols="40">
+      </div>
+      <div class="field">
+        <label for="service_description">Descripción: </label>
+        <textarea id="service_description" name="description" cols="40" rosw="4"></textarea>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -15,11 +25,6 @@ export default {
     return {
       message: "Hello service_form!"
     };
-  },
-  methods: {
-    onClick: function() {
-      console.log("clicked");
-    }
   },
 };
 </script>
