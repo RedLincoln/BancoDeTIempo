@@ -62,6 +62,7 @@ describe('service_form.vue', () => {
 
     it('show errors with the fields',  async () => {
         const wrapper = shallowMount(App)
+        const spy = jest.spyOn(axios, 'post')
 
         mockAxios.onPost(Route.services_path()).reply(400, errorMessage)
         wrapper.find('input[type="submit"]').trigger('click')
@@ -69,6 +70,7 @@ describe('service_form.vue', () => {
         await wrapper.vm.$nextTick()
 
         const errors = wrapper.find('div#errors')
+        expect(spy).toHaveBeenCalledTimes(1)
         expect(errors.exists()).toBe(true)
         expect(errors.find('.name').text()).toBe(errorMessage.name)
         expect(errors.find('.description').text()).toBe(errorMessage.description)
