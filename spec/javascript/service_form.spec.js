@@ -14,9 +14,9 @@ describe('service_form.vue', () => {
         const wrapper = shallowMount(App)
 
         const name = wrapper.find('input#service_name')
-        const description = wrapper.find('textarea#description_name')
+        const description = wrapper.find('textarea#service_description')
 
-        expect(name).toBe('')
-        expect(description).toBe('')
+        expect(name.text()).toBe('')
+        expect(description.text()).toBe('')
     })
 })
