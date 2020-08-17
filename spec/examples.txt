@@ -2,10 +2,10 @@ example_id                                        | status | run_time        |
 ------------------------------------------------- | ------ | --------------- |
 ./spec/controllers/home_controller_spec.rb[1:1:1] | passed | 0.05931 seconds |
 ./spec/controllers/user_controller_spec.rb[1:1:1] | passed | 0.05748 seconds |
-./spec/models/service_spec.rb[1:1:1]              | passed | 0.03184 seconds |
-./spec/models/service_spec.rb[1:2:1]              | passed | 0.00669 seconds |
-./spec/models/service_spec.rb[1:2:2]              | passed | 0.00434 seconds |
-./spec/models/service_spec.rb[1:2:3]              | failed | 0.02433 seconds |
+./spec/models/service_spec.rb[1:1:1]              | passed | 0.02868 seconds |
+./spec/models/service_spec.rb[1:2:1]              | passed | 0.01078 seconds |
+./spec/models/service_spec.rb[1:2:2]              | passed | 0.00778 seconds |
+./spec/models/service_spec.rb[1:2:3]              | passed | 0.04795 seconds |
 ./spec/models/user_spec.rb[1:1:1]                 | passed | 0.01293 seconds |
 ./spec/system/navbar_spec.rb[1:1]                 | passed | 3.97 seconds    |
 ./spec/system/navbar_spec.rb[1:2]                 | passed | 0.46221 seconds |
