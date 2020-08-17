@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Service', type: :system, js: true do
+  let(:user) { create(:user) }
 
   it 'can be created', :aggregate_failures do
+    sign_in user
     visit new_service_path
 
     fill_in('service_name', with: 'Pintar')
