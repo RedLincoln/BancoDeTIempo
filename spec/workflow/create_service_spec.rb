@@ -1,15 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe CreateServices, type: :controller do
-  let(:user) { create(:user) }
+RSpec.describe CreateServices do
+  let(:user) { build_stubbed(:user) }
 
   it "creates a service with name and description" do
-    sign_in user
-
-    creator = CreateServices.new(name: 'Pintar', description: 'La casa')
+    creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: user)
     creator.build
     expect(creator.service.name).to eq('Pintar')
     expect(creator.service.description).to eq('La casa')
+    expect(creator.service.user.name).to eq(user.name)
   end
 
 end
