@@ -1,13 +1,14 @@
 class CreateServices
-  attr_accessor :name, :description, :service
+  attr_accessor :name, :description, :user, :service
 
-  def initialize(name: "", description: "")
+  def initialize(name: "", description: "", user: User.new)
     @name = name
     @description = description
+    @user = user
   end
 
   def build
-    @service = Service.new(name: @name, description: @description)
+    self.service = Service.new(name: @name, description: @description, user: @user)
   end
 
 end
