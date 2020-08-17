@@ -11,4 +11,10 @@ RSpec.describe CreateServices do
     expect(creator.service.user.name).to eq(user.name)
   end
 
+  it "properly indicates when is valid", true do
+    creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: user)
+    creator.create
+    expect(creator).to be_valid
+  end
+
 end
