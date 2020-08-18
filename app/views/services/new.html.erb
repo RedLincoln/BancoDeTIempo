@@ -5,7 +5,7 @@
     <h4>Errores</h4>
     <ul class="errors">
     <% @service.errors.each do |key, message| %>
-      <li class="error_<%= key %>"><%= key %><%= message %></li>
+      <li class="error_<%= key %>"><%= key %>: <%= message %></li>
     <% end %>
     </ul>
   <% end %>

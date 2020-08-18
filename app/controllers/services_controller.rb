@@ -14,6 +14,11 @@ class ServicesController < ApplicationController
                                    description: params[:service][:description],
                                    user: current_user)
     @workflow.create
-    redirect_to services_path
+    if @workflow.valid?
+      redirect_to services_url
+    else
+      @service = @workflow.service
+      render new_service_path
+    end
   end
 end
