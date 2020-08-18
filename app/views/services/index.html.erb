@@ -1,0 +1,6 @@
+<% @services.each do |service| %>
+  <article id="service_<%= service.id %>" class="service_post">
+    <h2 class="service_name"><%= service.name %></h2>
+    <p class="service_description"><%= service.description %></p>
+  </article>
+<% end %>

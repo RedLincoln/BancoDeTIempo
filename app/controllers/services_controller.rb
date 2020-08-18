@@ -1,6 +1,10 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @services = Service.all
+  end
+
   def new
     @service = Service.new
   end
@@ -10,6 +14,6 @@ class ServicesController < ApplicationController
                                    description: params[:service][:description],
                                    user: current_user)
     @workflow.create
-    redirect_to service_path(@workflow.service.id)
+    redirect_to services_path
   end
 end
