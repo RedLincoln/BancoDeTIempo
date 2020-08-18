@@ -1,6 +1,11 @@
-<% @services.each do |service| %>
-  <article id="service_<%= service.id %>" class="service_post">
-    <h2 class="service_name"><%= service.name %></h2>
-    <p class="service_description"><%= service.description %></p>
-  </article>
-<% end %>
+<h2>Servicios</h2>
+<div class="services-list">
+  <% @services.each do |service| %>
+    <article id="service_<%= service.id %>" class="service_post">
+      <p class="service_name"><%= service.name %></p>
+      <div class="service_content">
+        <p><strong>Descripción: </strong><span class="service_description"><%= service.description %></span></p>
+      </div>
+    </article>
+  <% end %>
+</div>

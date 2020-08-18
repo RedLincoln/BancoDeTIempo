@@ -1,3 +1,27 @@
 // Place all the styles related to the services controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.service_post {
+  * {
+    margin: 0;
+  }
+
+  > * {
+    padding: 0 16px;
+  }
+
+  .service_name {
+    background-color: #213fb1;
+    color: white;
+    font-size: 1.5em;
+  }
+
+  .service_content {
+    background-color: #adafb7;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.9em;
+  }
+}
