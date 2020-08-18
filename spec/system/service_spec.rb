@@ -29,4 +29,11 @@ RSpec.describe 'Service', type: :system, js: true do
     expect(page).to have_selector("form .errors .error_description")
   end
 
+  it 'error creating have to stay in the same url' do
+    sign_in user
+    visit new_service_path
+    click_on('Crear servicio')
+    expect(current_path).to eq(new_service_path)
+  end
+
 end
