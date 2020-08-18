@@ -11,10 +11,12 @@ RSpec.describe 'Service', type: :system, js: true do
     fill_in('service_description', with: 'pintar tanto exteriores como interiores')
     click_on('Crear servicio')
 
-    expect(current_path).to eq(service_path(1))
+    expect(current_path).to eq(services_path)
 
-    expect(page).to have_selector('.service_name', text: 'Pintar')
-    expect(page).to have_selector('.service_description', text: 'pintar tanto exteriores como interiores')
+    service = Service.where(name: 'Pintar').first
+
+    expect(page).to have_selector("#service_#{service.id} .service_name", text: 'Pintar')
+    expect(page).to have_selector("#service_#{service.id} .service_description", text: 'pintar tanto exteriores como interiores')
   end
 
 end
