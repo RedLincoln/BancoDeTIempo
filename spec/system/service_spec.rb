@@ -19,4 +19,14 @@ RSpec.describe 'Service', type: :system, js: true do
     expect(page).to have_selector("#service_#{service.id} .service_description", text: 'pintar tanto exteriores como interiores')
   end
 
+  it 'show errors on bad creation', :aggregate_failures do
+    sign_in user
+    visit new_service_path
+
+    click_on('Crear servicio')
+
+    expect(page).to have_selector("form .errors .error_name")
+    expect(page).to have_selector("form .errors .error_description")
+  end
+
 end
