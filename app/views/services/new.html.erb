@@ -2,7 +2,6 @@
 
 <%= form_for(@service, url: services_path, method: 'post') do |f| %>
   <% if @service.errors.any? %>
-    <h4>Errores</h4>
     <ul class="errors">
     <% @service.errors.each do |key, message| %>
       <li class="error_<%= key %>"><%= key %>: <%= message %></li>
@@ -11,12 +10,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name, 'Nombre' %><br />
+    <%= f.label :name, 'Nombre: ' %></br>
     <%= f.text_field :name, autofocus: true , cols: 40%>
   </div>
 
   <div class="field">
-    <%= f.label :description, 'Descripción' %><br />
+    <%= f.label :description, 'Descripción: ' %></br>
     <%= f.text_area :description, cols: 40, rows: 4%>
   </div>
 
