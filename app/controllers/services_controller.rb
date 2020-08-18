@@ -18,7 +18,10 @@ class ServicesController < ApplicationController
       redirect_to services_url
     else
       @service = @workflow.service
-      render new_service_path
+      respond_to do |format|
+        format.html { render new_service_path }
+        format.js
+      end
     end
   end
 end

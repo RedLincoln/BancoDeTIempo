@@ -1,0 +1,7 @@
+<% if @service.errors.any? %>
+<ul class="errors">
+  <% @service.errors.each do |key, message| %>
+    <li class="error_<%= key %>"><%= key %>: <%= message %></li>
+  <% end %>
+</ul>
+<% end %>

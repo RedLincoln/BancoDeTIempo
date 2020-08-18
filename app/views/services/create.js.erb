@@ -1,0 +1,7 @@
+form = document.getElementById('new_service')
+errors = document.querySelector('form#new_service .errors') ?
+    document.querySelector('form#new_service .errors').parentElement :
+    document.createElement('div')
+
+errors.innerHTML = "<%= j render 'errors' %>"
+form.insertBefore(errors, form.firstChild)
