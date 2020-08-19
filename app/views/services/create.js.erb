@@ -1,6 +1,6 @@
-form = document.getElementById('new_service')
-errors = document.querySelector('form#new_service .errors') ?
-    document.querySelector('form#new_service .errors').parentElement :
+form = document.querySelector('form')
+errors = document.querySelector('form .errors') ?
+    document.querySelector('form .errors').parentElement :
     document.createElement('div')
 
 errors.innerHTML = "<%= j render 'errors' %>"
