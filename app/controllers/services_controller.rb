@@ -10,7 +10,7 @@ class ServicesController < ApplicationController
   end
 
   def edit
-    
+    @service = current_user.find_service(params[:id])
   end
 
   def create

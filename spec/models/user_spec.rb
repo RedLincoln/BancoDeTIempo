@@ -10,11 +10,11 @@ RSpec.describe User, type: :model do
     let(:service2) { create(:service) }
 
     it 'service search cant get service that are not owned by the user' do
-      expect{ service1.user.findService(service2.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect{ service1.user.find_service(service2.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'service search can find services owned by the user' do
-      foundService = service1.user.findService(service1.id)
+      foundService = service1.user.find_service(service1.id)
       expect(foundService).to eq(service1)
     end
   end

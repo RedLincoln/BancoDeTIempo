@@ -45,8 +45,8 @@ RSpec.describe 'Service', type: :system, js: true do
     end
 
     it "initial state is service data", :aggregate_failures do
-      expect(page).to have_selector('form .service_name', text: service.name)
-      expect(page).to have_selector('form .service_description', text: service.description)
+      expect(page.find('#service_name')[:value]).to eq(service.name)
+      expect(page).to have_selector('#service_description', text: service.description)
     end
 
   end

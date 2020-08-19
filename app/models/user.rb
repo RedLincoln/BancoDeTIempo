@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
-  def findService (service_id)
+  def find_service(service_id)
     Service.find_by! id: service_id, user_id: id
   end
 end
