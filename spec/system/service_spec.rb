@@ -15,7 +15,7 @@ RSpec.describe 'Service', type: :system, js: true do
       fill_in('service_description', with: 'pintar tanto exteriores como interiores')
       find('form#new_service input[type="submit"]').click
 
-      expect(current_path).to eq(services_path)
+      visit services_path
 
       service = Service.where(name: 'Pintar').first
 
@@ -47,6 +47,15 @@ RSpec.describe 'Service', type: :system, js: true do
     it "initial state is service data", :aggregate_failures do
       expect(page.find('#service_name')[:value]).to eq(service.name)
       expect(page).to have_selector('#service_description', text: service.description)
+    end
+
+    it "changes are made" do
+      fill_in('service_name', with: "#{service.name}_1")
+      find("form#edit_service_#{service.id} input[type=\"submit\"]").click
+
+      visit services_path
+
+      expect(page).to have_selector("#service_#{service.id} .service_name", text: "#{service.name}_1")
     end
 
   end
