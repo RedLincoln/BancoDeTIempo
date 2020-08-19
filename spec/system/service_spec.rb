@@ -58,6 +58,15 @@ RSpec.describe 'Service', type: :system, js: true do
       expect(page).to have_selector("#service_#{service.id} .service_name", text: "#{service.name}_1")
     end
 
+    it "errors are shown" do
+      fill_in('service_name', with: "")
+      find("form input[type=\"submit\"]").click
+
+      visit services_path
+
+      expect(page).to have_selector("form .errors .error_name")
+    end
+
   end
 
 end
