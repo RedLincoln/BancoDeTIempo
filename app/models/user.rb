@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true
+
+  def findService (service_id)
+    Service.find_by! id: service_id, user_id: id
+  end
 end
