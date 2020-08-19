@@ -3,37 +3,52 @@ require 'rails_helper'
 RSpec.describe 'Service', type: :system, js: true do
   let(:user) { create(:user) }
 
-  it 'can be created', :aggregate_failures do
-    sign_in user
-    visit new_service_path
+  describe "creation" do
 
-    fill_in('service_name', with: 'Pintar')
-    fill_in('service_description', with: 'pintar tanto exteriores como interiores')
-    click_on('Crear servicio')
+    before(:each) do
+      sign_in user
+      visit new_service_path
+    end
 
-    expect(current_path).to eq(services_path)
+    it 'can be created', :aggregate_failures do
+      fill_in('service_name', with: 'Pintar')
+      fill_in('service_description', with: 'pintar tanto exteriores como interiores')
+      click_on('Crear servicio')
 
-    service = Service.where(name: 'Pintar').first
+      expect(current_path).to eq(services_path)
 
-    expect(page).to have_selector("#service_#{service.id} .service_name", text: 'Pintar')
-    expect(page).to have_selector("#service_#{service.id} .service_description", text: 'pintar tanto exteriores como interiores')
+      service = Service.where(name: 'Pintar').first
+
+      expect(page).to have_selector("#service_#{service.id} .service_name", text: 'Pintar')
+      expect(page).to have_selector("#service_#{service.id} .service_description", text: 'pintar tanto exteriores como interiores')
+    end
+
+    it 'show errors on bad creation', :aggregate_failures do
+      click_on('Crear servicio')
+
+      expect(page).to have_selector("form .errors .error_name")
+      expect(page).to have_selector("form .errors .error_description")
+    end
+
+    it 'error creating have to stay in the same url' do
+      click_on('Crear servicio')
+      expect(current_path).to eq(new_service_path)
+    end
   end
 
-  it 'show errors on bad creation', :aggregate_failures do
-    sign_in user
-    visit new_service_path
+  describe "edit" do
+    let(:service) { create(:service) }
 
-    click_on('Crear servicio')
+    before(:each) do
+      sign_in service.user
+      visit edit_service_path(service.id)
+    end
 
-    expect(page).to have_selector("form .errors .error_name")
-    expect(page).to have_selector("form .errors .error_description")
-  end
+    it "initial state is service data", :aggregate_failures do
+      expect(page).to have_selector('form .service_name', text: service.name)
+      expect(page).to have_selector('form .service_description', text: service.description)
+    end
 
-  it 'error creating have to stay in the same url' do
-    sign_in user
-    visit new_service_path
-    click_on('Crear servicio')
-    expect(current_path).to eq(new_service_path)
   end
 
 end
