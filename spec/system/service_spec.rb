@@ -64,7 +64,6 @@ RSpec.describe 'Service', type: :system, js: true do
 
       expect(page).to have_selector("form .errors .error_name")
     end
-
   end
 
 end

@@ -6,15 +6,14 @@
       <Link class="logout_button" text="Cerrar sesión" :isNotAnAnchor="true" @click.native="logout"/>
     </template>
     <template v-else>
-      <Link class="login_button" text="Iniciar sesión" :href="loginPath"/>
-      <Link class="sign_up_button" text="Registrarse" :href="signUpPath"/>
+      <Link class="login_button" text="Iniciar sesión" :href="$loginPath"/>
+      <Link class="sign_up_button" text="Registrarse" :href="$signUpPath"/>
     </template>
   </div>
 </template>
 
 <script>
-import Link from './Link/link'
-import Route from '../routes'
+import Link from './Link/Link'
 import axios from 'axios'
 
 export default {
@@ -22,21 +21,13 @@ export default {
   props: ['isLogged', 'user_name'],
   data: function() {
     return {
-      isLoggedReactive: this.isLogged,
-      loginPath: Route.new_user_session_path(),
-      signUpPath: Route.new_user_registration_path()
+      isLoggedReactive: this.isLogged
     };
   },
   methods: {
     logout: function () {
-      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      axios.delete(Route.destroy_user_session_path({ format: 'json'}),
-              {
-                headers: {
-                  'X-CSRF-Token': csrfToken
-                }
-              }
-      ).then(response => this.isLoggedReactive = false).catch(err => console.log(Route.destroy_user_session_path()))
+      axios.delete(this.$signOutPath,{headers: { 'X-CSRF-Token': this.$getCSRFToken() }}
+      ).then(response => this.isLoggedReactive = false).catch(err => console.log(err))
     }
   }
 };

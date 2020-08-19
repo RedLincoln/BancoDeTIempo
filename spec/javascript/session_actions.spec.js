@@ -4,7 +4,6 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import App from '@/session_actions.vue'
 
-jest.mock('../../app/javascript/routes');
 
 describe('session_actions.vue', () => {
   const loginProps = {

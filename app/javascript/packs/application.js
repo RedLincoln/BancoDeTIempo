@@ -15,6 +15,16 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+import Route from "../routes";
+
 console.log('Hello World from Webpacker')
 
 import './session_actions'
+import Vue from 'vue'
+
+Vue.prototype.$loginPath = Routes.new_user_session_path()
+Vue.prototype.$signUpPath = Routes.new_user_registration_path()
+Vue.prototype.$signOutPath = Routes.destroy_user_session_path({ format: 'json'})
+Vue.prototype.$getCSRFToken = () => {
+    return document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+}
