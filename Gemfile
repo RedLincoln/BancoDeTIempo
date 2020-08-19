@@ -45,6 +45,7 @@ group :development, :test do
   gem 'capybara', '>= 2.15'
   gem 'webdrivers', '~> 3.0'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'faker'
 end
 
 group :development do

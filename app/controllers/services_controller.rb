@@ -9,6 +9,10 @@ class ServicesController < ApplicationController
     @service = Service.new
   end
 
+  def edit
+    
+  end
+
   def create
     @workflow = CreateServices.new(name: params[:service][:name],
                                    description: params[:service][:description],
