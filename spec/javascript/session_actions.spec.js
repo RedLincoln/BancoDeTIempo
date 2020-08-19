@@ -15,9 +15,9 @@ describe('session_actions.vue', () => {
     const wrapper = mount(App);
 
     const container = wrapper.find('#session_actions');
-    const loginButton = container.find('a.login_button');
-    const signUpButton = container.find('a.sign_up_button');
-    const logoutButton = container.find('a.logout_button');
+    const loginButton = container.find('.login_button');
+    const signUpButton = container.find('.sign_up_button');
+    const logoutButton = container.find('.logout_button');
 
     expect(loginButton.text()).toBe('Iniciar sesión');
     expect(signUpButton.text()).toBe('Registrarse');
@@ -30,9 +30,9 @@ describe('session_actions.vue', () => {
     });
 
     const container = wrapper.find('#session_actions');
-    const loginButton = container.find('a.login_button');
-    const signUpButton = container.find('a.sign_up_button');
-    const logoutButton = container.find('a.logout_button');
+    const loginButton = container.find('.login_button');
+    const signUpButton = container.find('.sign_up_button');
+    const logoutButton = container.find('.logout_button');
     const userName = container.find('.user_name');
 
     expect(loginButton.exists()).toBe(false);
