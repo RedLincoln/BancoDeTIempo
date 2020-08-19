@@ -3,17 +3,16 @@
 <!-- Generate a Single File Component part by running command `rails generate vue something` -->
 
 <template>
-  <div id="navigation_dropdown">
-    <p>{{ message }}</p>
+  <div class="navigation_dropdown">
+    <p class="dropdown_title">{{ title }}</p>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['title'],
   data: function() {
-    return {
-      message: "Hello navigation_dropdown!"
-    };
+    return { };
   },
 };
 </script>
