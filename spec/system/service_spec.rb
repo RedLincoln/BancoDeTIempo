@@ -62,8 +62,6 @@ RSpec.describe 'Service', type: :system, js: true do
       fill_in('service_name', with: "")
       find("form input[type=\"submit\"]").click
 
-      visit services_path
-
       expect(page).to have_selector("form .errors .error_name")
     end
 

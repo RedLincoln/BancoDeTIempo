@@ -18,7 +18,7 @@ class ServicesController < ApplicationController
       if @service.update(service_params)
         format.html { redirect_to root_path }
       else
-        format.js 'create'
+        format.js { render action: 'create' }
       end
     end
   end
