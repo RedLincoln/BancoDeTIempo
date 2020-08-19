@@ -13,7 +13,7 @@ RSpec.describe 'Service', type: :system, js: true do
     it 'can be created', :aggregate_failures do
       fill_in('service_name', with: 'Pintar')
       fill_in('service_description', with: 'pintar tanto exteriores como interiores')
-      click_on('Crear servicio')
+      find('form#new_service input[type="submit"]').click
 
       expect(current_path).to eq(services_path)
 
@@ -24,7 +24,7 @@ RSpec.describe 'Service', type: :system, js: true do
     end
 
     it 'show errors on bad creation', :aggregate_failures do
-      click_on('Crear servicio')
+      find('form#new_service input[type="submit"]').click
 
       expect(page).to have_selector("form .errors .error_name")
       expect(page).to have_selector("form .errors .error_description")
