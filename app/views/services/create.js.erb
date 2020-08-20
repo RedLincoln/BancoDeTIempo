@@ -5,3 +5,5 @@ errors = document.querySelector('form .errors') ?
 
 errors.innerHTML = "<%= j render 'errors' %>"
 form.insertBefore(errors, form.firstChild)
+
+document.getElementById('flash-messages').innerHTML = "<%= j render 'shared/flash' %>"

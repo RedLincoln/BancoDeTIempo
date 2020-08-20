@@ -1,2 +1,4 @@
 element = document.getElementById("service_<%= @service.id %>")
 element.parentElement.removeChild(element)
+
+document.getElementById('flash-messages').innerHTML = "<%= j render 'shared/flash' %>"

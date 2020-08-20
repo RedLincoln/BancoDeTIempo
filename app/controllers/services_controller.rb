@@ -13,7 +13,7 @@ class ServicesController < ApplicationController
   def destroy
     @service.destroy
     respond_to do |format|
-      format.js
+      format.js { flash.now[:notice] = 'Servicio eliminado' }
     end
   end
 
@@ -24,8 +24,9 @@ class ServicesController < ApplicationController
   def update
     respond_to do |format|
       if @service.update(service_params)
-        format.html { redirect_to root_path }
+        format.html { redirect_to root_path, notice: 'Servicio actualizado' }
       else
+        flash.now[:alert] = 'Error al actualizar servicio'
         format.js { render action: 'create' }
       end
     end
@@ -35,12 +36,12 @@ class ServicesController < ApplicationController
     @workflow = CreateServices.new(service_params)
     @workflow.create
     if @workflow.valid?
-      redirect_to root_path
+      redirect_to root_path, notice: 'Servicio creado'
     else
       @service = @workflow.service
       respond_to do |format|
         format.html { render new_service_path }
-        format.js
+        format.js { flash.now[:alert] = 'Error al crear servicio' }
       end
     end
   end

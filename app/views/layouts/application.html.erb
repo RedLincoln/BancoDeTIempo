@@ -13,8 +13,9 @@
   <%= content_tag :body, class: specific_page_vue do %>
     <%= render 'layouts/navbar' %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div id="flash-messages">
+      <%= render 'shared/flash' %>
+    </div>
     <div class="container">
       <%= yield %>
     </div>
