@@ -5,6 +5,7 @@
 <template>
   <div class="navigation_dropdown">
     <p class="dropdown_title">{{ title }}</p>
+    <span class="toggle_button" @click="toggleShow">Show</span>
     <transition name="dropdown">
       <ul v-if="show" class="dropdown_content">
         <li v-for="link in links"><a :href="link.href">{{ link.text }}</a></li>
@@ -21,6 +22,11 @@ export default {
       show: false
     };
   },
+  methods: {
+    toggleShow: function () {
+      this.show = true
+    }
+  }
 };
 </script>
 
