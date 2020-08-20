@@ -5,6 +5,6 @@ class UserController < ApplicationController
   end
 
   def services
-
+    @services = current_user.services
   end
 end

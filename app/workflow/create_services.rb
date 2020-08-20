@@ -9,7 +9,7 @@ class CreateServices
   end
 
   def build
-    self.service = Service.new(name: @name, description: @description, user: @user)
+    self.service = @user.services.build(name: @name, description: @description)
   end
 
   def create

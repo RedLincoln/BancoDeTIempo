@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_service, only: [:update, :edit]
+  before_action :set_service, only: [:update, :edit, :destroy]
 
   def index
     @services = Service.all
@@ -9,6 +9,14 @@ class ServicesController < ApplicationController
   def new
     @service = Service.new
   end
+
+  def destroy
+    @service.destroy
+    respond_to do |format|
+      format.js
+    end
+  end
+
 
   def edit
   end
