@@ -32,4 +32,12 @@ describe('navigation_dropdown.vue', ()=>{
         expect(content.wrappers.map((el) => el.text())).toEqual(props.links.map((l) => l.text))
         expect(content.wrappers.map((el) => el.attributes('href'))).toEqual(props.links.map((l) => l.href))
     })
+
+    it('clicking on toggle button show the content', async () => {
+        const wrapper = shallowMount(navigation_dropdown)
+
+        await wrapper.find('.toggle_button').trigger('click')
+
+        expect(wrapper.find('.dropdown_content').exists()).toBeTruthy()
+    })
 })
