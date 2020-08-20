@@ -5,14 +5,21 @@
 <template>
   <div class="navigation_dropdown">
     <p class="dropdown_title">{{ title }}</p>
+    <transition name="dropdown">
+      <ul v-if="show" class="dropdown_content">
+        <li v-for="link in links"><a :href="link.href">{{ link.text }}</a></li>
+      </ul>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['title'],
+  props: ['title', 'links'],
   data: function() {
-    return { };
+    return {
+      show: false
+    };
   },
 };
 </script>
