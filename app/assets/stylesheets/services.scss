@@ -3,6 +3,21 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+.new_service_button {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  padding: 10px 15px;
+  color: #1a0bf3;
+
+  &:before {
+    content: '\002B  ';
+  }
+}
+
+.services-list {
+  margin-top: 20px;
+}
+
 .service_post {
   * {
     margin: 0;
@@ -10,6 +25,47 @@
 
   > * {
     padding: 0 16px;
+  }
+  .service_header {
+    padding: 0;
+    position: relative;
+
+    .actions {
+      position: absolute;
+      right: 0;
+      bottom: 10%;
+
+      > * {
+        display: inline;
+        margin-right: 10px;
+
+      }
+
+      .edit_service, .delete_service {
+        padding: 2px 5px;
+        font-size: 1em;
+      }
+
+      .edit_service {
+        color: black;
+        background-color: white;
+
+        &:hover {
+          background-color: #f2ffe5;
+        }
+      }
+
+      .delete_service {
+        background-color: #F00100;
+        color: white;
+        border: none;
+
+        &:hover {
+          background-color: #E00100;
+          cursor: pointer;
+        }
+      }
+    }
   }
 
   .service_name {
