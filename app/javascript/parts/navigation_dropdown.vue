@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     toggleShow: function () {
-      this.show = true
+      this.show = !this.show
     }
   }
 };

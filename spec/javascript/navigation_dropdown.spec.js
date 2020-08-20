@@ -40,4 +40,18 @@ describe('navigation_dropdown.vue', ()=>{
 
         expect(wrapper.find('.dropdown_content').exists()).toBeTruthy()
     })
+
+    it('clicking on toggle button hide the content', async () => {
+        const wrapper = shallowMount(navigation_dropdown, {
+            data() {
+                return {
+                    show: true
+                }
+            }
+        })
+
+        await wrapper.find('.toggle_button').trigger('click')
+
+        expect(wrapper.find('.dropdown_content').exists()).toBeFalsy()
+    })
 })
