@@ -15,6 +15,7 @@
  */
 $navbar-height: 50px;
 $container-size: 20px;
+$navbar-margin-top: 15px;
 
 html, body {
   padding: 0;
@@ -31,7 +32,7 @@ a {
 
 .login_button, .logout_button, .sign_up_button {
   display: block;
-  padding: 15px 10px;
+  padding: $navbar-margin-top 10px;
   color: black;
 }
 
@@ -49,6 +50,7 @@ a {
 
 .logout_button {
   background-color: #F00100;
+  text-align: center;
 
   &:hover{
     background-color: #E00100;
@@ -82,5 +84,35 @@ form {
   #session_actions {
     display: flex;
     flex-direction: row;
+  }
+}
+
+.navigation_dropdown {
+  position: relative;
+
+  .dropdown_title {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 7px;
+    padding-right: 7px;
+    margin: $navbar-margin-top 5px 0 0;
+    font-size: 1.2em;
+    box-shadow: 7px 5px 5px 0 rgba(0,0,0,0.4);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  ul.dropdown_content {
+    position: absolute;
+    list-style: none;
+    padding: 10px 15px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 7px 5px 5px 0 rgba(0,0,0,0.4);
+    border-top: none;
+
+    li {
+      white-space: nowrap;
+    }
   }
 }
