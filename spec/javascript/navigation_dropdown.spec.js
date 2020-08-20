@@ -14,4 +14,22 @@ describe('navigation_dropdown.vue', ()=>{
         expect(wrapper.find('.dropdown_title').text()).toBe(props.title)
         expect(wrapper.find('.dropdown_content').exists()).toBeFalsy()
     })
+
+    it('should render dropdown_content', () =>  {
+        const props = {
+            links: [{href: 'link1', text: 'text1'}, {href: 'link2', text: 'text2'}]
+        }
+        const wrapper = shallowMount(navigation_dropdown, {
+            propsData: props,
+            data() {
+                return {
+                    show: true
+                }
+            }
+        })
+
+        const content = wrapper.find('.dropdown_content').findAll('a')
+        expect(content.wrappers.map((el) => el.text())).toEqual(props.links.map((l) => l.text))
+        expect(content.wrappers.map((el) => el.attributes('href'))).toEqual(props.links.map((l) => l.href))
+    })
 })
