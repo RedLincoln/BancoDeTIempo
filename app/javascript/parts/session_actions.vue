@@ -2,7 +2,7 @@
 <template>
   <div id="session_actions">
     <template v-if="isLoggedReactive">
-      <p class="user_name">{{ user_name }}</p>
+      <NavigationDropdown :title="user_name"/>
       <Link class="logout_button" text="Cerrar sesión" :isNotAnAnchor="true" @click.native="logout"/>
     </template>
     <template v-else>
@@ -14,10 +14,11 @@
 
 <script>
 import Link from './Link/Link'
+import NavigationDropdown from './navigation_dropdown'
 import axios from 'axios'
 
 export default {
-  components: {Link},
+  components: {Link, NavigationDropdown},
   props: ['isLogged', 'user_name'],
   data: function() {
     return {

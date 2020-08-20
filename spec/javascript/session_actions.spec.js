@@ -3,6 +3,7 @@
 
 import { mount } from '@vue/test-utils'
 import App from '@/session_actions.vue'
+import navigation_dropdown from "../../app/javascript/parts/navigation_dropdown";
 
 
 describe('session_actions.vue', () => {
@@ -27,6 +28,14 @@ describe('session_actions.vue', () => {
     expect(wrapper.find('.login_button').exists()).toBeFalsy();
     expect(wrapper.find('.sign_up_button').exists()).toBeFalsy();
     expect(wrapper.find('.logout_button').exists()).toBeTruthy()
+  })
+
+  it('with loginProps is logged in', () => {
+    const wrapper = mount(App, {
+      propsData : loginProps
+    });
+
+    expect(wrapper.findComponent(navigation_dropdown).exists()).toBeTruthy()
   })
 
 })
