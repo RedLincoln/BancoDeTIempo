@@ -2,7 +2,7 @@
 <template>
   <div id="session_actions">
     <template v-if="isLoggedReactive">
-      <NavigationDropdown :title="user_name"/>
+      <NavigationDropdown :title="user_name" :links="getLinks()"/>
       <Link class="logout_button" text="Cerrar sesión" :isNotAnAnchor="true" @click.native="logout"/>
     </template>
     <template v-else>
@@ -29,6 +29,11 @@ export default {
     logout: function () {
       axios.delete(this.$signOutPath,{headers: { 'X-CSRF-Token': this.$getCSRFToken() }}
       ).then(response => this.isLoggedReactive = false).catch(err => console.log(err))
+    },
+    getLinks: function () {
+      return [
+        {href: this.$userServicesPath, text: 'Mis servicios'}
+      ]
     }
   }
 };
