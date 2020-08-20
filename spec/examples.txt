@@ -18,7 +18,7 @@ example_id                                        | status | run_time        |
 ./spec/system/service_spec.rb[1:2:1]              | passed | 0.33267 seconds |
 ./spec/system/service_spec.rb[1:2:2]              | passed | 0.83447 seconds |
 ./spec/system/service_spec.rb[1:2:3]              | passed | 0.66933 seconds |
-./spec/system/user_service_spec.rb[1:1]           | failed | 7.11 seconds    |
+./spec/system/user_service_spec.rb[1:1]           | failed | 10.38 seconds   |
 ./spec/system/user_spec.rb[1:1]                   | passed | 1.06 seconds    |
 ./spec/workflow/create_service_spec.rb[1:1]       | passed | 0.00529 seconds |
 ./spec/workflow/create_service_spec.rb[1:2]       | passed | 0.02648 seconds |

@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryBot.define do
   factory :service do
-    name { "Pintar" }
+    name { Faker::Name.unique.name }
     description { "Casa" }
     user
   end
