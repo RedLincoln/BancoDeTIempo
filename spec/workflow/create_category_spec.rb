@@ -16,5 +16,11 @@ RSpec.describe CreateCategories do
       creator.create
       expect(creator).to_not be_success
     end
+
+    it 'empty supcategory' do
+      creator = CreateCategories.new(name: 'Class')
+      creator.create
+      expect(creator).to_not be_success
+    end
   end
 end
