@@ -10,11 +10,6 @@ class CreateServices
   end
 
   def build
-    begin
-      category = Category.find(@category_id)
-      rescue ActiveRecord::RecordNotFound
-      category = Category.new
-    end
     self.service = @user.services.build(name: @name, description: @description, category: category)
   end
 
@@ -25,6 +20,12 @@ class CreateServices
 
   def valid?
     @valid
+  end
+
+  private
+
+  def category
+    Category.exists?(@category_id) ? Category.find(@category_id) : Category.new
   end
 
 end
