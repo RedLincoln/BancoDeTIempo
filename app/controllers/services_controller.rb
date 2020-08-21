@@ -49,10 +49,11 @@ class ServicesController < ApplicationController
   private
 
   def service_params
-    params.require(:service).permit(:name, :description)
+    params.require(:service).permit(:name, :description, :category)
     {
         name: params[:service][:name],
         description: params[:service][:description],
+        category_id: params[:service][:category],
         user: current_user
     }
   end

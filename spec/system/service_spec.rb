@@ -12,8 +12,10 @@ RSpec.describe 'Service', type: :system do
     end
 
     it 'can be created', :aggregate_failures do
+      category
+      visit new_service_path
       fill_in('service_name', with: 'Pintar')
-      page.select category.name from: 'category'
+      select category.name, from: 'service_category'
       fill_in('service_description', with: 'pintar tanto exteriores como interiores')
       find('form input[type="submit"]').click
 

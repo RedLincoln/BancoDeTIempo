@@ -7,6 +7,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :category, 'Categoría: ' %>
+    <%= f.select :category, options_for_select(Category.pluck(:name, :id), f.object.category) %>
+  </div>
+
+  <div class="field">
     <%= f.label :description, 'Descripción: ' %></br>
     <%= f.text_area :description, cols: 40, rows: 4%>
   </div>

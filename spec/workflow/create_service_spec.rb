@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CreateServices do
   let(:user) { build_stubbed(:user) }
+  let(:category) { create(:category) }
 
   it "creates a service with name and description" do
     creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: user)
@@ -12,7 +13,7 @@ RSpec.describe CreateServices do
   end
 
   it "properly indicates when is valid" do
-    creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: user)
+    creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: user, category_id: category.id)
     creator.create
     expect(creator).to be_valid
   end

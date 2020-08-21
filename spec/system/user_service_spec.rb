@@ -14,7 +14,7 @@ RSpec.describe 'User Service', type: :system do
     visit user_services_path
   end
 
-  it 'permit CURD actions on the services', :aggregate_failures do
+  it 'permit CURD actions on the services', :aggregate_failures, js: true do
     create_services
     page.find('.new_service_button').click
     expect(current_path).to eql(new_service_path)
