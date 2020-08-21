@@ -19,8 +19,16 @@ RSpec.describe User, type: :model do
     end
 
     it 'service search can find services owned by the user' do
-      foundService = service1.user.find_service(service1.id)
-      expect(foundService).to eq(service1)
+      found_service = service1.user.find_service(service1.id)
+      expect(found_service).to eq(service1)
+    end
+  end
+
+  describe 'default' do
+    let(:user) { build_stubbed(:user) }
+
+    it 'role is standard' do
+      expect(user).to be_standard
     end
   end
 
