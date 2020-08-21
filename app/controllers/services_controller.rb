@@ -35,7 +35,7 @@ class ServicesController < ApplicationController
   def create
     @workflow = CreateServices.new(service_params)
     @workflow.create
-    if @workflow.valid?
+    if @workflow.success?
       redirect_to root_path, notice: 'Servicio creado'
     else
       @service = @workflow.service

@@ -15,44 +15,44 @@ RSpec.describe CreateServices do
   it "properly indicates when is valid" do
     creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: user, category_id: category.id)
     creator.create
-    expect(creator).to be_valid
+    expect(creator).to be_success
   end
 
   describe "not valid" do
     it "name" do
       creator = CreateServices.new(description: 'La casa', user: user, category_id: category.id)
       creator.create
-      expect(creator).to_not be_valid
+      expect(creator).to_not be_success
     end
 
     it "description" do
       creator = CreateServices.new(name: 'Pintar', user: user, category_id: category.id)
       creator.create
-      expect(creator).to_not be_valid
+      expect(creator).to_not be_success
     end
 
     it "user is nil" do
       creator = CreateServices.new(name: 'Pintar', description: 'La casa', category_id: category.id)
       creator.create
-      expect(creator).to_not be_valid
+      expect(creator).to_not be_success
     end
 
     it "user is not an instance of User model" do
       creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: '', category_id: category.id)
       creator.create
-      expect(creator).to_not be_valid
+      expect(creator).to_not be_success
     end
 
     it "user instance of User model but not valid" do
       creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: User.new, category_id: category.id)
       creator.create
-      expect(creator).to_not be_valid
+      expect(creator).to_not be_success
     end
 
     it "category does not exists" do
       creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: user, category_id: -1)
       creator.create
-      expect(creator).to_not be_valid
+      expect(creator).to_not be_success
     end
 
   end

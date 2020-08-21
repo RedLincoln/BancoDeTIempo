@@ -6,7 +6,7 @@ class CreateServices
     @description = description
     @category_id = category_id
     @user = user
-    @valid = false
+    @success = false
   end
 
   def build
@@ -19,11 +19,11 @@ class CreateServices
 
   def create
     build
-    @valid = service.save
+    @success = service.save
   end
 
-  def valid?
-    @valid
+  def success?
+    @success
   end
 
   private
