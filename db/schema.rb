@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_21_193541) do
+ActiveRecord::Schema.define(version: 2020_08_21_215309) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "supcategory"
   end
 
   create_table "services", force: :cascade do |t|
