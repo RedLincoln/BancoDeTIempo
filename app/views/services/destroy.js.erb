@@ -1,4 +1,10 @@
 element = document.getElementById("service_<%= @service.id %>")
 element.parentElement.removeChild(element)
 
-document.getElementById('flash-messages').innerHTML = "<%= j render 'shared/flash' %>"
+flashMessage = document.getElementById('flash-messages')
+flashMessage.classList.remove('translate-animation')
+flashMessage.innerHTML = "<%= j render 'shared/flash' %>"
+
+setTimeout(function(){
+    flashMessage.classList.add('translate-animation')
+})
