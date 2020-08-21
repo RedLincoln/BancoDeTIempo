@@ -4,6 +4,7 @@ RSpec.describe 'Service', type: :system, js: true do
   let(:user) { create(:user) }
 
   describe "creation" do
+    let(:category) { create(:category) }
 
     before(:each) do
       sign_in user
@@ -12,6 +13,7 @@ RSpec.describe 'Service', type: :system, js: true do
 
     it 'can be created', :aggregate_failures do
       fill_in('service_name', with: 'Pintar')
+      select category.name from: 'category'
       fill_in('service_description', with: 'pintar tanto exteriores como interiores')
       find('form input[type="submit"]').click
 
