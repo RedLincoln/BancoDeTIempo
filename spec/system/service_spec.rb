@@ -32,6 +32,7 @@ RSpec.describe 'Service', type: :system do
 
       expect(page).to have_selector("form .errors .error_name")
       expect(page).to have_selector("form .errors .error_description")
+      expect(page).to have_selector("form .errors .error_category")
     end
 
     it 'error creating have to stay in the same url', js: true do

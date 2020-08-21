@@ -8,7 +8,8 @@
 
   <div class="field">
     <%= f.label :category, 'Categoría: ' %>
-    <%= f.select :category, options_for_select(Category.pluck(:name, :id), f.object.category) %>
+    <%= f.select :category, options_for_select(Category.pluck(:name, :id), f.object.category),
+                  prompt: 'Selecciona una categoría'%>
   </div>
 
   <div class="field">

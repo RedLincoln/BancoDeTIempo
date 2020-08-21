@@ -18,10 +18,13 @@ RSpec.describe CreateServices do
     expect(creator).to be_valid
   end
 
-  it "properly indicates when is not valid" do
-    creator = CreateServices.new
-    creator.create
-    expect(creator).to_not be_valid
+  describe "not valid" do
+    it "name" do
+      creator = CreateServices.new(description: 'La casa', user: user, category_id: category.id)
+      creator.create
+      expect(creator).to_not be_valid
+    end
   end
+
 
 end
