@@ -36,6 +36,12 @@ RSpec.describe CreateServices do
       creator.create
       expect(creator).to_not be_valid
     end
+
+    it "user is not an instance of User model" do
+      creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: '', category_id: category.id)
+      creator.create
+      expect(creator).to_not be_valid
+    end
   end
 
 
