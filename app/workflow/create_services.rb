@@ -13,7 +13,7 @@ class CreateServices
     if @user.instance_of?(User) && @user.valid?
       self.service = @user.services.build(name: @name, description: @description, category: category)
     else
-      self.service = Service.new(name: @name, description: @description, category: @category)
+      self.service = Service.new(name: @name, description: @description, category: category)
     end
   end
 
@@ -29,7 +29,7 @@ class CreateServices
   private
 
   def category
-    Category.exists?(@category_id) ? Category.find(@category_id) : Category.new
+    Category.exists?(@category_id) ? Category.find(@category_id) : nil
   end
 
 end
