@@ -43,14 +43,17 @@ RSpec.describe 'Service', type: :system do
 
   describe "edit" do
     let(:service) { create(:service) }
+    let(:category) { create(:category) }
 
     before(:each) do
+      category
       sign_in service.user
       visit edit_service_path(service.id)
     end
 
     it "initial state is service data", :aggregate_failures do
       expect(page.find('#service_name')[:value]).to eq(service.name)
+      expect(page).to have_select('service_category', selected: service.category.name)
       expect(page).to have_selector('#service_description', text: service.description)
     end
 
