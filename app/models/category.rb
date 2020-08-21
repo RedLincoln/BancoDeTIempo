@@ -1,3 +1,3 @@
 class Category < ApplicationRecord
-  validates :name, presence: true
+  validates :name, :supcategory, presence: true
 end
