@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   resources :services
+
+  get 'categories/new', :to => 'category#new', :as => 'new_category'
+  get 'categories', :to => 'category#index', :as => 'categories'
+  post 'categories', :to => 'category#create'
+
   get 'profile', :to => 'user#index', :as => 'user_index'
   get 'profile/services', :to => 'user#services', :as => 'user_services'
   root :to => 'home#index'

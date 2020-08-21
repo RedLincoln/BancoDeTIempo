@@ -3,7 +3,7 @@ errors = document.querySelector('form .errors') ?
     document.querySelector('form .errors').parentElement :
     document.createElement('div')
 
-errors.innerHTML = "<%= j render 'errors' %>"
+errors.innerHTML = "<%= j render 'shared/errors', record: @service%>"
 form.insertBefore(errors, form.firstChild)
 
 flashMessage = document.getElementById('flash-messages')

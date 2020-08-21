@@ -1,0 +1,8 @@
+<h2>Categorías</h2>
+<ul>
+<% @categories.each do |category| %>
+  <li id="category_<%= category.id %>">
+    <div class="category_name"><%= category.name %></div>
+  </li>
+<% end %>
+</ul>

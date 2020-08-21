@@ -1,0 +1,3 @@
+class CreateCategories
+
+end

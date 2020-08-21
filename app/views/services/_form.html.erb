@@ -1,5 +1,5 @@
 <%= form_with(model: @service) do |f| %>
-  <%= render 'errors' %>
+  <%= render 'shared/errors', record: f.object%>
 
   <div class="field">
     <%= f.label :name, 'Nombre: ' %></br>

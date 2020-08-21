@@ -1,0 +1,17 @@
+<%= form_with(model: @category) do |f| %>
+  <%= render 'shared/errors', record: f.object %>
+
+  <div class="field">
+    <%= f.label :name, 'Nombre: ' %></br>
+    <%= f.text_field :name, autofocus: true , cols: 40%>
+  </div>
+
+  <div class="field">
+    <%= f.label :supcategory, 'Categoría raíz: ' %></br>
+    <%= f.text_field :supcategory, cols: 40, rows: 4%>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Confirmar" %>
+  </div>
+<% end %>
