@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CreateServices do
-  let(:user) { build_stubbed(:user) }
+  let(:user) { create(:user) }
   let(:category) { create(:category) }
 
   it "creates a service with name and description" do

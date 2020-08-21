@@ -10,7 +10,7 @@ class CreateServices
   end
 
   def build
-    if user.instance_of? User
+    if @user.instance_of?(User) && @user.valid?
       self.service = @user.services.build(name: @name, description: @description, category: category)
     else
       self.service = Service.new(name: @name, description: @description, category: @category)
