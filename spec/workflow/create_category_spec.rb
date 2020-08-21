@@ -10,8 +10,8 @@ RSpec.describe CreateCategories do
     expect(creator.category.supcategory).to eq('Learning')
   end
 
-  describe 'invalid' do
-    it 'name' do
+  describe 'not successful' do
+    it 'empty name' do
       creator = CreateCategories.new(supcategory: 'Learning')
       creator.create
       expect(creator).to_not be_success
