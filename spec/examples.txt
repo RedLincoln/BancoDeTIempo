@@ -2,7 +2,7 @@ example_id                                        | status | run_time        |
 ------------------------------------------------- | ------ | --------------- |
 ./spec/controllers/home_controller_spec.rb[1:1:1] | passed | 0.07165 seconds |
 ./spec/controllers/user_controller_spec.rb[1:1:1] | passed | 0.07714 seconds |
-./spec/models/category_spec.rb[1:1:1]             | failed | 0.03325 seconds |
+./spec/models/category_spec.rb[1:1:1]             | passed | 0.24885 seconds |
 ./spec/models/service_spec.rb[1:1:1]              | passed | 0.01072 seconds |
 ./spec/models/service_spec.rb[1:2:1]              | passed | 0.01746 seconds |
 ./spec/models/service_spec.rb[1:2:2]              | passed | 0.01063 seconds |
