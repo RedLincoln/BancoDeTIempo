@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CreateServices do
-  let(:user) { create(:user) }
+  let(:user) { build_stubbed(:user) }
   let(:category) { create(:category) }
 
   it "creates a service with name and description" do
@@ -48,6 +48,13 @@ RSpec.describe CreateServices do
       creator.create
       expect(creator).to_not be_valid
     end
+
+    it "category does not exists" do
+      creator = CreateServices.new(name: 'Pintar', description: 'La casa', user: user, category_id: -1)
+      creator.create
+      expect(creator).to_not be_valid
+    end
+
   end
 
 
