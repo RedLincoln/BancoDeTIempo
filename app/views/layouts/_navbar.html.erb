@@ -5,8 +5,11 @@
 %>
 
 <header class="navbar" id="navbar">
-  <div class="left-content">
+  <nav class="left-content">
     <%= link_to 'BancoDeTiempo', root_path, class: 'brand' %>
-  </div>
+    <% if user_signed_in? then %>
+      <%= link_to 'Servicios', services_path, class: 'service_link' %>
+    <% end %>
+  </nav>
   <div id="session_actions" data="<%= props %>"> </div>
 </header>

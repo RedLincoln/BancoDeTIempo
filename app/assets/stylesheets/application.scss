@@ -73,12 +73,12 @@ form {
   .left-content {
     height: $navbar-height;
     line-height: $navbar-height;
-  }
 
-  .brand {
-    font-size: large;
-    font-weight: bold;
-    border-bottom: dotted thin #aaaaaa;
+    .brand {
+      font-size: large;
+      font-weight: bold;
+      border-bottom: dotted thin #aaaaaa;
+    }
   }
 
   #session_actions {

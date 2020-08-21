@@ -48,10 +48,7 @@ RSpec.describe 'Navbar', type: :system, js: true do
 
     within '#navbar' do
       page.find('.service_link').click
-
       expect(current_path).to eq(services_path)
     end
-
-
   end
 end
