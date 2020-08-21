@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Service', type: :system, js: true do
+RSpec.describe 'Service', type: :system do
   let(:user) { create(:user) }
 
   describe "creation" do
@@ -13,7 +13,7 @@ RSpec.describe 'Service', type: :system, js: true do
 
     it 'can be created', :aggregate_failures do
       fill_in('service_name', with: 'Pintar')
-      select category.name from: 'category'
+      page.select category.name from: 'category'
       fill_in('service_description', with: 'pintar tanto exteriores como interiores')
       find('form input[type="submit"]').click
 
@@ -32,7 +32,7 @@ RSpec.describe 'Service', type: :system, js: true do
       expect(page).to have_selector("form .errors .error_description")
     end
 
-    it 'error creating have to stay in the same url' do
+    it 'error creating have to stay in the same url', js: true do
       click_on('Crear servicio')
       expect(current_path).to eq(new_service_path)
     end
@@ -60,7 +60,7 @@ RSpec.describe 'Service', type: :system, js: true do
       expect(page).to have_selector("#service_#{service.id} .service_name", text: "#{service.name}_1")
     end
 
-    it "errors are shown" do
+    it "errors are shown", js: true do
       fill_in('service_name', with: "")
       find("form input[type=\"submit\"]").click
 
