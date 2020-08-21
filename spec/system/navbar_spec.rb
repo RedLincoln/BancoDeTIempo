@@ -39,4 +39,19 @@ RSpec.describe 'Navbar', type: :system, js: true do
 
     expect(current_path).to eq(root_path)
   end
+
+  it "have user protected links" do
+    expect(page).to_not have_selector('.service_link')
+
+    sign_in user
+    visit root_path
+
+    within '#navbar' do
+      page.find('.service_link').click
+
+      expect(current_path).to eq(services_path)
+    end
+
+
+  end
 end
