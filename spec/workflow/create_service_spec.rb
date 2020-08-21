@@ -24,6 +24,18 @@ RSpec.describe CreateServices do
       creator.create
       expect(creator).to_not be_valid
     end
+
+    it "description" do
+      creator = CreateServices.new(name: 'Pintar', user: user, category_id: category.id)
+      creator.create
+      expect(creator).to_not be_valid
+    end
+
+    it "user is nil" do
+      creator = CreateServices.new(name: 'Pintar', description: 'La casa', category_id: category.id)
+      creator.create
+      expect(creator).to_not be_valid
+    end
   end
 
 
