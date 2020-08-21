@@ -5,5 +5,9 @@ FactoryBot.define do
     name { 'George Lucas' }
     email { Faker::Internet.unique.email }
     password { 'password' }
+
+    factory :admin do
+      role { 'admin' }
+    end
   end
 end
