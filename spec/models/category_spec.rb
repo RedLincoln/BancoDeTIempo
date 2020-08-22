@@ -15,10 +15,10 @@ RSpec.describe Category, type: :model do
     category3 = create(:category, supcategory: 'Another_category')
 
     expected = {
-        category1.supcategory => [category1.name, category2.name],
-        category3.supcategory => [category3.name]
+        category1.supcategory => [category1, category2],
+        category3.supcategory => [category3]
     }
 
-    expect(Category.grouped_by_category).to eq(expected)
+    expect(Category.grouped_by_supcategory).to eq(expected)
   end
 end
