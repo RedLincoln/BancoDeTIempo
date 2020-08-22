@@ -1,6 +1,6 @@
 class CategoryController < ApplicationController
   def index
-    @categories = Category.all
+    @supcategories = Category.grouped_by_supcategory
   end
 
   def new
