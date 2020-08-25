@@ -5,8 +5,15 @@ describe ('transaction_form.vue',  ()=>{
 
     it ('initially hide content', ()=>{
         const wrapper = shallowMount(transaction_form)
-
         expect(wrapper.find('.form').exists()).toBeFalsy()
+    })
+
+    it ('show content when click on button', async() => {
+        const wrapper = shallowMount(transaction_form)
+
+        await wrapper.find('.open_petition').trigger('click')
+
+        expect(wrapper.find('.form').exists()).toBeTruthy()
     })
 
     describe('', () => {
