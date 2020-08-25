@@ -16,7 +16,7 @@ RSpec.describe 'Service Transactions' do
     it 'User can ask for services' do
       visit services_path
 
-      within "service_#{service.id}" do
+      within "#service_#{service.id}" do
         find(".open_petition").click
         fill_in('time_petition', with:'07/07/2020, 12:00')
         fill_in('additional_information', with: 'Pintar casa')
