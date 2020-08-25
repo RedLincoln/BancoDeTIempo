@@ -27,8 +27,8 @@ export default {
   },
   methods: {
     logout: function () {
-      axios.delete(this.$signOutPath,{headers: { 'X-CSRF-Token': this.$getCSRFToken() }}
-      ).then(response => this.isLoggedReactive = false).catch(err => console.log(err))
+      axios.delete(this.$signOutPath)
+              .then(response => this.isLoggedReactive = false).catch(err => console.log(err))
     },
     getLinks: function () {
       return [

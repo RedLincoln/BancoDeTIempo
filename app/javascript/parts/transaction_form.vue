@@ -42,7 +42,7 @@
             datetime: this.$refs.datetime,
             additional_information: this.$refs.additional_information
           }
-        })
+        }).then().catch()
       }
     }
   };

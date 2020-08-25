@@ -6,7 +6,7 @@ RSpec.describe 'Service Transactions' do
   let(:service) { create(:service, user: offeringUser) }
 
 
-  describe 'transaction petition' do
+  describe 'transaction petition', js: true do
 
     before(:each) do
       sign_in requestUser

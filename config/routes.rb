@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :services
 
+  # Transaction
+  post 'transactions', :to => 'transaction#create', :as => 'transactions'
+
   get 'categories/new', :to => 'category#new', :as => 'new_category'
   get 'categories', :to => 'category#index', :as => 'categories'
   post 'categories', :to => 'category#create'

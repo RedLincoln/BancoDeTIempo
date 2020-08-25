@@ -2,7 +2,10 @@
 <div class="services-list">
   <% @services.each do |service| %>
     <article id="service_<%= service.id %>" class="service_post">
-      <p class="service_name"><%= service.name %></p>
+      <div class="service_header">
+        <p class="service_name"><%= service.name %></p>
+        <div class="transaction_action"></div>
+      </div>
       <div class="service_content">
         <p><strong>Descripción: </strong><span class="service_description"><%= service.description %></span></p>
       </div>

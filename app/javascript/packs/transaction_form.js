@@ -7,9 +7,12 @@ import Vue from 'vue'
 import App from '@/transaction_form.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.body.appendChild(document.createElement('transaction'))
-  const transaction = new Vue({
-    render: h => h(App)
-  }).$mount('transaction')
-  console.log({transaction})
+  const vues = document.querySelectorAll('.transaction_action')
+  Array.prototype.forEach.call(vues, (el) => {
+    new Vue({
+      el,
+      render: h => h(App)
+    })
+  })
+
 })
