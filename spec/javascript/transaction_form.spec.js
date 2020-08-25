@@ -57,6 +57,8 @@ describe ('transaction_form.vue',  ()=>{
                 }
             }).reply(200)
 
+            wrapper.find('.send_petition').trigger('click')
+
             expect(spy).toBeCalledTimes(1)
         })
     })

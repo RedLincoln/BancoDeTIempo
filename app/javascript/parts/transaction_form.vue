@@ -8,10 +8,15 @@
     <transition>
       <form v-if="show" class="form">
         <div class="field">
-
+          <label for="time_petition"></label>
+          <input type="text" id="time_petition" class="time_petition" ref="time_petition" placeholder="Horario: eg. 07/07/2020 13:00">
         </div>
         <div class="field">
-
+          <label for="additional_information"></label>
+          <textarea id="additional_information" class="additional_information" ref="additional_information" placeholder="Añade información extra"></textarea>
+        </div>
+        <div class="actions">
+          <input type="submit" class="send_petition" value="Enviar" @click="sendPetition">
         </div>
       </form>
     </transition>
@@ -19,6 +24,8 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     data: function() {
       return {
@@ -28,6 +35,14 @@
     methods: {
       toggleShow: function () {
         this.show = !this.show
+      },
+      sendPetition: function () {
+        axios.post(this.$createTransactionPath, {
+          transaction: {
+            datetime: this.$refs.datetime,
+            additional_information: this.$refs.additional_information
+          }
+        })
       }
     }
   };
