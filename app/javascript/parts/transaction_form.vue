@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from '../setupAxios'
   import railsFlash from "../railsFlash";
 
   export default {

@@ -15,7 +15,7 @@
 <script>
 import Link from './Link/Link'
 import NavigationDropdown from './navigation_dropdown'
-import axios from 'axios'
+import axios from '../setupAxios'
 
 export default {
   components: {Link, NavigationDropdown},

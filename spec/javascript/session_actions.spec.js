@@ -5,6 +5,7 @@ import { mount } from '@vue/test-utils'
 import App from '@/session_actions.vue'
 import navigation_dropdown from "../../app/javascript/parts/navigation_dropdown";
 
+jest.mock('../../app/javascript/setupAxios')
 
 describe('session_actions.vue', () => {
   const loginProps = {

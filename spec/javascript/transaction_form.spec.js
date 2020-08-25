@@ -3,6 +3,8 @@ import MockAdapter from "axios-mock-adapter";
 import axios from 'axios'
 import transaction_form from "../../app/javascript/parts/transaction_form";
 
+jest.mock('../../app/javascript/setupAxios')
+
 describe ('transaction_form.vue',  ()=>{
 
     it ('initially hide content', ()=>{

@@ -1,9 +1,8 @@
 const resetTransition = () => {
     const container = document.getElementById('flash-messages')
     container.classList.remove('translate-animation')
-    setTimeout(()=>{
-        container.classList.add('translate-animation')
-    })
+    container.offsetWidth
+    container.classList.add('translate-animation')
 }
 
 const createFlashMessage = (type, message) => {
@@ -14,6 +13,7 @@ const createFlashMessage = (type, message) => {
     flash.classList.add('flash-message', type)
     flash.innerHTML = message
     container.appendChild(flash)
+    resetTransition()
 }
 
 export default {
