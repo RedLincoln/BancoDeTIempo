@@ -12,24 +12,38 @@ describe('Flash Message Dom manipulation', () => {
             const message = 'Notice Message'
             railsFlash.notice(message)
 
-            const expected = document.querySelector('#flash-messages .notice')
-            const expectedNoticeCount = document.getElementById('flash-messages')
-                .getElementsByClassName('notice').length
+            const expected = document.getElementById('flash-messages').innerHTML
 
-            expect(expectedNoticeCount).toBe(1)
-            expect(expected.outerHTML).toBe(`<div class="flash-message notice">${message}</div>`)
+            expect(expected).toBe(`<div class="flash-message notice">${message}</div>`)
         })
 
         it(':alert', ()=>{
             const message = 'Alert Message'
             railsFlash.alert(message)
 
-            const expected = document.querySelector('#flash-messages .alert')
-            const expectedAlertCount = document.getElementById('flash-messages')
-                .getElementsByClassName('alert').length
+            const expected = document.getElementById('flash-messages')
 
-            expect(expectedAlertCount).toBe(1)
-            expect(expected.outerHTML).toBe(`<div class="flash-message alert">${message}</div>`)
+            expect(expected.innerHTML).toBe(`<div class="flash-message alert">${message}</div>`)
         })
+    })
+
+    describe('flash substitution with prior message', () => {
+
+        beforeEach(()=>{
+            document.body.innerHTML = `<div id="flash-messages" class="translate-animation">
+                                           <div class="flash-message notice">Notice Message</div>
+                                           <div class="flash-message alert">Alert Message</div>
+                                       </div>`
+        })
+
+        it(':notice', ()=>{
+            const message = 'Notice Message'
+            railsFlash.notice(message)
+
+            const expected =  document.getElementById('flash-messages').innerHTML
+
+            expect(expected).toBe(`<div class="flash-message notice">${message}</div>`)
+        })
+
     })
 })
