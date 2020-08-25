@@ -21,4 +21,12 @@ RSpec.describe 'Admin', type: :system do
     expect(page).to have_selector('.category_supcategory', text: 'Enseñansa')
   end
 
+  describe 'admin protected routes' do
+
+    it 'new category' do
+      visit new_category_path
+      expect(current_path).to eq(root_path)
+    end
+
+  end
 end
