@@ -26,5 +26,10 @@ describe ('transaction_form.vue',  ()=>{
         it ('show content', ()=>{
             expect(wrapper.find('.form').exists()).toBeTruthy()
         })
+
+        it ('hides content when click on button', async() => {
+            await wrapper.find('.open_petition').trigger('click')
+            expect(wrapper.find('.form').exists()).toBeFalsy()
+        })
     })
 })
