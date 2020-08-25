@@ -25,6 +25,7 @@
 
 <script>
   import axios from 'axios'
+  import railsFlash from "../railsFlash";
 
   export default {
     data: function() {
@@ -42,7 +43,7 @@
             datetime: this.$refs.datetime,
             additional_information: this.$refs.additional_information
           }
-        }).then().catch()
+        }).then(response => railsFlash.notice(response.notice)).catch(err => railsFlash.alert(err.message))
       }
     }
   };

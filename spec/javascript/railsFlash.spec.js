@@ -2,6 +2,13 @@ import railsFlash from "../../app/javascript/railsFlash";
 
 describe('Flash Message Dom manipulation', () => {
 
+    it('do nothing when there is no container', () => {
+        document.body.innerHTML = ''
+        railsFlash.notice('message')
+
+        expect(document.body.innerHTML).toBe('')
+    })
+
     describe('flash substitution without prior flash message', () => {
 
         beforeEach(()=>{
