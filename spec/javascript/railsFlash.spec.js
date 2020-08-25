@@ -19,5 +19,17 @@ describe('Flash Message Dom manipulation', () => {
             expect(expectedNoticeCount).toBe(1)
             expect(expected.outerHTML).toBe(`<div class="flash-message notice">${message}</div>`)
         })
+
+        it(':alert', ()=>{
+            const message = 'Alert Message'
+            railsFlash.alert(message)
+
+            const expected = document.querySelector('#flash-messages .alert')
+            const expectedAlertCount = document.getElementById('flash-messages')
+                .getElementsByClassName('alert').length
+
+            expect(expectedAlertCount).toBe(1)
+            expect(expected.outerHTML).toBe(`<div class="flash-message alert">${message}</div>`)
+        })
     })
 })
