@@ -8,6 +8,7 @@ const resetTransition = () => {
 
 const createFlashMessage = (type, message) => {
     const container = document.getElementById('flash-messages')
+    if(!container) return
     container.innerHTML = ""
     const flash =  document.createElement('div')
     flash.classList.add('flash-message', type)
