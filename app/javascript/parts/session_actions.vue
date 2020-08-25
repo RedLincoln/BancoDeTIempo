@@ -32,6 +32,7 @@ export default {
     },
     getLinks: function () {
       return [
+        {href: this.$userProfilePath, text: 'Perfil'},
         {href: this.$userServicesPath, text: 'Mis servicios'}
       ]
     }

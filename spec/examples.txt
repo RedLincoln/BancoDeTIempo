@@ -27,6 +27,7 @@ example_id                                        | status | run_time        |
 ./spec/system/service_spec.rb[1:2:1]              | passed | 0.24784 seconds |
 ./spec/system/service_spec.rb[1:2:2]              | passed | 0.60265 seconds |
 ./spec/system/service_spec.rb[1:2:3]              | passed | 0.75377 seconds |
+./spec/system/transaction_spec.rb[1:1:1]          | failed | 0.5039 seconds  |
 ./spec/system/user_service_spec.rb[1:1]           | passed | 1.92 seconds    |
 ./spec/system/user_spec.rb[1:1]                   | passed | 0.41709 seconds |
 ./spec/workflow/create_category_spec.rb[1:1]      | passed | 0.00417 seconds |
