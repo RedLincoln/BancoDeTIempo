@@ -4,6 +4,7 @@
 
 <template>
   <div id="transaction">
+    <span class="open_petition" @click="toggleShow">Pedir</span>
     <transition>
       <form v-if="show" class="form">
         <div class="field">
@@ -24,6 +25,11 @@
         show: false
       };
     },
+    methods: {
+      toggleShow: function () {
+        this.show = !this.show
+      }
+    }
   };
 </script>
 
