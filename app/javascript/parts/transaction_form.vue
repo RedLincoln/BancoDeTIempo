@@ -6,7 +6,7 @@
   <div id="transaction">
     <span class="open_petition" @click="toggleShow">Pedir</span>
     <transition>
-      <form v-if="show" class="form">
+      <form v-if="show" class="form" @submit.prevent>
         <div class="field">
           <label for="time_petition"></label>
           <input type="text" id="time_petition" class="time_petition" ref="time_petition" placeholder="Horario: eg. 07/07/2020 13:00">
@@ -16,7 +16,7 @@
           <textarea id="additional_information" class="additional_information" ref="additional_information" placeholder="Añade información extra"></textarea>
         </div>
         <div class="actions">
-          <input type="submit" class="send_petition" value="Enviar" @click="sendPetition">
+          <button class="send_petition" @click="sendPetition">Enviar</button>
         </div>
       </form>
     </transition>
