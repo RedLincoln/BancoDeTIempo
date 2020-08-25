@@ -4,14 +4,13 @@ RSpec.describe 'Service Transactions' do
   let(:requestUser) { create(:user) }
   let(:offeringUser) { create(:user) }
   let(:service) { create(:service, user: offeringUser) }
-  let(:transaction) { create(:transaction, service: service, client: requestUser) }
 
 
   describe 'transaction petition' do
 
     before(:each) do
       sign_in requestUser
-      transaction
+      service
     end
 
     it 'User can ask for services' do

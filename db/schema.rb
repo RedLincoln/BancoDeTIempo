@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_21_215309) do
+ActiveRecord::Schema.define(version: 2020_08_25_121445) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,18 @@ ActiveRecord::Schema.define(version: 2020_08_21_215309) do
     t.integer "category_id"
     t.index ["category_id"], name: "index_services_on_category_id"
     t.index ["user_id"], name: "index_services_on_user_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.string "datetime"
+    t.text "addition_information"
+    t.integer "service_id"
+    t.integer "client_id"
+    t.string "status", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_transactions_on_client_id"
+    t.index ["service_id"], name: "index_transactions_on_service_id"
   end
 
   create_table "users", force: :cascade do |t|
