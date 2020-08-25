@@ -4,14 +4,16 @@
 
 <template>
   <div id="transaction">
-    <form>
-      <div class="field">
+    <transition>
+      <form v-if="show" class="form">
+        <div class="field">
 
-      </div>
-      <div class="field">
+        </div>
+        <div class="field">
 
-      </div>
-    </form>
+        </div>
+      </form>
+    </transition>
   </div>
 </template>
 
@@ -19,7 +21,7 @@
   export default {
     data: function() {
       return {
-        message: "Hello transaction!"
+        show: false
       };
     },
   };
