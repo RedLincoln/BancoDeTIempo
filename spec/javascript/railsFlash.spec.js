@@ -9,14 +9,15 @@ describe('Flash Message Dom manipulation', () => {
         })
 
         it(':notice', ()=>{
-            railsFlash.notice('Notice Message')
+            const message = 'Notice Message'
+            railsFlash.notice(message)
 
             const expected = document.querySelector('#flash-messages .notice')
             const expectedNoticeCount = document.getElementById('flash-messages')
                 .getElementsByClassName('notice').length
 
             expect(expectedNoticeCount).toBe(1)
-            expect(expected.outerHTML).toBe('<div class="flash-message notice">Notice message</div>')
+            expect(expected.outerHTML).toBe(`<div class="flash-message notice">${message}</div>`)
         })
     })
 })
