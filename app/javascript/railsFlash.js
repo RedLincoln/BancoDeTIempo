@@ -1,16 +1,17 @@
+const createFlashMessage = (type, message) => {
+    const flash =  document.createElement('div')
+    flash.classList.add('flash-message', type)
+    flash.innerHTML = message
+    document.getElementById('flash-messages').appendChild(flash)
+}
+
 export default {
-    notice: (content) => {
-        const notice =  document.createElement('div')
-        notice.classList.add('flash-message', 'notice')
-        notice.innerHTML = content
-        document.getElementById('flash-messages').appendChild(notice)
+    notice: (message) => {
+        createFlashMessage('notice', message)
     },
 
-    alert: (content) => {
-        const alert =  document.createElement('div')
-        alert.classList.add('flash-message', 'alert')
-        alert.innerHTML = content
-        document.getElementById('flash-messages').appendChild(alert)
+    alert: (message) => {
+        createFlashMessage('alert', message)
     },
 
 }
