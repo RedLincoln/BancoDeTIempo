@@ -1,8 +1,10 @@
 const createFlashMessage = (type, message) => {
+    const container = document.getElementById('flash-messages')
+    container.innerHTML = ""
     const flash =  document.createElement('div')
     flash.classList.add('flash-message', type)
     flash.innerHTML = message
-    document.getElementById('flash-messages').appendChild(flash)
+    container.appendChild(flash)
 }
 
 export default {
