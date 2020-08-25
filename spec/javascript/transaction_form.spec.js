@@ -19,6 +19,6 @@ describe ('transaction_form.vue',  ()=>{
     it ('initially hide content', ()=>{
         const wrapper = shallowMount(transaction_form)
 
-        expect(wrapper.find('.form').exists()).toBeTruthy()
+        expect(wrapper.find('.form').exists()).toBeFalsy()
     })
 })
