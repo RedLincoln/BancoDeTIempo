@@ -7,7 +7,7 @@ class Transaction < ApplicationRecord
   private
 
   def service_owner_can_not_be_the_client
-    nil_checker = service.nil? && client.nil?
+    nil_checker = service.nil? || client.nil?
     if nil_checker || service.user == client
       errors.add(:client, 'client and service owner can not be the same')
     end

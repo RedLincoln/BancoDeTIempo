@@ -30,6 +30,13 @@ RSpec.describe CreateTransactions do
 
       expect(creator).to_not be_success
     end
+
+    it 'servcice exits' do
+      creator = CreateTransactions.new(datetime: 'anyday', addition_information: 'anywhere', service_id: -1, client: service.user)
+      creator.create
+
+      expect(creator).to_not be_success
+    end
   end
 
 end
