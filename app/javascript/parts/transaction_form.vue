@@ -43,7 +43,7 @@
         axios.post(this.$createTransactionPath, {
           transaction: {
             datetime: this.$refs.time_petition.value,
-            additional_information: this.$refs.additional_information.value,
+            addition_information: this.$refs.additional_information.value,
             serviceId: this.serviceId
           }}, {headers: axiosConf.getDefaultHeader()}
         ).then(response => railsFlash.notice(response.notice)).catch(err => railsFlash.alert(err.message))
