@@ -11,9 +11,10 @@ example_id                                        | status  | run_time        |
 ./spec/models/service_spec.rb[1:2:1]              | passed  | 0.01125 seconds |
 ./spec/models/service_spec.rb[1:2:2]              | passed  | 0.01 seconds    |
 ./spec/models/service_spec.rb[1:2:3]              | passed  | 0.02308 seconds |
-./spec/models/transaction_spec.rb[1:1:1]          | passed  | 0.19697 seconds |
-./spec/models/transaction_spec.rb[1:1:2]          | passed  | 0.00416 seconds |
-./spec/models/transaction_spec.rb[1:2:1]          | passed  | 0.0032 seconds  |
+./spec/models/transaction_spec.rb[1:1:1]          | passed  | 0.00463 seconds |
+./spec/models/transaction_spec.rb[1:1:2]          | passed  | 0.00387 seconds |
+./spec/models/transaction_spec.rb[1:2:1]          | failed  | 0.216 seconds   |
+./spec/models/transaction_spec.rb[1:3:1]          | passed  | 0.00307 seconds |
 ./spec/models/user_spec.rb[1:1:1]                 | passed  | 0.00361 seconds |
 ./spec/models/user_spec.rb[1:2:1]                 | passed  | 0.00755 seconds |
 ./spec/models/user_spec.rb[1:3:1]                 | passed  | 0.02796 seconds |

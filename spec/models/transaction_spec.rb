@@ -7,6 +7,18 @@ RSpec.describe Transaction, type: :model do
     it { should belong_to(:service) }
   end
 
+  describe 'validation' do
+    let(:service) { create(:service) }
+
+    it 'service owner can not be the client' do
+      transaction = Transaction.new(service: service, client: service.user)
+
+      expect(transaction).to_not be_valid
+      expect(transaction.errors).to include(:client)
+    end
+
+  end
+
   describe 'default' do
 
     it 'status' do
