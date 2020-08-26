@@ -23,6 +23,13 @@ RSpec.describe CreateTransactions do
 
       expect(creator).to_not be_success
     end
+
+    it 'client is not set' do
+      creator = CreateTransactions.new(datetime: 'anyday', addition_information: 'anywhere', service_id: service.id)
+      creator.create
+
+      expect(creator).to_not be_success
+    end
   end
 
 end
