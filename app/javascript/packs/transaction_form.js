@@ -5,13 +5,18 @@
 
 import Vue from 'vue'
 import App from '@/transaction_form.vue'
+import TurbolinksAdapter from 'vue-turbolinks'
+Vue.use(TurbolinksAdapter);
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbolinks:load', () => {
   const vues = document.querySelectorAll('.transaction_action')
   Array.prototype.forEach.call(vues, (el) => {
+    const props = {
+      serviceId: el.dataset.serviceID
+    }
     new Vue({
       el,
-      render: h => h(App)
+      render: h => h(App, props)
     })
   })
 

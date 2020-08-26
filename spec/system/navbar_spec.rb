@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Navbar', type: :system, js: true do
+RSpec.describe 'Navbar', type: :system do
   let(:user) { create(:user) }
 
 
-  it 'have login button when user is not logged in', :aggregate_failures do
+  it 'have login button when user is not logged in', :aggregate_failures, js: true do
     visit root_path
 
     within('#navbar #session_actions') do
@@ -15,7 +15,7 @@ RSpec.describe 'Navbar', type: :system, js: true do
     expect(current_path).to eq(new_user_session_path)
   end
 
-  it 'have sign_up button when user is not logged in', :aggregate_failures do
+  it 'have sign_up button when user is not logged in', :aggregate_failures, js: true do
     visit root_path
 
     within('#navbar #session_actions') do
@@ -26,7 +26,7 @@ RSpec.describe 'Navbar', type: :system, js: true do
     expect(current_path).to eq(new_user_registration_path)
   end
 
-  it 'have only logout button when user is logged in', :aggregate_failures do
+  it 'have only logout button when user is logged in', :aggregate_failures, js: true do
     sign_in user
     visit root_path
 

@@ -24,10 +24,12 @@
 </template>
 
 <script>
-  import axios from '../setupAxios'
+  import axios from 'axios'
+  import axiosConf from '../setupAxios'
   import railsFlash from "../railsFlash";
 
   export default {
+    props: ['serviceId'],
     data: function() {
       return {
         show: false
@@ -39,10 +41,14 @@
       },
       sendPetition: function () {
         axios.post(this.$createTransactionPath, {
-          transaction: {
-            datetime: this.$refs.datetime,
-            additional_information: this.$refs.additional_information
-          }
+          data : {
+            transaction: {
+              datetime: this.$refs.datetime,
+              additional_information: this.$refs.additional_information,
+              serviceId: this.serviceId
+            }
+          },
+          headers: axiosConf.getDefaultHeader()
         }).then(response => railsFlash.notice(response.notice)).catch(err => railsFlash.alert(err.message))
       }
     }

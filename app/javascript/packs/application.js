@@ -20,7 +20,6 @@ console.log('Hello World from Webpacker')
 import './session_actions'
 import './transaction_form'
 import Vue from 'vue'
-import ax from '../setupAxios'
 
 
 Vue.prototype.$loginPath = Routes.new_user_session_path()
@@ -29,5 +28,4 @@ Vue.prototype.$signOutPath = Routes.destroy_user_session_path({ format: 'json'})
 Vue.prototype.$userServicesPath = Routes.user_services_path()
 Vue.prototype.$userProfilePath = Routes.user_index_path()
 Vue.prototype.$createTransactionPath = Routes.transactions_path()
-Vue.prototype.$axios = ax
 

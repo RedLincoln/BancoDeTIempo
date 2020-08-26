@@ -15,7 +15,8 @@
 <script>
 import Link from './Link/Link'
 import NavigationDropdown from './navigation_dropdown'
-import axios from '../setupAxios'
+import axios from 'axios'
+import axiosConf from '../setupAxios'
 
 export default {
   components: {Link, NavigationDropdown},
@@ -27,7 +28,7 @@ export default {
   },
   methods: {
     logout: function () {
-      axios.delete(this.$signOutPath)
+      axios.delete(this.$signOutPath, {headers: axiosConf.getDefaultHeader()})
               .then(response => this.isLoggedReactive = false).catch(err => console.log(err))
     },
     getLinks: function () {
