@@ -5,18 +5,20 @@
 
 import Vue from 'vue'
 import App from '@/transaction_form.vue'
+import { isView } from "vueonrails";
 import TurbolinksAdapter from 'vue-turbolinks'
 Vue.use(TurbolinksAdapter);
 
 document.addEventListener('turbolinks:load', () => {
+  if (!isView('services#index')) return
   const vues = document.querySelectorAll('.transaction_action')
   Array.prototype.forEach.call(vues, (el) => {
     const props = {
-      serviceId: el.dataset.serviceID
+      serviceId: el.dataset.serviceId
     }
     new Vue({
       el,
-      render: h => h(App, props)
+      render: h => h(App, {props: props})
     })
   })
 

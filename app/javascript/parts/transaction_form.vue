@@ -41,15 +41,12 @@
       },
       sendPetition: function () {
         axios.post(this.$createTransactionPath, {
-          data : {
-            transaction: {
-              datetime: this.$refs.datetime,
-              additional_information: this.$refs.additional_information,
-              serviceId: this.serviceId
-            }
-          },
-          headers: axiosConf.getDefaultHeader()
-        }).then(response => railsFlash.notice(response.notice)).catch(err => railsFlash.alert(err.message))
+          transaction: {
+            datetime: this.$refs.time_petition.value,
+            additional_information: this.$refs.additional_information.value,
+            serviceId: this.serviceId
+          }}, {headers: axiosConf.getDefaultHeader()}
+        ).then(response => railsFlash.notice(response.notice)).catch(err => railsFlash.alert(err.message))
       }
     }
   };
