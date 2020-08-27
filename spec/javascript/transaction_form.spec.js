@@ -7,23 +7,33 @@ jest.mock('../../app/javascript/setupAxios')
 
 describe ('transaction_form.vue',  ()=>{
 
-    it ('initially hide content', ()=>{
-        const wrapper = shallowMount(transaction_form)
-        expect(wrapper.find('.form').exists()).toBeFalsy()
-    })
+    describe('', ()=>{
+        let wrapper
 
-    it ('show content when click on button', async() => {
-        const wrapper = shallowMount(transaction_form)
+        beforeEach(()=>{
+            wrapper = shallowMount(transaction_form, {
+                mocks: {
+                    $getCSRFToken: () => ''
+                }
+            })
+        })
 
-        await wrapper.find('.open_petition').trigger('click')
+        it ('initially hide content', ()=>{
+            expect(wrapper.find('.form').exists()).toBeFalsy()
+        })
 
-        expect(wrapper.find('.form').exists()).toBeTruthy()
+        it ('show content when click on button', async() => {
+            await wrapper.find('.open_petition').trigger('click')
+
+            expect(wrapper.find('.form').exists()).toBeTruthy()
+        })
+
     })
 
     describe('', () => {
         let wrapper
         let axiosMock
-        const $createTransactionPath =  '/transactions'
+        const $createTransactionPath =  '/transactions.js'
 
         beforeEach(()=> {
             jest.clearAllMocks()
@@ -36,7 +46,8 @@ describe ('transaction_form.vue',  ()=>{
                     }
                 },
                 mocks: {
-                    $createTransactionPath: $createTransactionPath
+                    $createTransactionPath: $createTransactionPath,
+                    $getCSRFToken: () => ''
                 }
             })
         })
@@ -52,14 +63,9 @@ describe ('transaction_form.vue',  ()=>{
 
         it ('sends petition once clicked in send petition', () => {
             const spy = jest.spyOn(axios, 'post')
-            axiosMock.onPost($createTransactionPath, {
-                transaction: {
-                    datetime: wrapper.find('.time_petition'),
-                    additional_information: wrapper.find('.additional_information')
-                }
-            }).reply(200)
+            axiosMock.onPost($createTransactionPath).reply(200, { message: 'err'})
 
-            wrapper.find('.send_petition').trigger('click')
+            wrapper.find('.form').trigger('submit')
 
             expect(spy).toBeCalledTimes(1)
         })

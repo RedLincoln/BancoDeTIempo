@@ -51,7 +51,7 @@
 
         axios.post(e.target.action, reqBody)
                 .then(response => railsFlash.notice(response.data.message))
-                .catch(err => console.log(err))
+                .catch(err => railsFlash.alert(err.data.message))
       }
     }
   };
