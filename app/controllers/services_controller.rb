@@ -3,7 +3,7 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:update, :edit, :destroy]
 
   def index
-    @services = Service.all
+    @services = Service.services_not_made_by(current_user)
   end
 
   def new

@@ -74,6 +74,9 @@ RSpec.describe 'Service', type: :system do
       fill_in('service_name', with: "#{service.name}_1")
       find("form input[type=\"submit\"]").click
 
+      sign_out user
+      sign_in user2
+
       visit services_path
 
       expect(page).to have_selector("#service_#{service.id} .service_name", text: "#{service.name}_1")
