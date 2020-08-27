@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Service', type: :system do
   let(:user) { create(:user) }
+  let(:user2) { create(:user) }
+  let(:service) { create(:service) }
+
+  it 'creator can not see the service in the services main page' do
+    sign_in service.user
+
+    visit services_path
+
+    expect(page).to_not have_selector("#service_#{service.id}")
+  end
 
   describe "creation" do
     let(:category) { create(:category) }
@@ -18,6 +28,9 @@ RSpec.describe 'Service', type: :system do
       select category.name, from: 'service_category'
       fill_in('service_description', with: 'pintar tanto exteriores como interiores')
       find('form input[type="submit"]').click
+
+      sign_out user
+      sign_in user2
 
       visit services_path
 

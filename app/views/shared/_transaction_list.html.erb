@@ -1,0 +1,12 @@
+<div id="transaction_list">
+  <% transactions.each do |transaction| %>
+    <div id="service_<%= transaction.service.id %>_petition">
+      <p class="service_name"><%= transaction.service.name %></p>
+      <p class="service_name"><%= transaction.service.description %></p>
+      <p class="service_name"><%= transaction.time_petition %></p>
+      <p class="service_name"><%= transaction.additional_information %></p>
+      <p class="service_name"><%= transaction.status %></p>
+      <p class="service_name"><%= transaction.client.name %></p>
+    </div>
+  <% end %>
+</div>

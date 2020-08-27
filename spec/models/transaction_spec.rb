@@ -9,12 +9,19 @@ RSpec.describe Transaction, type: :model do
 
   describe 'validation' do
     let(:service) { create(:service) }
+    let(:user) { create(:user) }
 
     it 'service owner can not be the client' do
       transaction = Transaction.new(service: service, client: service.user)
 
       expect(transaction).to_not be_valid
       expect(transaction.errors).to include(:client)
+    end
+
+    it 'valid when client and owner are different' do
+      transaction = Transaction.new(service: service, client: user)
+
+      expect(transaction).to be_valid
     end
 
   end
