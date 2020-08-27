@@ -8,7 +8,7 @@
     <transition>
       <form v-if="show" class="form" :action="$createTransactionPath" method="post" @submit="sendPetition">
         <input name="utf8" type="hidden" value="✓">
-        <input type="hidden" name="authenticity_token" :value="$getCSRFToken()">
+        <input type="hidden" name="authenticity_token" :value="csrfToken">
         <input type="hidden" name="transaction[service_id]" :value="serviceId">
         <div class="field">
           <label for="datetime"></label>
@@ -29,13 +29,18 @@
 <script>
   import axios from 'axios'
   import railsFlash from "../railsFlash";
+  import formParams from '../formHelper'
 
   export default {
     props: ['serviceId'],
     data: function() {
       return {
-        show: false
+        show: false,
+        csrfToken: ''
       };
+    },
+    mounted() {
+      this.csrfToken = this.$getCSRFToken()
     },
     methods: {
       toggleShow: function () {
@@ -43,13 +48,8 @@
       },
       sendPetition: function (e) {
         e.preventDefault()
-        let reqBody = {};
-        for (let i = 0; i < e.target.elements.length; i++){
-          let element = e.target.elements.item(i)
-          reqBody[element.name] = element.value
-        }
-
-        axios.post(e.target.action, reqBody)
+        console.log(formParams.getPostParams(e.target.elements))
+        axios.post(e.target.action, formParams.getPostParams(e.target.elements))
                 .then(response => railsFlash.notice(response.data.message))
                 .catch(err => railsFlash.alert(err.data.message))
       }

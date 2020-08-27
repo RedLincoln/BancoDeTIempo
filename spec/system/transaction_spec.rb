@@ -1,20 +1,22 @@
 require 'rails_helper'
 
-RSpec.describe 'Service Transactions' do
+RSpec.describe 'Service Transactions', type: :system do
   let(:requestUser) { create(:user) }
   let(:offeringUser) { create(:user) }
   let(:service) { create(:service, user: offeringUser) }
 
 
-  describe 'transaction petition', js: true do
+  describe 'transaction petition' do
 
     before(:each) do
       sign_in requestUser
       service
     end
 
-    it 'User can ask for services', :aggregate_failures do
+    it 'User can ask for services', :aggregate_failures, js: true do
       visit services_path
+
+      puts page.driver
 
       within "#service_#{service.id}" do
         find(".open_petition").click
@@ -23,8 +25,8 @@ RSpec.describe 'Service Transactions' do
         find(".send_petition").click
       end
 
-      expect(page).to have_selector('#flash-messages .notice')
 
+      find('#flash-messages .notice')
       visit user_index_path
 
       within "#transaction_list #service_#{service.id}_petition" do

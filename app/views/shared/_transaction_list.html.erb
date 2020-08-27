@@ -2,11 +2,11 @@
   <% transactions.each do |transaction| %>
     <div id="service_<%= transaction.service.id %>_petition">
       <p class="service_name"><%= transaction.service.name %></p>
-      <p class="service_name"><%= transaction.service.description %></p>
-      <p class="service_name"><%= transaction.time_petition %></p>
-      <p class="service_name"><%= transaction.additional_information %></p>
-      <p class="service_name"><%= transaction.status %></p>
-      <p class="service_name"><%= transaction.client.name %></p>
+      <p class="service_description"><%= transaction.service.description %></p>
+      <p class="time_petition"><%= transaction.datetime %></p>
+      <p class="additional_information"><%= transaction.addition_information %></p>
+      <p class="transaction_status"><%= transaction.status %></p>
+      <p class="offeror_name"><%= transaction.service.user.name %></p>
     </div>
   <% end %>
 </div>
