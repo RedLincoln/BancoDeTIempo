@@ -13,15 +13,17 @@ RSpec.describe 'Service Transactions' do
       service
     end
 
-    it 'User can ask for services' do
+    it 'User can ask for services', :aggregate_failures do
       visit services_path
 
       within "#service_#{service.id}" do
         find(".open_petition").click
-        fill_in('time_petition', with:'07/07/2020, 12:00')
-        fill_in('additional_information', with: 'Pintar casa')
+        fill_in('datetime', with:'07/07/2020, 12:00')
+        fill_in('addition_information', with: 'Pintar casa')
         find(".send_petition").click
       end
+
+      expect(page).to have_selector('#flash-messages .notice')
 
       visit user_index_path
 

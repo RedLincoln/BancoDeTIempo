@@ -3,20 +3,23 @@
 <!-- Generate another component part like this by running command `rails generate vue something` -->
 
 <template>
-  <div id="transaction">
+  <div class="transaction-form">
     <span class="open_petition" @click="toggleShow">Pedir</span>
     <transition>
-      <form v-if="show" class="form" @submit.prevent>
+      <form v-if="show" class="form" :action="$createTransactionPath" method="post" @submit="sendPetition">
+        <input name="utf8" type="hidden" value="✓">
+        <input type="hidden" name="authenticity_token" :value="$getCSRFToken()">
+        <input type="hidden" name="transaction[service_id]" :value="serviceId">
         <div class="field">
-          <label for="time_petition"></label>
-          <input type="text" id="time_petition" class="time_petition" ref="time_petition" placeholder="Horario: eg. 07/07/2020 13:00">
+          <label for="datetime"></label>
+          <input type="text" name="transaction[datetime]" id="datetime" placeholder="Horario: eg. 07/07/2020 13:00">
         </div>
         <div class="field">
-          <label for="additional_information"></label>
-          <textarea id="additional_information" class="additional_information" ref="additional_information" placeholder="Añade información extra"></textarea>
+          <label for="addition_information"></label>
+          <textarea name="transaction[addition_information]" id="addition_information" placeholder="Añade información extra"></textarea>
         </div>
         <div class="actions">
-          <button class="send_petition" @click="sendPetition">Enviar</button>
+          <button class="send_petition">Enviar</button>
         </div>
       </form>
     </transition>
@@ -25,7 +28,6 @@
 
 <script>
   import axios from 'axios'
-  import axiosConf from '../setupAxios'
   import railsFlash from "../railsFlash";
 
   export default {
@@ -39,14 +41,17 @@
       toggleShow: function () {
         this.show = !this.show
       },
-      sendPetition: function () {
-        axios.post(this.$createTransactionPath, {
-          transaction: {
-            datetime: this.$refs.time_petition.value,
-            addition_information: this.$refs.additional_information.value,
-            serviceId: this.serviceId
-          }}, {headers: axiosConf.getDefaultHeader()}
-        ).then(response => railsFlash.notice(response.notice)).catch(err => railsFlash.alert(err.message))
+      sendPetition: function (e) {
+        e.preventDefault()
+        let reqBody = {};
+        for (let i = 0; i < e.target.elements.length; i++){
+          let element = e.target.elements.item(i)
+          reqBody[element.name] = element.value
+        }
+
+        axios.post(e.target.action, reqBody)
+                .then(response => railsFlash.notice(response.data.message))
+                .catch(err => console.log(err))
       }
     }
   };

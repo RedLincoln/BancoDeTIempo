@@ -1,0 +1,7 @@
+flashMessage = document.getElementById('flash-messages')
+flashMessage.classList.remove('translate-animation')
+flashMessage.innerHTML = "<%= j render 'shared/flash' %>"
+
+setTimeout(function(){
+    flashMessage.classList.add('translate-animation')
+})

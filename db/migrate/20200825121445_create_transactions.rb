@@ -4,10 +4,11 @@ class CreateTransactions < ActiveRecord::Migration[5.2]
       t.string :datetime
       t.text :addition_information
       t.references :service
-      t.references :client, index: true, foreign_key: {to_table: :user}
+      t.references :client, foreign_key: false
       t.string :status, default: 'pending'
 
       t.timestamps
     end
+    add_foreign_key :transactions, :users, column: :client_id
   end
 end

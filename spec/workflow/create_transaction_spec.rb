@@ -14,6 +14,14 @@ RSpec.describe CreateTransactions do
     expect(creator.transaction.client).to eq(user)
   end
 
+  it 'be successful' do
+    creator = CreateTransactions.new(datetime: 'anyday', addition_information: 'anywhere', service_id: service.id,
+                                     client: user)
+    creator.create
+
+    expect(creator).to be_success
+  end
+
   describe 'not successful' do
 
     it 'service owner is the client' do

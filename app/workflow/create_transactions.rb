@@ -26,6 +26,6 @@ class CreateTransactions
   private
 
   def get_service(service_id)
-     Service.exists?(service_id) ? Service.find(service_id) : nil
+    Service.exists?(service_id) ? Service.find(service_id) : nil
   end
 end
