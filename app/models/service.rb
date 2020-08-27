@@ -4,4 +4,8 @@ class Service < ApplicationRecord
 
   belongs_to :user
   belongs_to :category
+
+  def self.services_not_made_by(user)
+    where.not(user: user)
+  end
 end
