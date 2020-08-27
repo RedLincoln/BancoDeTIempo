@@ -14,7 +14,7 @@ describe('form helper', ()=>{
         it('are converted properly', ()=>{
             const expected = formHelper.getPostParams(params)
 
-            expect(expect).toEqual({ name: 'the_value' })
+            expect(expected).toEqual({ name: 'the_value' })
         })
     })
 })
