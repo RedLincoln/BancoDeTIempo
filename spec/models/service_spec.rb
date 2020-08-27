@@ -28,6 +28,12 @@ RSpec.describe Service, type: :model do
 
         expect(services).to eq([service2])
       end
+
+      it 'gets all if user is not persistent' do
+        services = Service.services_not_made_by(User.new)
+
+        expect(services).to eq([service1, service2])
+      end
     end
   end
 end
