@@ -11,4 +11,23 @@ RSpec.describe Service, type: :model do
     it { should validate_presence_of(:description) }
     it { should validate_uniqueness_of(:name).scoped_to(:user_id)}
   end
+
+  describe 'finders' do
+    let(:service1) { create(:service) }
+    let(:service2) { create(:service) }
+
+    describe 'services_not_made_by' do
+
+      before(:each) do
+        service1
+        service2
+      end
+
+      it 'only gets services not made by a user' do
+        services = Service.services_not_made_by(service1.user)
+
+        expect(services).to eq([service2])
+      end
+    end
+  end
 end
