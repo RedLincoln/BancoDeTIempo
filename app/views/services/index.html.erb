@@ -4,7 +4,9 @@
     <article id="service_<%= service.id %>" class="service_post">
       <div class="service_header">
         <p class="service_name"><%= service.name %></p>
-        <div class="transaction_action" data-service-id="<%= service.id %>"></div>
+        <div class="action-container">
+          <div class="transaction_action" data-service-id="<%= service.id %>"></div>
+        </div>
       </div>
       <div class="service_content">
         <p><strong>Descripción: </strong><span class="service_description"><%= service.description %></span></p>

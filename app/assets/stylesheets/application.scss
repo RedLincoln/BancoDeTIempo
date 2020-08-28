@@ -116,3 +116,27 @@ form {
     }
   }
 }
+
+
+.action-container {
+
+  .button-action {
+    position: absolute;
+    right: 10px;
+    top: 4px;
+    padding: 2px 5px;
+    font-size: 0.9em;
+    border-radius: 5px;
+  }
+
+  .button-action {
+    color: black;
+    background-color: #2da766;
+
+    &:hover {
+      background-color: #3ba752;
+      cursor: pointer;
+    }
+  }
+}
+

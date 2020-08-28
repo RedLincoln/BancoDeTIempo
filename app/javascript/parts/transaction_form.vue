@@ -4,19 +4,21 @@
 
 <template>
   <div class="transaction-form">
-    <span class="open_petition" @click="toggleShow">Pedir</span>
+    <span class="open_petition button-action" @click="toggleShow">Pedir</span>
     <transition>
       <form v-if="show" class="form" :action="$createTransactionPath" method="post" @submit="sendPetition">
         <input name="utf8" type="hidden" value="✓">
         <input type="hidden" name="authenticity_token" :value="csrfToken">
         <input type="hidden" name="transaction[service_id]" :value="serviceId">
         <div class="field">
-          <label for="datetime"></label>
-          <input type="text" name="transaction[datetime]" id="datetime" placeholder="Horario: eg. 07/07/2020 13:00">
+          <label for="datetime">Horario: </label><br>
+          <input type="text" name="transaction[datetime]" id="datetime"
+                 placeholder="Horario: eg. 07/07/2020 13:00" cols="40">
         </div>
         <div class="field">
-          <label for="addition_information"></label>
-          <textarea name="transaction[addition_information]" id="addition_information" placeholder="Añade información extra"></textarea>
+          <label for="addition_information">Información aditional: </label><br>
+          <textarea name="transaction[addition_information]" id="addition_information"
+                    placeholder="Añade información extra" rows="3" cols="40"></textarea>
         </div>
         <div class="actions">
           <button class="send_petition">Enviar</button>
@@ -58,4 +60,11 @@
 </script>
 
 <style scoped>
+  textarea {
+    resize:  none;
+  }
+
+  input, textarea {
+    font-size: 1rem;
+  }
 </style>
