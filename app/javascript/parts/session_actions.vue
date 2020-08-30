@@ -29,7 +29,10 @@ export default {
   methods: {
     logout: function () {
       axios.delete(this.$signOutPath, {headers: axiosConf.getDefaultHeader()})
-              .then(response => this.isLoggedReactive = false).catch(err => console.log(err))
+              .then(response => {
+                this.isLoggedReactive = false
+                Turbolinks.visit('/')
+              }).catch(err => console.log(err))
     },
     getLinks: function () {
       return [
