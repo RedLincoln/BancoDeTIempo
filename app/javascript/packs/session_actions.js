@@ -12,9 +12,8 @@ document.addEventListener('turbolinks:load', () => {
   const element = document.getElementById('session_actions');
   const props = JSON.parse(element.getAttribute('data'));
 
-  const session_actions = new Vue({
+  new Vue({
     el : '#session_actions',
     render: h => h(App, { props: props }),
   })
-  console.log({session_actions})
 });
