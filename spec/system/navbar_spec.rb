@@ -51,4 +51,5 @@ RSpec.describe 'Navbar', type: :system do
       expect(current_path).to eq(services_path)
     end
   end
+
 end

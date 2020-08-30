@@ -25,8 +25,8 @@ RSpec.describe 'Service Transactions', type: :system do
         find(".send_petition").click
       end
 
-
       find('#flash-messages .notice')
+      expect(page).to_not have_selector("#service_#{service.id} .open_petition")
       visit user_index_path
 
       within "#transaction_list #service_#{service.id}_petition" do

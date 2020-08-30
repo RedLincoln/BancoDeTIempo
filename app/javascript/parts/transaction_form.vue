@@ -4,7 +4,7 @@
 
 <template>
   <div class="transaction-form">
-    <span class="open_petition button-action" @click="toggleShow">Pedir</span>
+    <span v-if="made" class="open_petition button-action" @click="toggleShow">Pedir</span>
     <transition>
       <form v-if="show" class="form" :action="$createTransactionPath" method="post" @submit="sendPetition">
         <input name="utf8" type="hidden" value="✓">
@@ -38,7 +38,8 @@
     data: function() {
       return {
         show: false,
-        csrfToken: ''
+        csrfToken: '',
+        made: true
       };
     },
     mounted() {
@@ -50,9 +51,11 @@
       },
       sendPetition: function (e) {
         e.preventDefault()
-        console.log(formParams.getPostParams(e.target.elements))
         axios.post(e.target.action, formParams.getPostParams(e.target.elements))
-                .then(response => railsFlash.notice(response.data.message))
+                .then(response => {
+                  railsFlash.notice(response.data.message)
+                  this.made = false
+                })
                 .catch(err => railsFlash.alert(err.data.message))
       }
     }
