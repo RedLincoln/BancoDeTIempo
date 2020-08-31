@@ -14,7 +14,8 @@ document.addEventListener('turbolinks:load', () => {
   const vues = document.querySelectorAll('.transaction_action')
   Array.prototype.forEach.call(vues, (el) => {
     const props = {
-      serviceId: el.dataset.serviceId
+      serviceId: el.dataset.serviceId,
+      service_asked: el.dataset.serviceAsked
     }
     new Vue({
       el,

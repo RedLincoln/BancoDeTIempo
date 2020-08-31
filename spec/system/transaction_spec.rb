@@ -4,7 +4,7 @@ RSpec.describe 'Service Transactions', type: :system do
   let(:requestUser) { create(:user) }
   let(:offeringUser) { create(:user) }
   let(:service) { create(:service, user: offeringUser) }
-
+  let(:transaction) { create(:transaction, service: service, client: requestUser)}
 
   describe 'transaction petition' do
 
@@ -39,6 +39,14 @@ RSpec.describe 'Service Transactions', type: :system do
       end
     end
 
+    it 'the ask button is always hided if a petition have already been made', js: true do
+      transaction
+      sign_in requestUser
+      visit root_path
+
+      visit services_path
+      expect(page).to_not have_selector("#service_#{service.id} .open_petition")
+    end
   end
 
 end

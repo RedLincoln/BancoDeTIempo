@@ -4,7 +4,7 @@
 
 <template>
   <div class="transaction-form">
-    <span v-if="made" class="open_petition button-action" @click="toggleShow">Pedir</span>
+    <span v-if="asked" class="open_petition button-action" @click="toggleShow">Pedir</span>
     <transition>
       <form v-if="show" class="form" :action="$createTransactionPath" method="post" @submit="sendPetition">
         <input name="utf8" type="hidden" value="✓">
@@ -34,16 +34,20 @@
   import formParams from '../formHelper'
 
   export default {
-    props: ['serviceId'],
+    props: ['serviceId', 'service_asked'],
     data: function() {
       return {
         show: false,
         csrfToken: '',
-        made: true
+        asked: true
       };
     },
     mounted() {
       this.csrfToken = this.$getCSRFToken()
+      console.log(this.service_asked)
+      if (this.service_asked){
+        this.asked = false
+      }
     },
     methods: {
       toggleShow: function () {
@@ -54,7 +58,7 @@
         axios.post(e.target.action, formParams.getPostParams(e.target.elements))
                 .then(response => {
                   railsFlash.notice(response.data.message)
-                  this.made = false
+                  this.asked = false
                 })
                 .catch(err => railsFlash.alert(err.data.message))
       }

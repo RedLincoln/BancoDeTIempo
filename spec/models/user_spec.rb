@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { should have_many(:services)}
+    it { should have_many(:transactions)}
   end
 
   describe 'validations' do
@@ -29,6 +30,19 @@ RSpec.describe User, type: :model do
 
     it 'role is standard' do
       expect(user).to be_standard
+    end
+  end
+
+  describe 'methods:' do
+    let(:client) { create(:user) }
+    let(:service) { create(:service)}
+    let(:transaction) {create(:transaction, service: service, client: client)}
+
+
+    it 'finds if a user have a transaction with a service' do
+      transaction
+
+      expect(client.have_transaction?(service)).to be(true)
     end
   end
 

@@ -5,7 +5,8 @@
       <div class="service_header">
         <p class="service_name"><%= service.name %></p>
         <div class="action-container">
-          <div class="transaction_action" data-service-id="<%= service.id %>"></div>
+          <div class="transaction_action" data-service-asked="<%= current_user.transaction_asked?(service) %>"
+               data-service-id="<%= service.id %>"></div>
         </div>
       </div>
       <div class="service_content">
