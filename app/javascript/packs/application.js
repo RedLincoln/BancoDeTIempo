@@ -19,6 +19,7 @@ console.log('Hello World from Webpacker')
 
 import './session_actions'
 import './transaction_form'
+import './notifications'
 import Vue from 'vue'
 
 Vue.mixin({
