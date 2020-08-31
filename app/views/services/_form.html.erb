@@ -1,23 +1,23 @@
 <%= form_with(model: @service) do |f| %>
   <%= render 'shared/errors', record: f.object%>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :name, 'Nombre: ' %></br>
-    <%= f.text_field :name, autofocus: true , cols: 40%>
+    <%= f.text_field :name, autofocus: true , cols: 40, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :category, 'Categoría: ' %>
     <%= f.select :category, options_for_select(Category.pluck(:name, :id), f.object.category_id),
-                  prompt: 'Selecciona una categoría'%>
+                 {prompt: 'Selecciona una categoría'}, {class: 'form-control'} %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :description, 'Descripción: ' %></br>
-    <%= f.text_area :description, cols: 40, rows: 4%>
+    <%= f.text_area :description, cols: 40, rows: 4, class: 'form-control' %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Crear servicio" %>
+  <div class="actions form-group">
+    <%= f.submit "Crear servicio", class: 'btn btn-primary'%>
   </div>
 <% end %>
