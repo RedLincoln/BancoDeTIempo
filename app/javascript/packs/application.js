@@ -19,8 +19,9 @@ console.log('Hello World from Webpacker')
 
 import './session_actions'
 import './transaction_form'
-import './notifications'
 import Vue from 'vue'
+import ActionCable from 'actioncable'
+
 
 Vue.mixin({
     beforeDestroy() {
@@ -35,6 +36,7 @@ Vue.mixin({
     }
 })
 
+Vue.prototype.$cable = ActionCable.createConsumer('/cable')
 Vue.prototype.$loginPath = Routes.new_user_session_path()
 Vue.prototype.$signUpPath = Routes.new_user_registration_path()
 Vue.prototype.$signOutPath = Routes.destroy_user_session_path({ format: 'json'})

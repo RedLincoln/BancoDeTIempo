@@ -2,6 +2,7 @@
 <template>
   <div id="session_actions" class="d-flex align-items-center">
     <template v-if="isLoggedReactive">
+      <Notifications :user_id="user_id"></Notifications>
       <NavigationDropdown :title="user_name" :links="getLinks()"/>
       <Link class="logout_button btn btn-danger" text="Cerrar sesión" :isNotAnAnchor="true" @click.native="logout"/>
     </template>
@@ -15,12 +16,13 @@
 <script>
 import Link from './Link/Link'
 import NavigationDropdown from './navigation_dropdown'
+import Notifications from './notifications'
 import axios from 'axios'
 import axiosConf from '../setupAxios'
 
 export default {
-  components: {Link, NavigationDropdown},
-  props: ['isLogged', 'user_name'],
+  components: {Link, NavigationDropdown, Notifications},
+  props: ['isLogged', 'user_name', 'user_id'],
   data: function() {
     return {
       isLoggedReactive: this.isLogged

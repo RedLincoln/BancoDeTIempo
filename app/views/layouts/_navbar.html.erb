@@ -1,6 +1,7 @@
 <% props = {
     isLogged: user_signed_in?,
-    user_name: user_signed_in? ? current_user.name : ""
+    user_name: user_signed_in? ? current_user.name : "",
+    user_id: user_signed_in? ? current_user.id : ""
   }.to_json
 %>
 

@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@rails/webpacker": "5.1.1",
+    "actioncable": "^5.2.4-3",
     "axios": "^0.19.2",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.11",
