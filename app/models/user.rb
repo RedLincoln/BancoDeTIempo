@@ -9,6 +9,11 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  def have_transaction?(service)
+    transactions.any? do |transaction|
+      transaction.service.id == service.id
+    end
+  end
 
   def find_service(service_id)
     Service.find_by! id: service_id, user_id: id
