@@ -4,8 +4,10 @@
 
 <template>
   <div class="navigation_dropdown dropdown" ref="dropdown">
-    <p class="dropdown_title toggle_button btn dropdown-toggle" id="dropdownUserLinks"
-       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"@click="toggleShow">{{ title }}</p>
+    <div class="d-flex align-items-center">
+      <span class="dropdown_title toggle_button btn dropdown-toggle" id="dropdownUserLinks"
+         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"@click="toggleShow">{{ title }}</span>
+    </div>
       <ul v-if="show" class="dropdown_content dropdown-menu show" aria-labelledby="dropdownUserLinks">
         <li v-for="link in links"><a class="dropdown-item" :href="link.href">{{ link.text }}</a></li>
       </ul>

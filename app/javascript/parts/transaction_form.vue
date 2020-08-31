@@ -3,10 +3,11 @@
 <!-- Generate another component part like this by running command `rails generate vue something` -->
 
 <template>
-  <div class="transaction-form">
-    <span v-if="!asked" class="open_petition button-action" @click="toggleShow">Pedir</span>
+  <div class="transaction-form dropdown">
+    <button type="button" v-if="!asked" class="open_petition button-action btn-sm btn btn-success dropdown-toggle"
+            @click="toggleShow">Pedir</button>
     <transition>
-      <form v-if="show" class="form" :action="$createTransactionPath" method="post" @submit="sendPetition">
+      <form v-if="show" class="form border-top mt-2" :action="$createTransactionPath" method="post" @submit="sendPetition">
         <input name="utf8" type="hidden" value="✓">
         <input type="hidden" name="authenticity_token" :value="csrfToken">
         <input type="hidden" name="transaction[service_id]" :value="service_id">
@@ -21,7 +22,7 @@
                     placeholder="Añade información extra" rows="3" cols="40"></textarea>
         </div>
         <div class="actions">
-          <button class="send_petition">Enviar</button>
+          <button class="send_petition btn btn-sm btn-primary">Enviar</button>
         </div>
       </form>
     </transition>
