@@ -1,17 +1,21 @@
 <h2>Mis Servicios</h2>
-<%= link_to 'Nuevo Servicio', new_service_path, class: 'new_service_button' %>
+<%= link_to 'Nuevo Servicio', new_service_path, class: 'new_service_button btn btn-sm border-primary' %>
+
+<% if @services.empty? %>
+  <p class="text-center mt-3"> Actualmente no ofrece ningun servicio, considere crear uno. </p>
+<% end %>
 
 <div class="services-list">
   <% @services.each do |service| %>
-    <article id="service_<%= service.id %>" class="service_post">
-      <div class="service_header">
-        <p class="service_name name"><%= service.name %></p>
-        <div class="actions">
-          <%= link_to 'Editar', edit_service_path(service), class: 'edit_service' %>
-          <%= button_to 'Eliminar', service_path(service), class: 'delete_service', method: :delete, remote: true %>
+    <article id="service_<%= service.id %>" class="service_post border rounded pr-3 pl-3 pb-2 mb-2 mt-3">
+      <div class="service_header d-flex justify-content-between">
+        <h3 class="service_name name"><%= service.name %></h3>
+        <div class="actions d-flex align-items-center">
+          <%= link_to 'Editar', edit_service_path(service), class: 'edit_service btn btn-sm btn-primary mr-2' %>
+          <%= button_to 'Eliminar', service_path(service), class: 'delete_service btn btn-sm btn-danger', method: :delete, remote: true %>
         </div>
       </div>
-      <div class="service_content">
+      <div class="service_content border-top pt-2">
         <p><strong>Descripción: </strong><span class="service_description"><%= service.description %></span></p>
       </div>
     </article>
