@@ -4,12 +4,15 @@
   }.to_json
 %>
 
-<header class="navbar" id="navbar">
-  <nav class="left-content">
-    <%= link_to 'BancoDeTiempo', root_path, class: 'brand' %>
+<header>
+  <nav class="navbar left-content" id="navbar">
+    <%= link_to 'BancoDeTiempo', root_path, class: 'navbar-brand' %>
+    <ul class="navbar-nav mr-auto">
     <% if user_signed_in? then %>
-      <%= link_to 'Servicios', services_path, class: 'service_link' %>
+      <li class="navbar-item"><%= link_to 'Servicios', services_path, class: 'service_link nav-item' %></li>
     <% end %>
+    </ul>
+    <div id="session_actions" data="<%= props %>"> </div>
   </nav>
-  <div id="session_actions" data="<%= props %>"> </div>
+
 </header>

@@ -3,13 +3,12 @@
 <!-- Generate a Single File Component part by running command `rails generate vue something` -->
 
 <template>
-  <div class="navigation_dropdown">
-    <p class="dropdown_title toggle_button" @click="toggleShow">{{ title }}</p>
-    <transition name="dropdown">
-      <ul v-if="show" class="dropdown_content">
-        <li v-for="link in links"><a :href="link.href">{{ link.text }}</a></li>
+  <div class="navigation_dropdown dropdown" ref="dropdown">
+    <p class="dropdown_title toggle_button btn dropdown-toggle" id="dropdownUserLinks"
+       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"@click="toggleShow">{{ title }}</p>
+      <ul v-if="show" class="dropdown_content dropdown-menu show" aria-labelledby="dropdownUserLinks">
+        <li v-for="link in links"><a class="dropdown-item" :href="link.href">{{ link.text }}</a></li>
       </ul>
-    </transition>
   </div>
 </template>
 
@@ -20,6 +19,11 @@ export default {
     return {
       show: false
     };
+  },
+  mounted() {
+    if (this.show) {
+      this.$refs.dropdown.classList.add('show')
+    }
   },
   methods: {
     toggleShow: function () {
