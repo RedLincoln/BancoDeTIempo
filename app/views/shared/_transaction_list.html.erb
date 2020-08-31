@@ -1,12 +1,27 @@
 <div id="transaction_list">
   <% transactions.each do |transaction| %>
-    <div id="service_<%= transaction.service.id %>_petition">
-      <p class="service_name"><%= transaction.service.name %></p>
-      <p class="service_description"><%= transaction.service.description %></p>
-      <p class="time_petition"><%= transaction.datetime %></p>
-      <p class="additional_information"><%= transaction.addition_information %></p>
-      <p class="transaction_status"><%= transaction.status %></p>
-      <p class="offeror_name"><%= transaction.service.user.name %></p>
+    <div id="service_<%= transaction.service.id %>_petition" class="border-top border-bottom mt-4 pb-2 pt-2">
+      <div class="mb-1">
+        <span class="font-weight-bold">Nombre de servicio: </span>
+        <span class="service_name"><%= transaction.service.name %></span>
+      </div>
+      <div class="mb-1">
+        <span class="font-weight-bold">Descripción del servicio:</span><br>
+        <span class="service_description"><%= transaction.service.description %></span>
+      </div>
+      <div class="mb-1">
+        <span class="font-weight-bold">Nombre del usuario que ofrece el servicio: </span>
+        <span class="offeror_name"><%= transaction.service.user.name %></span>
+      </div>
+      <div class="mb-1">
+        <span class="font-weight-bold">Estado de petición: </span>
+        <span class="transaction_status"><%= transaction.status %></span>
+      </div>
+      <% unless transaction.datetime.empty? || transaction.addition_information.empty? %>
+        <h4>Información de la petición</h4>
+      <% end %>
+      <div class="time_petition"><%= transaction.datetime %></div>
+      <div class="additional_information"><%= transaction.addition_information %></div>
     </div>
   <% end %>
 </div>
