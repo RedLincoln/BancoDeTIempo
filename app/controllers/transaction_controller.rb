@@ -7,11 +7,11 @@ class TransactionController < ApplicationController
 
     if @workflow.success?
       respond_to do |format|
-        format.js { render json: {message: 'Petición realida'} }
+        format.js { render json: {message: 'Petición realisada'} }
       end
     else
       respond_to do |format|
-        format.js { render json: {message: 'Error al realizar la petición'} }
+        format.js { render json: {message: 'Error al realizar la petición'}, status: :bad_request }
       end
     end
 

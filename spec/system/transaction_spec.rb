@@ -4,6 +4,7 @@ RSpec.describe 'Service Transactions', type: :system do
   let(:requestUser) { create(:user) }
   let(:offeringUser) { create(:user) }
   let(:service) { create(:service, user: offeringUser) }
+  let(:service2) { create(:service) }
   let(:transaction) { create(:transaction, service: service, client: requestUser)}
 
   describe 'transaction petition' do
@@ -15,8 +16,6 @@ RSpec.describe 'Service Transactions', type: :system do
 
     it 'User can ask for services', :aggregate_failures, js: true do
       visit services_path
-
-      puts page.driver
 
       within "#service_#{service.id}" do
         find(".open_petition").click
@@ -41,11 +40,13 @@ RSpec.describe 'Service Transactions', type: :system do
 
     it 'the ask button is always hided if a petition have already been made', js: true do
       transaction
+      service2
       sign_in requestUser
       visit root_path
 
       visit services_path
       expect(page).to_not have_selector("#service_#{service.id} .open_petition")
+      expect(page).to have_selector("#service_#{service2.id} .open_petition")
     end
   end
 

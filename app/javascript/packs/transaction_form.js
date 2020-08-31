@@ -13,10 +13,7 @@ document.addEventListener('turbolinks:load', () => {
   if (!isView('services#index')) return
   const vues = document.querySelectorAll('.transaction_action')
   Array.prototype.forEach.call(vues, (el) => {
-    const props = {
-      serviceId: el.dataset.serviceId,
-      service_asked: el.dataset.serviceAsked
-    }
+    const props = JSON.parse(el.dataset.serviceData)
     new Vue({
       el,
       render: h => h(App, {props: props})
