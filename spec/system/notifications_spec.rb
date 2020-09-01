@@ -25,4 +25,16 @@ RSpec.describe 'Notifications', type: :system, js: true do
       expect(page).to have_selector('.notification .target', text: service.name)
     end
   end
+
+  it 'have persistence while visiting others paths', :aggregate_failures do
+    transaction
+    visit services_path
+
+
+    find('#notifications').click
+
+    expect(page).to have_selector('#notifications-counter', text: '1')
+    expect(page).to have_selector('#notifications .notification .target', text: service.name)
+  end
+
 end
