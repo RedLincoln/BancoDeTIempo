@@ -1,3 +1,3 @@
 class Notification < ApplicationRecord
-  validates :message, presence: true
+  validates :message, :target, presence: true
 end
