@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'categories', :to => 'category#index', :as => 'categories'
   post 'categories', :to => 'category#create'
 
+  #user
+  get 'user/notifications', :to => 'user#notifications', :as => 'user_notifications'
   get 'profile', :to => 'user#index', :as => 'user_index'
   get 'profile/services', :to => 'user#services', :as => 'user_services'
   root :to => 'home#index'

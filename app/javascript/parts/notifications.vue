@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
   props: ['user_id'],
@@ -27,6 +28,7 @@ export default {
     };
   },
   created() {
+    this.fetchNotifications()
     this.connectWebSocket()
   },
   destroyed() {
@@ -54,7 +56,13 @@ export default {
                 }
               }
       )
+    },
+    fetchNotifications: function () {
+      axios.get(this.$userNotificationsPath).then(response => {
+        console.log(response)
+      })
     }
+
   }
 };
 </script>

@@ -21,10 +21,8 @@ class Transaction < ApplicationRecord
   end
 
   def broadcast
-    data = {
-        target: service.name,
-        message: 'Se have pedido el servicio '
-    }.to_json
-    ActionCable.server.broadcast "notifications_#{service.user.id}", data
+    notification = service.user.notifications.build(message: 'Se have pedido el servicio ', target: service.name)
+    notification.save
+    ActionCable.server.broadcast "notifications_#{service.user.id}", notification.to_json
   end
 end

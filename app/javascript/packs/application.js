@@ -19,7 +19,6 @@
 import Vue from 'vue'
 import ActionCable from 'actioncable'
 
-console.log('visited aplication')
 Vue.mixin({
     beforeDestroy() {
         if (this.$el.parentNode) {
@@ -35,7 +34,9 @@ Vue.mixin({
     }
 })
 
+
 Vue.prototype.$cable = ActionCable.createConsumer('/cable')
+Vue.prototype.$userNotificationsPath = Routes.user_notifications_path({ format: 'json' })
 Vue.prototype.$loginPath = Routes.new_user_session_path()
 Vue.prototype.$signUpPath = Routes.new_user_registration_path()
 Vue.prototype.$signOutPath = Routes.destroy_user_session_path({ format: 'json'})

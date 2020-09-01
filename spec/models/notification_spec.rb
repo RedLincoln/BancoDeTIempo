@@ -11,4 +11,14 @@ RSpec.describe Notification, type: :model do
     it { should validate_presence_of(:target)}
   end
 
+  describe 'filter' do
+    let(:notification) { build_stubbed(:notification)}
+
+    it 'to_json' do
+      notification
+
+      expect(notification.to_json).to eql({ message: notification.message, target: notification.target }.to_json)
+    end
+
+  end
 end
