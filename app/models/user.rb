@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :services
   has_many :transactions, foreign_key: 'client_id'
+  has_many :notifications
   enum role: {standard: 'standard', admin: 'admin'}
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
