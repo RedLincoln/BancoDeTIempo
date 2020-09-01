@@ -1,6 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import notifications from "../../app/javascript/parts/notifications";
 
+
 describe('notifcations.vue', () => {
 
     describe('dropdown', () => {

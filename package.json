@@ -9,6 +9,9 @@
     "webpack-dev-server": "./bin/webpack-dev-server"
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>/jest.init.js"
+    ],
     "roots": [
       "spec/javascript"
     ],

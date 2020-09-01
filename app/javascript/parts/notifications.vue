@@ -51,7 +51,6 @@ export default {
                 },
                 received: function (data) {
                   vm.counter++
-                  console.log(data)
                   vm.notifications.push(JSON.parse(data))
                 }
               }
@@ -59,7 +58,8 @@ export default {
     },
     fetchNotifications: function () {
       axios.get(this.$userNotificationsPath).then(response => {
-        console.log(response)
+        this.notifications = response.data
+        this.counter = response.data.length
       })
     }
 
