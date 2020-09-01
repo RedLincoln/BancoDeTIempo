@@ -26,7 +26,7 @@ RSpec.describe 'Notifications', type: :system, js: true do
     end
   end
 
-  it 'have persistence while visiting others paths', :aggregate_failures do
+  it 'have persistence while visiting others views', :aggregate_failures do
     transaction
     visit services_path
 

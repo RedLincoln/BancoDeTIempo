@@ -10,13 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_121445) do
+ActiveRecord::Schema.define(version: 2020_09_01_123613) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "supcategory"
+  end
+
+  create_table "chat_rooms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "text"
+    t.integer "chat_room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.text "message"
+    t.string "target"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "services", force: :cascade do |t|
@@ -54,7 +76,11 @@ ActiveRecord::Schema.define(version: 2020_08_25_121445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", default: "standard"
+    t.integer "chat_room_id"
+    t.integer "message_id"
+    t.index ["chat_room_id"], name: "index_users_on_chat_room_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["message_id"], name: "index_users_on_message_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
