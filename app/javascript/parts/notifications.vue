@@ -5,7 +5,10 @@
       <span id="notifications-counter">{{ counter }}</span>
     </div>
     <transition>
-      <div v-if="drop" id="notifications-list" class="dropdown-content">
+      <div v-if="drop" id="notifications-list" class="dropdown-content d-flex row">
+        <div v-for="notification in notifications" class="notification">
+          <p>{{ notification.message }}<span class="target">{{ notification.target }}</span></p>
+        </div>
       </div>
     </transition>
   </div>
@@ -19,6 +22,7 @@ export default {
     return {
       drop: false,
       counter: 0,
+      notifications: []
     };
   },
   created() {
@@ -44,7 +48,7 @@ export default {
                 },
                 received: function (data) {
                   vm.counter++
-                  console.log(data)
+                  vm.notifications.push(JSON.parse(data))
                 }
               }
       )
