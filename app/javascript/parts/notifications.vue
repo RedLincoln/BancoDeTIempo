@@ -32,13 +32,18 @@ export default {
       this.drop = !this.drop
     },
     connectWebSocket: function () {
+      const vm = this
       this.channel = this.$cable.subscriptions.create(
               {
                 channel: 'NotificationsChannel',
                 user_id: this.user_id
               },
               {
+                connected: function () {
+                  console.log(`connected to notifications_${vm.user_id}`)
+                },
                 received: function (data) {
+                  vm.counter++
                   console.log(data)
                 }
               }

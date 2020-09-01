@@ -32,4 +32,13 @@ RSpec.describe Transaction, type: :model do
       expect(Transaction.new.status).to eq('pending')
     end
   end
+
+  describe 'filters' do
+    let(:transaction) { build_stubbed(:transaction) }
+
+    it 'to_json' do
+      expect(transaction.to_json).to eql({service: transaction.service})
+    end
+
+  end
 end

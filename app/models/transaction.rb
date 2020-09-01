@@ -1,4 +1,5 @@
 class Transaction < ApplicationRecord
+  after_commit :broadcast
   belongs_to :client, class_name: :User
   belongs_to :service
 
@@ -11,5 +12,11 @@ class Transaction < ApplicationRecord
     if nil_checker || service.user == client
       errors.add(:client, 'client and service owner can not be the same')
     end
+  end
+
+  private
+
+  def broadcast
+    ActionCable.server.broadcast "notifications_#{service.user.id}", to_json
   end
 end

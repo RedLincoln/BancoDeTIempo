@@ -8,12 +8,11 @@ RSpec.describe 'Notifications', type: :system, js: true do
   before(:each) do
     sign_in user
     visit root_path
-    transaction
   end
 
   it 'show notification when service petitions are made' do
-    visit services_path
     notifications = find('#notifications')
+    transaction
 
     within notifications do
       expect(page).to have_selector('#notifications-counter', text: '1')
