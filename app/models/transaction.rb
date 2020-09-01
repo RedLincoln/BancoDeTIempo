@@ -5,6 +5,12 @@ class Transaction < ApplicationRecord
 
   validate :service_owner_can_not_be_the_client
 
+  def as_json(*)
+    {
+        service: service
+    }
+  end
+
   private
 
   def service_owner_can_not_be_the_client
@@ -13,8 +19,6 @@ class Transaction < ApplicationRecord
       errors.add(:client, 'client and service owner can not be the same')
     end
   end
-
-  private
 
   def broadcast
     ActionCable.server.broadcast "notifications_#{service.user.id}", to_json
