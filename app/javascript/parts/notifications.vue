@@ -1,13 +1,14 @@
 <template>
-  <div id="notifications">
+  <div id="notifications" class="dropdown">
     <div>
-      <button type="button" class="toggle-button" @click="toggleDropdown">!</button>
-      <span id="notifications-counter">{{ counter }}</span>
+      <button type="button" class="toggle-button border rounded-circle" id="notification-list"
+      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="toggleDropdown">!</button>
+      <small id="notifications-counter" class="border rounded-circle position-absolute font-weight-bold">{{ counter }}</small>
     </div>
     <transition>
-      <div v-if="drop" id="notifications-list" class="dropdown-content d-flex row">
-        <div v-for="notification in notifications" class="notification">
-          <p>{{ notification.message }}<span class="target">{{ notification.target }}</span></p>
+      <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
+        <div v-for="notification in notifications" class="notification dropdown-item">
+          <p>{{ notification.message }}<span class="target font-weight-bold">{{ notification.target }}</span></p>
         </div>
       </div>
     </transition>
@@ -48,6 +49,7 @@ export default {
                 },
                 received: function (data) {
                   vm.counter++
+                  console.log(data)
                   vm.notifications.push(JSON.parse(data))
                 }
               }

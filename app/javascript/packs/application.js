@@ -15,14 +15,11 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('Hello World from Webpacker')
 
-import './session_actions'
-import './transaction_form'
 import Vue from 'vue'
 import ActionCable from 'actioncable'
 
-
+console.log('visited aplication')
 Vue.mixin({
     beforeDestroy() {
         if (this.$el.parentNode) {
@@ -32,7 +29,9 @@ Vue.mixin({
         }
     },
     destroyed() {
-        this.$el.outerHTML = this.$originalEl;
+        if (this.$el.parentNode){
+            this.$el.outerHTML = this.$originalEl;
+        }
     }
 })
 
@@ -47,3 +46,5 @@ Vue.prototype.$getCSRFToken = () => {
     return document.querySelector("meta[name=csrf-token]").getAttribute('content')
 }
 
+import './session_actions'
+import './transaction_form'
