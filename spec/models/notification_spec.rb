@@ -65,6 +65,12 @@ RSpec.describe Notification, type: :model do
       travel 25.hour
       expect(notification.created_ago).to eq('1 dia')
     end
+
+    it 'a notification created equal or over 2 days ago have to be in plural' do
+      notification
+      travel 50.hour
+      expect(notification.created_ago).to eq('2 dias')
+    end
   end
 
 end
