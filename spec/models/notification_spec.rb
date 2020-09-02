@@ -11,6 +11,15 @@ RSpec.describe Notification, type: :model do
     it { should validate_presence_of(:target)}
   end
 
+  describe 'default' do
+    let(:notification) { build_stubbed(:notification)}
+
+    it 'seen' do
+      expect(notification.seen).to eq(false)
+    end
+
+  end
+
   describe 'filter' do
     let(:notification) { build_stubbed(:notification)}
 
