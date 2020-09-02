@@ -7,7 +7,8 @@
     </div>
     <transition>
       <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
-        <div v-for="notification in notifications" class="notification dropdown-item">
+        <div v-for="notification in notifications" class="notification dropdown-item position-relative">
+          <span v-if="!notification.seen" class="seen position-absolute text-primary font-weight-bold">.</span>
           <p>{{ notification.message }}<span class="target font-weight-bold">{{ notification.target }}</span></p>
           <p class="text-muted">{{ notification.time_ago }}</p>
         </div>
@@ -72,4 +73,10 @@ export default {
 </script>
 
 <style scoped>
+  .seen {
+    font-size: 1.5em;
+    top: 50%;
+    left: 5%;
+    transform: translate(-100%, -80%);
+  }
 </style>
