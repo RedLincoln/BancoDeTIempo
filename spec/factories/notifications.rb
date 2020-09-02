@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :notification do
     message { 'message '}
-    target { 'target' }
+    sequence(:target) { |n| "target#{n}" }
     user
   end
 end

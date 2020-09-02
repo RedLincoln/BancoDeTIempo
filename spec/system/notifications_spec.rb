@@ -51,4 +51,22 @@ RSpec.describe 'Notifications', type: :system, js: true do
     expect(page).to have_selector('#notifications .notification .target', text: not_seen_notification.target)
   end
 
+  it 'click on unseen notification marks it seen' do
+    seen_notification = create(:notification, seen: true, user: user)
+    not_seen_notification = create(:notification, seen: false, user: user)
+
+    visit root_path
+
+    find('#notifications').click
+    find('#notifications .notification .target', text: not_seen_notification.target).click
+
+    visit current_path
+
+    expect(page).to have_selector('#notifications-counter', text: '0')
+    find('#notifications').click
+
+    expect(page).to have_selector('#notifications .notification .target', text: seen_notification.target)
+    expect(page).to have_selector('#notifications .notification .target', text: not_seen_notification.target)
+  end
+
 end
