@@ -7,4 +7,8 @@ class Notification < ApplicationRecord
     super(:only => [:message, :target])
   end
 
+  def created_ago
+    seconds = (Time.now - created_at).to_i
+    "#{seconds} segundos"
+  end
 end

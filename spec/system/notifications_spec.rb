@@ -34,7 +34,7 @@ RSpec.describe 'Notifications', type: :system, js: true do
     find('#notifications').click
 
     expect(page).to have_selector('#notifications-counter', text: '1')
-    expect(page).to have_selector('#notifications .notification .target', text: service.name)
+    expect(page).to have_selector('#notifications .notification .target', text: transaction.service.name)
   end
 
 end
