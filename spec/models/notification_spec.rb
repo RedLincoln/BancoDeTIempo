@@ -29,6 +29,7 @@ RSpec.describe Notification, type: :model do
       expected = {
           message: notification.message,
           target: notification.target,
+          seen: notification.seen,
           time_ago: "hace #{notification.created_ago}"
       }.to_json
 
