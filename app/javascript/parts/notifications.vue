@@ -7,7 +7,8 @@
     </div>
     <transition>
       <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
-        <div v-for="notification in notifications" class="notification dropdown-item position-relative">
+        <div v-for="(notification, index) in notifications" @click="updateNotification(index)"
+             class="notification dropdown-item position-relative">
           <span v-if="!notification.seen" class="seen position-absolute text-primary font-weight-bold">.</span>
           <p>{{ notification.message }}<span class="target font-weight-bold">{{ notification.target }}</span></p>
           <p class="text-muted">{{ notification.time_ago }}</p>
@@ -19,6 +20,7 @@
 
 <script>
 import axios from 'axios'
+import railsFlash from "../railsFlash";
 
 export default {
   props: ['user_id'],
@@ -66,8 +68,15 @@ export default {
       axios.get(this.$userNotificationsPath).then(response => {
         this.addToNotifications(response.data)
       })
+    },
+    updateNotification: function (index) {
+      const notification = this.notifications[index]
+      axios.patch(this.$updateNotificationPath(notification.id), {seen: true}).then(response => {
+        this.notifications[e.target.dataset.notificationIndex].seen = true
+      }).catch(err => {
+        railsFlash.alert(err.data.message)
+      })
     }
-
   }
 };
 </script>

@@ -36,6 +36,9 @@ Vue.mixin({
 
 
 Vue.prototype.$cable = ActionCable.createConsumer('/cable')
+Vue.prototype.$updateNotificationPath = (id) => {
+    return Routes.update_notification_path(id, { format: 'json' })
+}
 Vue.prototype.$userNotificationsPath = Routes.user_notifications_path({ format: 'json' })
 Vue.prototype.$loginPath = Routes.new_user_session_path()
 Vue.prototype.$signUpPath = Routes.new_user_registration_path()
