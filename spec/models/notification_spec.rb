@@ -59,6 +59,12 @@ RSpec.describe Notification, type: :model do
       travel 3.hour
       expect(notification.created_ago).to eq('3 horas')
     end
+
+    it 'a notification created over 24 hours ago have to be transformed into days' do
+      notification
+      travel 24.hour
+      expect(notification.created_ago).to eq('1 dia')
+    end
   end
 
 end
