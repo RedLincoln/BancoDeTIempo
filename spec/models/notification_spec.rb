@@ -41,6 +41,12 @@ RSpec.describe Notification, type: :model do
       travel 100.seconds
       expect(notification.created_ago).to eq('1 minuto')
     end
+
+    it 'a notification created equal or over 2 minutes have to be in plural' do
+      notification
+      travel 260.seconds
+      expect(notification.created_ago).to eq('4 minutos')
+    end
   end
 
 end
