@@ -57,10 +57,13 @@ export default {
               }
       )
     },
+    addToNotifications: function (notifications){
+      this.notifications = notifications
+      this.counter = this.notifications.filter(notification => !notification.seen).length
+    },
     fetchNotifications: function () {
       axios.get(this.$userNotificationsPath).then(response => {
-        this.notifications = response.data
-        this.counter = response.data.length
+        this.addToNotifications(response.data)
       })
     }
 

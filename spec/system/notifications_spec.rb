@@ -15,7 +15,7 @@ RSpec.describe 'Notifications', type: :system, js: true do
     transaction
 
     within notifications do
-      expect(page).to have_selector('#notifications-counter', text: '1')
+      expect(page).to have_selector('#notifications-counter', text: '1', wait: 5)
     end
 
     notifications.click
@@ -47,8 +47,8 @@ RSpec.describe 'Notifications', type: :system, js: true do
     expect(page).to have_selector('#notifications-counter', text: '1')
     find('#notifications').click
 
-    expect(page).to have_selector('#notifications .notification .target', text: seen_notification.service.name)
-    expect(page).to have_selector('#notifications .notification .target', text: not_seen_notification.service.name)
+    expect(page).to have_selector('#notifications .notification .target', text: seen_notification.target)
+    expect(page).to have_selector('#notifications .notification .target', text: not_seen_notification.target)
   end
 
 end
