@@ -4,7 +4,9 @@ class Notification < ApplicationRecord
   belongs_to :user
 
   def as_json(*)
-    super(:only => [:message, :target])
+    super(:only => [:message, :target]).tap do |hash|
+      hash[:time_ago] = "hace #{created_ago}"
+    end
   end
 
   def created_ago
