@@ -53,6 +53,12 @@ RSpec.describe Notification, type: :model do
       travel 62.minute
       expect(notification.created_ago).to eq('1 hora')
     end
+
+    it 'a notification created over 1 hour ago have to in plural' do
+      notification
+      travel 3.hour
+      expect(notification.created_ago).to eq('3 horas')
+    end
   end
 
 end
