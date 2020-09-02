@@ -17,8 +17,22 @@ RSpec.describe Notification, type: :model do
     it 'to_json' do
       notification
 
-      expect(notification.to_json).to eql({ message: notification.message, target: notification.target }.to_json)
-    end
+      expected = {
+          message: notification.message,
+          target: notification.target,
+      }.to_json
 
+      expect(notification.to_json).to eql(expected)
+    end
   end
+
+  describe 'created_ago' do
+    let(:notification) { build_stubbed(:notification)}
+
+    it 'a notification just created must be created 0 seconds ago' do
+      notification
+      expect(notification.created_ago).to eq('0 segundos')
+    end
+  end
+
 end
