@@ -9,6 +9,7 @@
       <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
         <div v-for="notification in notifications" class="notification dropdown-item">
           <p>{{ notification.message }}<span class="target font-weight-bold">{{ notification.target }}</span></p>
+          <p class="text-muted">{{ notification.time_ago }}</p>
         </div>
       </div>
     </transition>

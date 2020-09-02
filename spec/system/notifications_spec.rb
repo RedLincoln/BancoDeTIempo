@@ -31,10 +31,24 @@ RSpec.describe 'Notifications', type: :system, js: true do
     visit services_path
 
 
+    expect(page).to have_selector('#notifications-counter', text: '1')
     find('#notifications').click
 
-    expect(page).to have_selector('#notifications-counter', text: '1')
     expect(page).to have_selector('#notifications .notification .target', text: transaction.service.name)
+  end
+
+  it 'seen notifications does not add to the notification counter' do
+    seen_notification = create(:notification, seen: true, user: user)
+    not_seen_notification = create(:notification, seen: false, user: user)
+
+
+    visit root_path
+
+    expect(page).to have_selector('#notifications-counter', text: '1')
+    find('#notifications').click
+
+    expect(page).to have_selector('#notifications .notification .target', text: seen_notification.service.name)
+    expect(page).to have_selector('#notifications .notification .target', text: not_seen_notification.service.name)
   end
 
 end
