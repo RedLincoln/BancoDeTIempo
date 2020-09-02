@@ -9,6 +9,10 @@ class Notification < ApplicationRecord
 
   def created_ago
     seconds = (Time.now - created_at).to_i
-    "#{seconds} segundos"
+    if seconds > 1.minute
+      "#{seconds/60} minuto"
+    else
+      "#{seconds} segundos"
+    end
   end
 end
