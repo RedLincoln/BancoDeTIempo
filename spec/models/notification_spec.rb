@@ -47,6 +47,12 @@ RSpec.describe Notification, type: :model do
       travel 260.seconds
       expect(notification.created_ago).to eq('4 minutos')
     end
+
+    it 'a notification created over 60 minutes have to be transformed into hours' do
+      notification
+      travel 61.minutes
+      expect(notification.created_ago).to eq('1 hora')
+    end
   end
 
 end
