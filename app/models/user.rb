@@ -19,4 +19,8 @@ class User < ApplicationRecord
   def find_service(service_id)
     Service.find_by! id: service_id, user_id: id
   end
+
+  def find_notification(notification_id)
+    Notification.find_by! id:notification_id, user_id: id
+  end
 end

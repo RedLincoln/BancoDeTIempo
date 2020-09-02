@@ -54,6 +54,10 @@ RSpec.describe User, type: :model do
 
         expect(userNotification.user.find_notification(userNotification.id)).to eql(userNotification)
       end
+
+      it 'raise exception when the notification is not found' do
+        expect{ client.find_notification(1) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 
