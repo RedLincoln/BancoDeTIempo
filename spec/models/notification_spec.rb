@@ -27,11 +27,19 @@ RSpec.describe Notification, type: :model do
   end
 
   describe 'created_ago' do
+    include ActiveSupport::Testing::TimeHelpers
+
     let(:notification) { build_stubbed(:notification)}
 
     it 'a notification just created must be created 0 seconds ago' do
       notification
       expect(notification.created_ago).to eq('0 segundos')
+    end
+
+    it 'a notification created over 60 seconds have to be transformed to minutes' do
+      notification
+      travel 100.seconds
+      expect(notification.created_ago).to eq('1 minuto')
     end
   end
 
