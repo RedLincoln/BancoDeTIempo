@@ -62,7 +62,7 @@ RSpec.describe Notification, type: :model do
 
     it 'a notification created over 24 hours ago have to be transformed into days' do
       notification
-      travel 24.hour
+      travel 25.hour
       expect(notification.created_ago).to eq('1 dia')
     end
   end

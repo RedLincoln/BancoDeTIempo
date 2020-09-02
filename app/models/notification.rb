@@ -9,10 +9,13 @@ class Notification < ApplicationRecord
 
   def created_ago
     seconds = (Time.now - created_at).to_i
-    if seconds > 1.hour
-      pluralize((seconds + 1)/1.hour, 'hora')
-    elsif seconds > 1.minute
-      pluralize((seconds + 1)/1.minute, 'minuto')
+    corrected_seconds = seconds + 1
+    if corrected_seconds > 1.day
+      pluralize(corrected_seconds/1.day, 'dia')
+    elsif corrected_seconds > 1.hour
+      pluralize(corrected_seconds/1.hour, 'hora')
+    elsif corrected_seconds > 1.minute
+      pluralize(corrected_seconds/1.minute, 'minuto')
     else
       "#{seconds} segundos"
     end
