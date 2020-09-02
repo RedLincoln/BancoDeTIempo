@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+  get 'notification/update'
   resources :services
+
+  #notificaitons
+  patch 'notifications/:id', :to => 'notifications#update', :as => 'update_notification'
 
   # Transaction
   post 'transactions', :to => 'transaction#create', :as => 'transactions'

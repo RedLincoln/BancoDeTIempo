@@ -27,6 +27,7 @@ RSpec.describe Notification, type: :model do
       notification
 
       expected = {
+          id: notification.id,
           message: notification.message,
           target: notification.target,
           seen: notification.seen,
