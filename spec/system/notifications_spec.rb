@@ -52,6 +52,7 @@ RSpec.describe 'Notifications', type: :system, js: true do
   end
 
   it 'click on unseen notification marks it seen' do
+    sign_in user
     seen_notification = create(:notification, seen: true, user: user)
     not_seen_notification = create(:notification, seen: false, user: user)
 

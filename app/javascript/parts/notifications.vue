@@ -21,6 +21,7 @@
 <script>
 import axios from 'axios'
 import railsFlash from "../railsFlash";
+import setupAxios from "../setupAxios";
 
 export default {
   props: ['user_id'],
@@ -71,8 +72,11 @@ export default {
     },
     updateNotification: function (index) {
       const notification = this.notifications[index]
-      axios.patch(this.$updateNotificationPath(notification.id), {seen: true}).then(response => {
-        this.notifications[e.target.dataset.notificationIndex].seen = true
+      if (notification.seen) return
+      axios.patch(this.$updateNotificationPath(notification.id), {seen: true},
+              {headers: setupAxios.getDefaultHeader()}).then(response => {
+        this.counter--
+        this.notifications[index].seen = true
       }).catch(err => {
         railsFlash.alert(err.data.message)
       })
