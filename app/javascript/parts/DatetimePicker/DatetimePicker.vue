@@ -4,7 +4,9 @@
       <div class="position-absolute text-primary small top-0">
         Selecciona fecha y hora
       </div>
-      <div class="datetime-input position-absolute bottom-0" ref="input"></div>
+      <div class="datetime-input position-absolute bottom-0" ref="input">
+        {{ computeTime }}
+      </div>
     </div>
     <div v-if="drop" class="date-picker">
       <div class="w-75">
@@ -75,6 +77,8 @@ export default {
     return {
       hourRange: [...Array(24).keys()],
       minutesRange: [...Array(60).keys()],
+      minutes: undefined,
+      hour: undefined,
       month: "",
       monthIndex: -1,
       year: "",
@@ -89,7 +93,23 @@ export default {
     this.today.now = date;
     this.configDate(date);
   },
+  computed: {
+    computeTime() {
+      const minutes = this.getMinutes();
+      const hours = this.getHours();
+      return `${hours}${minutes}`;
+    },
+  },
   methods: {
+    getMinutes() {
+      if (this.minutes === undefined && this.hour === undefined) return "";
+      if (this.minutes === undefined) return "00";
+      return this.minutes < 10 ? `0${this.minutes}` : this.minutes;
+    },
+    getHours() {
+      if (this.minutes === undefined && this.hour === undefined) return "";
+      return this.hour === undefined ? "0:" : `${this.hour}:`;
+    },
     configDate(date) {
       this.month = date_utils.getMonth(date.getMonth());
       this.monthIndex = date.getMonth();
@@ -124,11 +144,10 @@ export default {
       this.drop = !this.drop;
     },
     selectHour(hour) {
-      this.$refs.input.innerHTML = `${hour}:00`;
+      this.hour = hour;
     },
     selectMinutes(minutes) {
-      const formatedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-      this.$refs.input.innerHTML = `0:${formatedMinutes}`;
+      this.minutes = minutes;
     },
     setDate: function(day) {
       this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;
