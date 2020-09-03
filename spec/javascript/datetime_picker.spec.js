@@ -9,6 +9,12 @@ describe("DatetimePicker.vue", () => {
       const wrapper = shallowMount(DatetimePicker);
       expect(wrapper.find(".date-picker").exists()).toBeFalsy();
     });
+
+    it("click on datetime-input show picker", async () => {
+      const wrapper = shallowMount(DatetimePicker);
+      await wrapper.find(".datetime-input").trigger("click");
+      expect(wrapper.find(".date-picker").exists()).toBeTruthy();
+    });
   });
 
   const RealDate = Date.now;
