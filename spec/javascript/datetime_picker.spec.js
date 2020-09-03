@@ -250,4 +250,50 @@ describe("DatetimePicker.vue", () => {
       expect(wrapper.find(".datetime-input").text()).toBe("11:26");
     });
   });
+
+  describe("time-picker and date-picker", () => {
+    const RealDate = Date.now;
+
+    afterEach(() => {
+      global.Date.now = RealDate;
+    });
+
+    it("can select time and date at the same time", async () => {
+      global.Date.now = jest.fn(() => {
+        return new Date("February 1, 1975 23:15:30").valueOf();
+      });
+
+      const wrapper = shallowMount(DatetimePicker);
+      const minutes = 26;
+      const hour = 11;
+      const day = 8;
+
+      await wrapper.find(".datetime-input").trigger("click");
+
+      const timePicker = wrapper.find(".time-picker");
+
+      await timePicker
+        .find(".minutes-picker")
+        .findAll(".time")
+        .at(minutes)
+        .trigger("click");
+
+      await timePicker
+        .find(".hour-picker")
+        .findAll(".time")
+        .at(hour)
+        .trigger("click");
+
+      const datePicker = wrapper.find(".date-picker");
+
+      await datePicker
+        .findAll(".day")
+        .at(day - 1)
+        .trigger("click");
+
+      expect(wrapper.find(".datetime-input").text()).toBe(
+        `${day} Febrero 1975 ${hour}:${minutes}`
+      );
+    });
+  });
 });
