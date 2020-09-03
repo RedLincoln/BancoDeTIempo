@@ -47,6 +47,13 @@
           </tbody>
         </table>
       </div>
+      <div class="time-picker w-25">
+        <ul class="hour-picker">
+          <li v-for="hour in hourRange" class="time" @click="selectHour(hour)">
+            {{ hour }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -57,6 +64,7 @@ import date_utils from "../../date_utils";
 export default {
   data: function() {
     return {
+      hourRange: [...Array(24).keys()],
       month: "",
       monthIndex: -1,
       year: "",
@@ -104,6 +112,9 @@ export default {
     },
     togglePicker: function() {
       this.drop = !this.drop;
+    },
+    selectHour(hour) {
+      this.$refs.input.innerHTML = `${hour}:00`;
     },
     setDate: function(day) {
       this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;

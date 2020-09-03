@@ -203,7 +203,8 @@ describe("DatetimePicker.vue", () => {
       await timePicker
         .find(".hour-picker")
         .findAll(".time")
-        .at(hour + 1);
+        .at(hour)
+        .trigger("click");
 
       expect(wrapper.find(".datetime-input").text()).toBe("8:00");
     });
