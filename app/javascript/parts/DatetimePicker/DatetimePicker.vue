@@ -2,10 +2,13 @@
   <div class="datetime_picker">
     <div class="datetime-input" @click="showPicker" ref="input"></div>
     <div v-if="drop" class="date-picker">
-      <p>
-        <span class="month">{{ month }}</span>
-        <span class="year">{{ year }}</span>
-      </p>
+      <div>
+        <p>
+          <span class="month">{{ month }}</span>
+          <span class="year">{{ year }}</span>
+        </p>
+        <div class="next-month" @click="loadNextMonth">next</div>
+      </div>
       <div>
         <div v-for="day in daysRange">
           <div v-if="isBeforeToday(day)" class="day">
@@ -27,6 +30,7 @@ export default {
   data: function() {
     return {
       month: "",
+      monthIndex: -1,
       year: "",
       today: { day: "" },
       daysRange: [],
@@ -36,15 +40,19 @@ export default {
   created() {
     const date = new Date(Date.now());
     this.today.day = date.getDate();
-    this.month = date_utils.getMonth(date.getMonth());
-    this.year = date.getFullYear();
-    const daysOfTheMonth = date_utils.getDaysInMonth(
-      this.year,
-      date.getMonth()
-    );
-    this.daysRange = [...Array(daysOfTheMonth).keys()];
+    this.configDate(date);
   },
   methods: {
+    configDate(date) {
+      this.month = date_utils.getMonth(date.getMonth());
+      this.monthIndex = date.getMonth();
+      this.year = date.getFullYear();
+      const daysOfTheMonth = date_utils.getDaysInMonth(
+        this.year,
+        this.monthIndex
+      );
+      this.daysRange = [...Array(daysOfTheMonth).keys()];
+    },
     showPicker: function() {
       this.drop = true;
     },
@@ -53,6 +61,12 @@ export default {
     },
     isBeforeToday(day) {
       return day < this.today.day;
+    },
+    loadNextMonth() {
+      const nextMonthDate = date_utils.getNextMonthDate(
+        new Date(this.year, this.monthIndex, 1)
+      );
+      this.configDate(nextMonthDate);
     },
   },
 };
