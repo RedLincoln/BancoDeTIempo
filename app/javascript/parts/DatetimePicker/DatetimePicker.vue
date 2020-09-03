@@ -8,7 +8,7 @@
         {{ computeTime }}
       </div>
     </div>
-    <div v-if="drop" class="date-picker">
+    <div v-if="drop" class="date-picker d-flex">
       <div class="w-75">
         <div
           class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2"
@@ -40,7 +40,7 @@
                   <td v-else-if="isBeforeToday(day)" class="day text-muted">
                     {{ day }}
                   </td>
-                  <td v-else class="day hover-primary" @click="setDate(day)">
+                  <td v-else class="day hover-primary" @click="setDate(day)" :class="{ active: activeDay === day}">
                     {{ day }}
                   </td>
                 </template>
@@ -49,17 +49,18 @@
           </tbody>
         </table>
       </div>
-      <div class="time-picker w-25">
-        <ul class="hour-picker">
-          <li v-for="hour in hourRange" class="time" @click="selectHour(hour)">
-            {{ hour }}
+      <div class="time-picker w-25 row ml-3">
+        <ul class="hour-picker col">
+          <li v-for="hour in hourRange" class="time" @click="selectHour(hour)" :class="{ active: activeHour === hour}">
+            <span>{{ hour }}</span>
           </li>
         </ul>
-        <ul class="minutes-picker">
+        <ul class="minutes-picker col">
           <li
             v-for="minutes in minutesRange"
             class="time"
             @click="selectMinutes(minutes)"
+            :class="{ active: activeMinutes === minutes }"
           >
             {{ minutes }}
           </li>
@@ -77,11 +78,12 @@ export default {
     return {
       hourRange: [...Array(24).keys()],
       minutesRange: [...Array(60).keys()],
-      minutes: undefined,
-      hour: undefined,
+      activeMinutes: undefined,
+      activeHour: undefined,
       month: "",
       monthIndex: -1,
       year: "",
+      activeDay: undefined,
       today: { now: "", date: "" },
       daysRange: [],
       drop: false,
@@ -102,13 +104,13 @@ export default {
   },
   methods: {
     getMinutes() {
-      if (this.minutes === undefined && this.hour === undefined) return "";
-      if (this.minutes === undefined) return "00";
-      return this.minutes < 10 ? `0${this.minutes}` : this.minutes;
+      if (this.activeMinutes === undefined && this.activeHour === undefined) return "";
+      if (this.activeMinutes === undefined) return "00";
+      return this.activeMinutes < 10 ? `0${this.activeMinutes}` : this.activeMinutes;
     },
     getHours() {
-      if (this.minutes === undefined && this.hour === undefined) return "";
-      return this.hour === undefined ? "0:" : `${this.hour}:`;
+      if (this.activeMinutes === undefined && this.activeHour === undefined) return "";
+      return this.activeHour === undefined ? "0:" : `${this.activeHour}:`;
     },
     configDate(date) {
       this.month = date_utils.getMonth(date.getMonth());
@@ -144,12 +146,13 @@ export default {
       this.drop = !this.drop;
     },
     selectHour(hour) {
-      this.hour = hour;
+      this.activeHour = hour;
     },
     selectMinutes(minutes) {
-      this.minutes = minutes;
+      this.activeMinutes = minutes;
     },
     setDate: function(day) {
+      this.activeDay = day
       this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;
     },
     isBeforeToday(day) {
@@ -178,5 +181,34 @@ export default {
 <style scoped>
 .date-picker {
   z-index: 10;
+}
+
+.time-picker {
+  overflow: hidden;
+}
+
+.time-picker ul {
+  list-style: none;
+  padding-left: 0;
+  overflow-y: scroll;
+  height: 400px;
+}
+
+.time-picker ul li:hover {
+  cursor: pointer;
+  background-color: #007bff;
+}
+
+.active {
+  background-color: #007bff;
+}
+
+.datetime-input:hover{
+  cursor: pointer;
+}
+
+.hour-picker,
+.minutes-picker {
+  text-align: center;
 }
 </style>
