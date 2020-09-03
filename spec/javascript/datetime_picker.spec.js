@@ -124,7 +124,6 @@ describe("DatetimePicker.vue", () => {
       });
 
       const wrapper = shallowMount(DatetimePicker);
-      const date = new Date(Date.now());
 
       await wrapper.find(".datetime-input").trigger("click");
       const datePicker = wrapper.find(".date-picker");
@@ -132,6 +131,21 @@ describe("DatetimePicker.vue", () => {
 
       expect(datePicker.find(".month").text()).toBe("Enero");
       expect(datePicker.find(".year").text()).toBe("1976");
+    });
+
+    it("cant go to the previous month of Date.now()", async () => {
+      global.Date.now = jest.fn(() => {
+        return new Date("December 15, 1975 23:15:30").valueOf();
+      });
+
+      const wrapper = shallowMount(DatetimePicker);
+
+      await wrapper.find(".datetime-input").trigger("click");
+      const datePicker = wrapper.find(".date-picker");
+      await datePicker.find(".previous-month").trigger("click");
+
+      expect(datePicker.find(".month").text()).toBe("Diciembre");
+      expect(datePicker.find(".year").text()).toBe("1975");
     });
   });
 });
