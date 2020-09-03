@@ -3,7 +3,7 @@
     <div class="datetime-input" @click="showPicker" ref="input"></div>
     <div v-if="drop" class="date-picker">
       <div>
-        <div class="previous-month">previous</div>
+        <div class="previous-month" @click="loadPreviousMonth">previous</div>
         <p>
           <span class="month">{{ month }}</span>
           <span class="year">{{ year }}</span>
@@ -33,13 +33,14 @@ export default {
       month: "",
       monthIndex: -1,
       year: "",
-      today: { day: "" },
+      today: { day: "", date: "" },
       daysRange: [],
       drop: false,
     };
   },
   created() {
     const date = new Date(Date.now());
+    this.today.date = new Date(date.getFullYear(), date.getMonth(), 1);
     this.today.day = date.getDate();
     this.configDate(date);
   },
@@ -68,6 +69,13 @@ export default {
         new Date(this.year, this.monthIndex, 1)
       );
       this.configDate(nextMonthDate);
+    },
+    loadPreviousMonth() {
+      const previousMonthDate = date_utils.getPreviousMonthDate(
+        new Date(this.year, this.monthIndex, 1)
+      );
+      if (previousMonthDate < this.today.date) return;
+      this.configDate(previousMonthDate);
     },
   },
 };
