@@ -7,44 +7,46 @@
       <div class="datetime-input position-absolute bottom-0" ref="input"></div>
     </div>
     <div v-if="drop" class="date-picker">
-      <div
-        class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2"
-      >
-        <div class="previous-month" @click="loadPreviousMonth">Anterior</div>
-        <p class="mb-0">
-          <span class="month">{{ month }}</span>
-          <span class="year">{{ year }}</span>
-        </p>
-        <div class="next-month" @click="loadNextMonth">Siguiente</div>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Lun</th>
-            <th scope="col">Mar</th>
-            <th scope="col">Mie</th>
-            <th scope="col">Jue</th>
-            <th scope="col">Vie</th>
-            <th scope="col">Sab</th>
-            <th scope="col">Dom</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-for="week in daysRange">
+      <div class="w-75">
+        <div
+          class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2"
+        >
+          <div class="previous-month" @click="loadPreviousMonth">Anterior</div>
+          <p class="mb-0">
+            <span class="month">{{ month }}</span>
+            <span class="year">{{ year }}</span>
+          </p>
+          <div class="next-month" @click="loadNextMonth">Siguiente</div>
+        </div>
+        <table class="table">
+          <thead>
             <tr>
-              <template v-for="day in week">
-                <td v-if="isOffsetDay(day)">{{ day }}</td>
-                <td v-else-if="isBeforeToday(day)" class="day text-muted">
-                  {{ day }}
-                </td>
-                <td v-else class="day hover-primary" @click="setDate(day)">
-                  {{ day }}
-                </td>
-              </template>
+              <th scope="col">Lun</th>
+              <th scope="col">Mar</th>
+              <th scope="col">Mie</th>
+              <th scope="col">Jue</th>
+              <th scope="col">Vie</th>
+              <th scope="col">Sab</th>
+              <th scope="col">Dom</th>
             </tr>
-          </template>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <template v-for="week in daysRange">
+              <tr>
+                <template v-for="day in week">
+                  <td v-if="isOffsetDay(day)">{{ day }}</td>
+                  <td v-else-if="isBeforeToday(day)" class="day text-muted">
+                    {{ day }}
+                  </td>
+                  <td v-else class="day hover-primary" @click="setDate(day)">
+                    {{ day }}
+                  </td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

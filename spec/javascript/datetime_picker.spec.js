@@ -190,4 +190,22 @@ describe("DatetimePicker.vue", () => {
       expect(wrapper.find(".datetime-input").text()).toBe(`${day} Marzo 1975`);
     });
   });
+
+  describe("time-picker content", () => {
+    it("can select the hour", async () => {
+      const wrapper = shallowMount(DatetimePicker);
+      const hour = 8;
+
+      await wrapper.find(".datetime-input").trigger("click");
+
+      const timePicker = wrapper.find(".time-picker");
+
+      await timePicker
+        .find(".hour-picker")
+        .findAll(".time")
+        .at(hour + 1);
+
+      expect(wrapper.find(".datetime-input").text()).toBe("8:00");
+    });
+  });
 });
