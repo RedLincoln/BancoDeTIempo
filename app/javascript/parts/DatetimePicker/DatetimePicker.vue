@@ -1,7 +1,7 @@
 <template>
   <div class="datetime_picker">
     <div class="datetime-input"></div>
-    <div class="date-picker">
+    <div v-if="drop" class="date-picker">
       <p>
         <span class="month">{{ month }}</span>
         <span class="year">{{ year }}</span>
@@ -18,6 +18,7 @@ export default {
     return {
       month: "",
       year: "",
+      drop: false,
     };
   },
   created() {
