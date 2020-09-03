@@ -19,21 +19,6 @@
 import Vue from 'vue'
 import ActionCable from 'actioncable'
 
-Vue.mixin({
-    beforeDestroy() {
-        if (this.$el.parentNode) {
-            document.addEventListener('turbolinks:visit', () => this.$destroy(), { once: true });
-
-            this.$originalEl = this.$el.outerHTML;
-        }
-    },
-    destroyed() {
-        if (this.$el.parentNode){
-            this.$el.outerHTML = this.$originalEl;
-        }
-    }
-})
-
 
 Vue.prototype.$cable = ActionCable.createConsumer('/cable')
 Vue.prototype.$updateNotificationPath = (id) => {

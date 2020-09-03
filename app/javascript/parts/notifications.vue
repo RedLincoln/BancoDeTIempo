@@ -5,16 +5,16 @@
       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="toggleDropdown">!</button>
       <small id="notifications-counter" class="border rounded-circle position-absolute font-weight-bold">{{ counter }}</small>
     </div>
-    <transition>
-      <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
-        <div v-for="(notification, index) in notifications" @click="updateNotification(index)"
-             class="notification dropdown-item position-relative">
-          <span v-if="!notification.seen" class="seen position-absolute text-primary font-weight-bold">.</span>
-          <p>{{ notification.message }}<span class="target font-weight-bold">{{ notification.target }}</span></p>
-          <p class="text-muted">{{ notification.time_ago }}</p>
-        </div>
+    <div>
+    <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
+      <div v-for="(notification, index) in notifications" @click="updateNotification(index)"
+           class="notification dropdown-item position-relative">
+        <span v-if="!notification.seen" class="seen position-absolute text-primary font-weight-bold">.</span>
+        <p>{{ notification.message }}<span class="target font-weight-bold">{{ notification.target }}</span></p>
+        <p class="text-muted">{{ notification.time_ago }}</p>
       </div>
-    </transition>
+    </div>
+    </div>
   </div>
 </template>
 
