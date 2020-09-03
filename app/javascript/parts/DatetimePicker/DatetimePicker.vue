@@ -1,5 +1,11 @@
 <template>
   <div class="datetime_picker">
+    <input
+      type="hidden"
+      v-model="computedDateTime"
+      name="transaction[datetime]"
+      class="transaction-datetime"
+    />
     <div class="form-control position-relative" @click="togglePicker">
       <div class="position-absolute text-primary small top-0">
         Selecciona fecha y hora
@@ -117,6 +123,16 @@ export default {
         result = `${this.activeDay} ${this.month} ${this.year}`;
       }
       return result;
+    },
+    computedDateTime() {
+      let datetime = "";
+      const minutes = this.getMinutes();
+      const hours = this.getHours();
+      const time = ` ${hours}${minutes}`;
+      if (this.activeDay !== undefined) {
+        datetime = `${this.activeDay}/${this.monthIndex + 1}/${this.year}`;
+      }
+      return `${datetime}${time}`;
     },
   },
   methods: {
