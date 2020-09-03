@@ -37,4 +37,3 @@ Vue.prototype.$getCSRFToken = () => {
 
 import './session_actions'
 import './transaction_form'
-import './datetime_picker'
