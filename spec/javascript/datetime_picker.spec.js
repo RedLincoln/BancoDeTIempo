@@ -4,6 +4,13 @@ import DatetimePicker from "../../app/javascript/parts/DatetimePicker/DatetimePi
 // Spanish testing
 
 describe("DatetimePicker.vue", () => {
+  describe("dropdown", () => {
+    it("initial state hides picker", () => {
+      const wrapper = shallowMount(DatetimePicker);
+      expect(wrapper.find(".date-picker").exists()).toBeFalsy();
+    });
+  });
+
   const RealDate = Date.now;
 
   afterEach(() => {
