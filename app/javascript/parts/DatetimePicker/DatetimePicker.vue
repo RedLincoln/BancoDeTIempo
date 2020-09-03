@@ -7,8 +7,13 @@
         <span class="year">{{ year }}</span>
       </p>
       <div>
-        <div v-for="day in daysRange" class="day" @click="setDate(day)">
-          {{ day }}
+        <div v-for="day in daysRange">
+          <div v-if="isBeforeToday(day)" class="day">
+            {{ day }}
+          </div>
+          <div v-else class="day" @click="setDate(day)">
+            {{ day }}
+          </div>
         </div>
       </div>
     </div>
@@ -23,12 +28,14 @@ export default {
     return {
       month: "",
       year: "",
+      today: { day: "" },
       daysRange: [],
       drop: false,
     };
   },
   created() {
     const date = new Date(Date.now());
+    this.today.day = date.getDate();
     this.month = date_utils.getMonth(date.getMonth());
     this.year = date.getFullYear();
     const daysOfTheMonth = date_utils.getDaysInMonth(
@@ -43,6 +50,9 @@ export default {
     },
     setDate: function(day) {
       this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;
+    },
+    isBeforeToday(day) {
+      return day < this.today.day;
     },
   },
 };
