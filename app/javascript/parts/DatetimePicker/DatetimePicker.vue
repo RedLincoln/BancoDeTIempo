@@ -3,6 +3,7 @@
     <div class="datetime-input" @click="showPicker" ref="input"></div>
     <div v-if="drop" class="date-picker">
       <div>
+        <div class="previous-month">previous</div>
         <p>
           <span class="month">{{ month }}</span>
           <span class="year">{{ year }}</span>
