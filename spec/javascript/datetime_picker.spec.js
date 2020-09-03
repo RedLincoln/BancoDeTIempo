@@ -180,7 +180,7 @@ describe("DatetimePicker.vue", () => {
         .at(day)
         .trigger("click");
 
-      expect(wrapper.find(".datetime-input").text()).toBe(`${day} March 1975`);
+      expect(wrapper.find(".datetime-input").text()).toBe(`${day} Marzo 1975`);
     });
   });
 });

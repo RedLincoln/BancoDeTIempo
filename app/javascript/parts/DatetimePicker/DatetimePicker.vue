@@ -33,7 +33,7 @@ export default {
       month: "",
       monthIndex: -1,
       year: "",
-      today: { day: "", date: "" },
+      today: { now: "", date: "" },
       daysRange: [],
       drop: false,
     };
@@ -41,7 +41,7 @@ export default {
   created() {
     const date = new Date(Date.now());
     this.today.date = new Date(date.getFullYear(), date.getMonth(), 1);
-    this.today.day = date.getDate();
+    this.today.now = date;
     this.configDate(date);
   },
   methods: {
@@ -62,7 +62,7 @@ export default {
       this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;
     },
     isBeforeToday(day) {
-      return day < this.today.day;
+      return new Date(this.year, this.monthIndex, day) < this.today.now;
     },
     loadNextMonth() {
       const nextMonthDate = date_utils.getNextMonthDate(
