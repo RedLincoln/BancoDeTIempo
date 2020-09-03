@@ -209,7 +209,7 @@ describe("DatetimePicker.vue", () => {
       expect(wrapper.find(".datetime-input").text()).toBe("8:00");
     });
 
-    it("can select the minues", async () => {
+    it("can select the minutes", async () => {
       const wrapper = shallowMount(DatetimePicker);
       const minutes = 6;
 
@@ -224,6 +224,30 @@ describe("DatetimePicker.vue", () => {
         .trigger("click");
 
       expect(wrapper.find(".datetime-input").text()).toBe("0:06");
+    });
+
+    it("can select minutes and hour at the same time", async () => {
+      const wrapper = shallowMount(DatetimePicker);
+      const minutes = 26;
+      const hour = 11;
+
+      await wrapper.find(".datetime-input").trigger("click");
+
+      const timePicker = wrapper.find(".time-picker");
+
+      await timePicker
+        .find(".minutes-picker")
+        .findAll(".time")
+        .at(minutes)
+        .trigger("click");
+
+      await timePicker
+        .find(".hour-picker")
+        .findAll(".time")
+        .at(hour)
+        .trigger("click");
+
+      expect(wrapper.find(".datetime-input").text()).toBe("11:26");
     });
   });
 });
