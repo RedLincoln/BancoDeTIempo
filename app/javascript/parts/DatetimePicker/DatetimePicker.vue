@@ -1,13 +1,15 @@
 <template>
   <div class="datetime_picker">
-    <div class="form-control position-relative" @click="showPicker">
+    <div class="form-control position-relative" @click="togglePicker">
       <div class="position-absolute text-primary small top-0">
         Selecciona fecha y hora
       </div>
       <div class="datetime-input position-absolute bottom-0" ref="input"></div>
     </div>
     <div v-if="drop" class="date-picker">
-      <div class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2">
+      <div
+        class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2"
+      >
         <div class="previous-month" @click="loadPreviousMonth">Anterior</div>
         <p class="mb-0">
           <span class="month">{{ month }}</span>
@@ -98,8 +100,8 @@ export default {
         this.daysRange.push(week);
       }
     },
-    showPicker: function() {
-      this.drop = true;
+    togglePicker: function() {
+      this.drop = !this.drop;
     },
     setDate: function(day) {
       this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;
@@ -107,8 +109,8 @@ export default {
     isBeforeToday(day) {
       return new Date(this.year, this.monthIndex, day) < this.today.now;
     },
-    isOffsetDay(day){
-      return day === '';
+    isOffsetDay(day) {
+      return day === "";
     },
     loadNextMonth() {
       const nextMonthDate = date_utils.getNextMonthDate(
