@@ -91,7 +91,7 @@ describe("DatetimePicker.vue", () => {
 
       await datePicker
         .findAll(".day")
-        .at(day)
+        .at(day - 1)
         .trigger("click");
 
       expect(wrapper.find(".datetime-input").text()).toBe(
@@ -112,7 +112,7 @@ describe("DatetimePicker.vue", () => {
 
       await datePicker
         .findAll(".day")
-        .at(day)
+        .at(day - 1)
         .trigger("click");
 
       expect(wrapper.find(".datetime-input").text()).toBe("");
@@ -177,7 +177,7 @@ describe("DatetimePicker.vue", () => {
 
       await datePicker
         .findAll(".day")
-        .at(day)
+        .at(day - 1)
         .trigger("click");
 
       expect(wrapper.find(".datetime-input").text()).toBe(`${day} Marzo 1975`);

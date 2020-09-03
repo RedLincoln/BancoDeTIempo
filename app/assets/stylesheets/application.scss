@@ -18,3 +18,16 @@ $navbar-margin-top: 15px;
 @import "bootstrap";
 @import "flash";
 @import "services";
+
+.top-0 {
+  top: 0;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
+.block {
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  font-size: 0.8rem;
+}

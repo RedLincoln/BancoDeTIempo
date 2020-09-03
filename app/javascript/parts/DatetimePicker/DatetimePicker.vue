@@ -1,8 +1,8 @@
 <template>
   <div class="datetime_picker">
-    <div  @click="showPicker">
-      <div>Selecciona fecha y hora</div>
-      <div class="datetime-input" ref="input"></div>
+    <div  class="form-control position-relative" @click="showPicker">
+      <div class="position-absolute text-primary small top-0">Selecciona fecha y hora</div>
+      <div class="datetime-input position-absolute bottom-0" ref="input"></div>
     </div>
     <div v-if="drop" class="date-picker">
       <div>
@@ -13,16 +13,33 @@
         </p>
         <div class="next-month" @click="loadNextMonth">next</div>
       </div>
-      <div>
-        <div v-for="day in daysRange">
-          <div v-if="isBeforeToday(day)" class="day">
-            {{ day }}
-          </div>
-          <div v-else class="day" @click="setDate(day)">
-            {{ day }}
-          </div>
-        </div>
-      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Lunes</th>
+            <th scope="col">Martes</th>
+            <th scope="col">Miercoles</th>
+            <th scope="col">Jueves</th>
+            <th scope="col">Viernes</th>
+            <th scope="col">Sabado</th>
+            <th scope="col">Domingo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="week in daysRange">
+            <tr>
+              <template v-for="day in week">
+                <td v-if="isBeforeToday(day)" class="day">
+                  {{ day }}
+                </td>
+                <td v-else class="day" @click="setDate(day)">
+                  {{ day }}
+                </td>
+              </template>
+            </tr>
+          </template>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -56,7 +73,24 @@ export default {
         this.year,
         this.monthIndex
       );
-      this.daysRange = [...Array(daysOfTheMonth).keys()];
+      this.createDaysRange(daysOfTheMonth)
+    },
+    createDaysRange: function(totalDays){
+      this.daysRange = [];
+      let day = 0;
+      let week = [];
+      while(day < totalDays){
+        if (day % 7 === 0){
+          this.daysRange.push(week);
+          week = [];
+        }
+        day++;
+        week.push(day);
+
+      }
+      if (week.length > 0){
+        this.daysRange.push(week);
+      }
     },
     showPicker: function() {
       this.drop = true;

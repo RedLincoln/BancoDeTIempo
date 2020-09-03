@@ -21,7 +21,7 @@ export default {
     getDaysInMonth(year, month){
         return new Date(
             year,
-            month,
+            month + 1,
             0
         ).getDate();
     },
