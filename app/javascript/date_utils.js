@@ -32,5 +32,9 @@ export default {
 
     getPreviousMonthDate(date) {
         return new Date(date.getFullYear(), date.getMonth() - 1, 1)
+    },
+
+    getOffsetWeekDayOfMonth(date){
+
     }
 }

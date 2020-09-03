@@ -55,4 +55,12 @@ describe("date_utils", ()=>{
         })
 
     })
+
+    describe("getOffsetWeekDayOfMonth", ()=>{
+
+        it("give the right offset when the month start in the middle of the week", ()=>{
+            const date = new Date("September 4, 2020") // first day is Tuesday (2)
+            expect(date_utils.getOffsetWeekDayOfMonth(date)).toBe(2)
+        })
+    })
 })

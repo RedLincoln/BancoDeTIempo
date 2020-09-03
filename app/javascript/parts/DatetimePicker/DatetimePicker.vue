@@ -1,7 +1,9 @@
 <template>
   <div class="datetime_picker">
-    <div  class="form-control position-relative" @click="showPicker">
-      <div class="position-absolute text-primary small top-0">Selecciona fecha y hora</div>
+    <div class="form-control position-relative" @click="showPicker">
+      <div class="position-absolute text-primary small top-0">
+        Selecciona fecha y hora
+      </div>
       <div class="datetime-input position-absolute bottom-0" ref="input"></div>
     </div>
     <div v-if="drop" class="date-picker">
@@ -73,22 +75,21 @@ export default {
         this.year,
         this.monthIndex
       );
-      this.createDaysRange(daysOfTheMonth)
+      this.createDaysRange(daysOfTheMonth);
     },
-    createDaysRange: function(totalDays){
+    createDaysRange: function(totalDays) {
       this.daysRange = [];
       let day = 0;
       let week = [];
-      while(day < totalDays){
-        if (day % 7 === 0){
+      while (day < totalDays) {
+        if (day % 7 === 0) {
           this.daysRange.push(week);
           week = [];
         }
         day++;
         week.push(day);
-
       }
-      if (week.length > 0){
+      if (week.length > 0) {
         this.daysRange.push(week);
       }
     },
