@@ -117,5 +117,22 @@ describe("DatetimePicker.vue", () => {
 
       expect(wrapper.find(".datetime-input").text()).toBe("");
     });
+
+    it("can go to the next month", async () => {
+      global.Date.now = jest.fn(() => {
+        return new Date("February 15, 1975 23:15:30").valueOf();
+      });
+
+      const wrapper = shallowMount(DatetimePicker);
+      const date = new Date(Date.now());
+
+      await wrapper.find(".datetime-input").trigger("click");
+      await wrapper.find(".datetime-input .next-month").trigger("click");
+
+      expect(datePicker.find(".month").text()).toBe("Agosto");
+      expect(datePicker.find(".year").text()).toBe(
+        date.getFullYear().toString()
+      );
+    });
   });
 });
