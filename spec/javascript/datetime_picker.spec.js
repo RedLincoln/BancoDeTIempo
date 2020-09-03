@@ -55,22 +55,27 @@ describe("DatetimePicker.vue", () => {
 
       const wrapper = shallowMount(DatetimePicker);
       const date = new Date(Date.now());
+
       const daysInMonth = new Date(
-        date.getFullYear,
-        date.getMonth,
+        date.getFullYear(),
+        date.getMonth() + 1,
         0
       ).getDate();
 
-      console.log(daysInMonth);
+      const daysRange = [...Array(daysInMonth).keys()].map((number) =>
+        (number + 1).toString()
+      );
+
       await wrapper.find(".datetime-input").trigger("click");
 
       const datePicker = wrapper.find(".date-picker");
       const days = datePicker.findAll(".days");
 
-      expect(datePicker.find(".month").text()).toBe("Agosto");
-      expect(datePicker.find(".year").text()).toBe(
-        date.getFullYear().toString()
-      );
+      const recived = days.wrappers.filter((el) =>
+        daysRange.includes(el.text())
+      ).length;
+
+      expect(recived).toBe(daysInMonth);
     });
   });
 });
