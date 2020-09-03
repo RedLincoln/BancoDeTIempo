@@ -53,6 +53,15 @@
             {{ hour }}
           </li>
         </ul>
+        <ul class="minutes-picker">
+          <li
+            v-for="minutes in minutesRange"
+            class="time"
+            @click="selectMinutes(minutes)"
+          >
+            {{ minutes }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -65,6 +74,7 @@ export default {
   data: function() {
     return {
       hourRange: [...Array(24).keys()],
+      minutesRange: [...Array(60).keys()],
       month: "",
       monthIndex: -1,
       year: "",
@@ -115,6 +125,10 @@ export default {
     },
     selectHour(hour) {
       this.$refs.input.innerHTML = `${hour}:00`;
+    },
+    selectMinutes(minutes) {
+      const formatedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+      this.$refs.input.innerHTML = `0:${formatedMinutes}`;
     },
     setDate: function(day) {
       this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;

@@ -211,7 +211,7 @@ describe("DatetimePicker.vue", () => {
 
     it("can select the minues", async () => {
       const wrapper = shallowMount(DatetimePicker);
-      const hour = 6;
+      const minutes = 6;
 
       await wrapper.find(".datetime-input").trigger("click");
 
@@ -220,7 +220,7 @@ describe("DatetimePicker.vue", () => {
       await timePicker
         .find(".minutes-picker")
         .findAll(".time")
-        .at(hour)
+        .at(minutes)
         .trigger("click");
 
       expect(wrapper.find(".datetime-input").text()).toBe("0:06");
