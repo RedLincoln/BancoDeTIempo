@@ -1,6 +1,6 @@
 <template>
   <div class="datetime_picker">
-    <div class="datetime-input"></div>
+    <div class="datetime-input" @click="showPicker"></div>
     <div v-if="drop" class="date-picker">
       <p>
         <span class="month">{{ month }}</span>
@@ -25,6 +25,11 @@ export default {
     const date = new Date(Date.now());
     this.month = date_utils.getMonth(date.getMonth());
     this.year = date.getFullYear();
+  },
+  methods: {
+    showPicker: function() {
+      this.drop = true;
+    },
   },
 };
 </script>
