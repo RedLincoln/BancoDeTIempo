@@ -6,6 +6,9 @@
         <span class="month">{{ month }}</span>
         <span class="year">{{ year }}</span>
       </p>
+      <div>
+        <div v-for="day in daysRange" class="day">{{ day }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +21,7 @@ export default {
     return {
       month: "",
       year: "",
+      daysRange: [],
       drop: false,
     };
   },
@@ -25,6 +29,11 @@ export default {
     const date = new Date(Date.now());
     this.month = date_utils.getMonth(date.getMonth());
     this.year = date.getFullYear();
+    const daysOfTheMonth = date_utils.getDaysInMonth(
+      this.year,
+      date.getMonth()
+    );
+    this.daysRange = [...Array(daysOfTheMonth).keys()];
   },
   methods: {
     showPicker: function() {

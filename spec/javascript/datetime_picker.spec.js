@@ -69,7 +69,7 @@ describe("DatetimePicker.vue", () => {
       await wrapper.find(".datetime-input").trigger("click");
 
       const datePicker = wrapper.find(".date-picker");
-      const days = datePicker.findAll(".days");
+      const days = datePicker.findAll(".day");
 
       const recived = days.wrappers.filter((el) =>
         daysRange.includes(el.text())
