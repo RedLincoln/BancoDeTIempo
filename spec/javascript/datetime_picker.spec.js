@@ -208,5 +208,22 @@ describe("DatetimePicker.vue", () => {
 
       expect(wrapper.find(".datetime-input").text()).toBe("8:00");
     });
+
+    it("can select the minues", async () => {
+      const wrapper = shallowMount(DatetimePicker);
+      const hour = 6;
+
+      await wrapper.find(".datetime-input").trigger("click");
+
+      const timePicker = wrapper.find(".time-picker");
+
+      await timePicker
+        .find(".minutes-picker")
+        .findAll(".time")
+        .at(hour)
+        .trigger("click");
+
+      expect(wrapper.find(".datetime-input").text()).toBe("0:06");
+    });
   });
 });
