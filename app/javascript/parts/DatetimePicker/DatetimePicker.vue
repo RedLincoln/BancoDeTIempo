@@ -5,7 +5,7 @@
         Selecciona fecha y hora
       </div>
       <div class="datetime-input position-absolute bottom-0" ref="input">
-        {{ computeTime }}
+        {{ computeDate }} {{ computeTime }}
       </div>
     </div>
     <div v-if="drop" class="date-picker d-flex">
@@ -40,7 +40,12 @@
                   <td v-else-if="isBeforeToday(day)" class="day text-muted">
                     {{ day }}
                   </td>
-                  <td v-else class="day hover-primary" @click="setDate(day)" :class="{ active: activeDay === day}">
+                  <td
+                    v-else
+                    class="day hover-primary"
+                    @click="setDate(day)"
+                    :class="{ active: activeDay === day }"
+                  >
                     {{ day }}
                   </td>
                 </template>
@@ -51,7 +56,12 @@
       </div>
       <div class="time-picker w-25 row ml-3">
         <ul class="hour-picker col">
-          <li v-for="hour in hourRange" class="time" @click="selectHour(hour)" :class="{ active: activeHour === hour}">
+          <li
+            v-for="hour in hourRange"
+            class="time"
+            @click="selectHour(hour)"
+            :class="{ active: activeHour === hour }"
+          >
             <span>{{ hour }}</span>
           </li>
         </ul>
@@ -101,15 +111,26 @@ export default {
       const hours = this.getHours();
       return `${hours}${minutes}`;
     },
+    computeDate() {
+      let result = "";
+      if (this.activeDay !== undefined) {
+        result = `${this.activeDay} ${this.month} ${this.year}`;
+      }
+      return result;
+    },
   },
   methods: {
     getMinutes() {
-      if (this.activeMinutes === undefined && this.activeHour === undefined) return "";
+      if (this.activeMinutes === undefined && this.activeHour === undefined)
+        return "";
       if (this.activeMinutes === undefined) return "00";
-      return this.activeMinutes < 10 ? `0${this.activeMinutes}` : this.activeMinutes;
+      return this.activeMinutes < 10
+        ? `0${this.activeMinutes}`
+        : this.activeMinutes;
     },
     getHours() {
-      if (this.activeMinutes === undefined && this.activeHour === undefined) return "";
+      if (this.activeMinutes === undefined && this.activeHour === undefined)
+        return "";
       return this.activeHour === undefined ? "0:" : `${this.activeHour}:`;
     },
     configDate(date) {
@@ -152,8 +173,7 @@ export default {
       this.activeMinutes = minutes;
     },
     setDate: function(day) {
-      this.activeDay = day
-      this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;
+      this.activeDay = day;
     },
     isBeforeToday(day) {
       return new Date(this.year, this.monthIndex, day) < this.today.now;
@@ -203,7 +223,7 @@ export default {
   background-color: #007bff;
 }
 
-.datetime-input:hover{
+.datetime-input:hover {
   cursor: pointer;
 }
 
