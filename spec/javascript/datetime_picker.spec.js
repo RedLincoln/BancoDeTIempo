@@ -15,6 +15,13 @@ describe("DatetimePicker.vue", () => {
       await wrapper.find(".datetime-input").trigger("click");
       expect(wrapper.find(".date-picker").exists()).toBeTruthy();
     });
+
+    it("click on datetime-input hides picker", async () => {
+      const wrapper = shallowMount(DatetimePicker);
+      await wrapper.find(".datetime-input").trigger("click");
+      await wrapper.find(".datetime-input").trigger("click");
+      expect(wrapper.find(".date-picker").exists()).toBeFalsy();
+    });
   });
 
   describe("date-picker content", () => {

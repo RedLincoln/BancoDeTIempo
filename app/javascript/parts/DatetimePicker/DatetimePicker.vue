@@ -7,34 +7,35 @@
       <div class="datetime-input position-absolute bottom-0" ref="input"></div>
     </div>
     <div v-if="drop" class="date-picker">
-      <div>
-        <div class="previous-month" @click="loadPreviousMonth">previous</div>
-        <p>
+      <div class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2">
+        <div class="previous-month" @click="loadPreviousMonth">Anterior</div>
+        <p class="mb-0">
           <span class="month">{{ month }}</span>
           <span class="year">{{ year }}</span>
         </p>
-        <div class="next-month" @click="loadNextMonth">next</div>
+        <div class="next-month" @click="loadNextMonth">Siguiente</div>
       </div>
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">Lunes</th>
-            <th scope="col">Martes</th>
-            <th scope="col">Miercoles</th>
-            <th scope="col">Jueves</th>
-            <th scope="col">Viernes</th>
-            <th scope="col">Sabado</th>
-            <th scope="col">Domingo</th>
+            <th scope="col">Lun</th>
+            <th scope="col">Mar</th>
+            <th scope="col">Mie</th>
+            <th scope="col">Jue</th>
+            <th scope="col">Vie</th>
+            <th scope="col">Sab</th>
+            <th scope="col">Dom</th>
           </tr>
         </thead>
         <tbody>
           <template v-for="week in daysRange">
             <tr>
               <template v-for="day in week">
-                <td v-if="isBeforeToday(day)" class="day">
+                <td v-if="isOffsetDay(day)">{{ day }}</td>
+                <td v-else-if="isBeforeToday(day)" class="day text-muted">
                   {{ day }}
                 </td>
-                <td v-else class="day" @click="setDate(day)">
+                <td v-else class="day hover-primary" @click="setDate(day)">
                   {{ day }}
                 </td>
               </template>
@@ -79,10 +80,14 @@ export default {
     },
     createDaysRange: function(totalDays) {
       this.daysRange = [];
+      let offset = date_utils.getOffsetWeekDayOfMonth(
+        new Date(this.year, this.monthIndex, 1)
+      );
       let day = 0;
       let week = [];
+      while (offset--) week.push("");
       while (day < totalDays) {
-        if (day % 7 === 0) {
+        if (week.length % 7 === 0) {
           this.daysRange.push(week);
           week = [];
         }
@@ -102,6 +107,9 @@ export default {
     isBeforeToday(day) {
       return new Date(this.year, this.monthIndex, day) < this.today.now;
     },
+    isOffsetDay(day){
+      return day === '';
+    },
     loadNextMonth() {
       const nextMonthDate = date_utils.getNextMonthDate(
         new Date(this.year, this.monthIndex, 1)
@@ -119,4 +127,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.date-picker {
+  z-index: 10;
+}
+</style>
