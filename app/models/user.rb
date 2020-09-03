@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :services
   has_many :transactions, foreign_key: 'client_id'
+  has_many :notifications
   enum role: {standard: 'standard', admin: 'admin'}
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -17,5 +18,9 @@ class User < ApplicationRecord
 
   def find_service(service_id)
     Service.find_by! id: service_id, user_id: id
+  end
+
+  def find_notification(notification_id)
+    Notification.find_by! id:notification_id, user_id: id
   end
 end

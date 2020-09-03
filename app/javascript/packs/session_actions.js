@@ -2,11 +2,10 @@
 // Display this Vue component on Rails View by adding `require('./session_actions')` to app/javascript/application.js
 // Generate a component part by running command `rails generate vue something`
 
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.esm'
 import App from '@/session_actions.vue'
 import TurbolinksAdapter from 'vue-turbolinks'
-Vue.use(TurbolinksAdapter);
-
+Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
   const element = document.getElementById('session_actions');

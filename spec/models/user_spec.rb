@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
   describe 'associations' do
     it { should have_many(:services)}
     it { should have_many(:transactions)}
+    it { should have_many(:notifications)}
   end
 
   describe 'validations' do
@@ -43,6 +44,20 @@ RSpec.describe User, type: :model do
       transaction
 
       expect(client.have_transaction?(service)).to be(true)
+    end
+
+    describe 'notification finder' do
+      let(:userNotification) { create(:notification )}
+
+      it 'finds notification when user owns the notification' do
+        userNotification
+
+        expect(userNotification.user.find_notification(userNotification.id)).to eql(userNotification)
+      end
+
+      it 'raise exception when the notification is not found' do
+        expect{ client.find_notification(1) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 

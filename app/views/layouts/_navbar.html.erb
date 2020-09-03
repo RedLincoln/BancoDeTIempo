@@ -1,6 +1,7 @@
 <% props = {
     isLogged: user_signed_in?,
-    user_name: user_signed_in? ? current_user.name : ""
+    user_name: user_signed_in? ? current_user.name : "",
+    user_id: user_signed_in? ? current_user.id : ""
   }.to_json
 %>
 
@@ -12,7 +13,7 @@
       <li class="navbar-item"><%= link_to 'Servicios', services_path, class: 'service_link nav-item' %></li>
     <% end %>
     </ul>
-    <div id="session_actions" data="<%= props %>"> </div>
+    <span id="session_actions" data="<%= props %>"> </span>
   </nav>
 
 </header>

@@ -6,26 +6,25 @@
   <div class="transaction-form dropdown">
     <button type="button" v-if="!asked" class="open_petition button-action btn-sm btn btn-success dropdown-toggle"
             @click="toggleShow">Pedir</button>
-    <transition>
-      <form v-if="show" class="form border-top mt-2" :action="$createTransactionPath" method="post" @submit="sendPetition">
-        <input name="utf8" type="hidden" value="✓">
-        <input type="hidden" name="authenticity_token" :value="csrfToken">
-        <input type="hidden" name="transaction[service_id]" :value="service_id">
-        <div class="field">
-          <label for="datetime">Horario: </label><br>
-          <input type="text" name="transaction[datetime]" id="datetime"
-                 placeholder="Horario: eg. 07/07/2020 13:00" cols="40">
-        </div>
-        <div class="field">
-          <label for="addition_information">Información aditional: </label><br>
-          <textarea name="transaction[addition_information]" id="addition_information"
-                    placeholder="Añade información extra" rows="3" cols="40"></textarea>
-        </div>
-        <div class="actions">
-          <button class="send_petition btn btn-sm btn-primary">Enviar</button>
-        </div>
-      </form>
-    </transition>
+
+    <form v-if="show" class="form border-top mt-2" :action="$createTransactionPath" method="post" @submit="sendPetition">
+      <input name="utf8" type="hidden" value="✓">
+      <input type="hidden" name="authenticity_token" :value="csrfToken">
+      <input type="hidden" name="transaction[service_id]" :value="service_id">
+      <div class="field">
+        <label for="datetime">Horario: </label><br>
+        <input type="text" name="transaction[datetime]" id="datetime"
+               placeholder="Horario: eg. 07/07/2020 13:00" cols="40">
+      </div>
+      <div class="field">
+        <label for="addition_information">Información aditional: </label><br>
+        <textarea name="transaction[addition_information]" id="addition_information"
+                  placeholder="Añade información extra" rows="3" cols="40"></textarea>
+      </div>
+      <div class="actions">
+        <button class="send_petition btn btn-sm btn-primary">Enviar</button>
+      </div>
+    </form>
   </div>
 </template>
 

@@ -3,11 +3,11 @@
 // Display this Vue component on Rails View by adding `require('./transaction')` to app/javascript/application.js
 // Generate a component part by running command `rails generate vue something`
 
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.esm'
 import App from '@/transaction_form.vue'
 import { isView } from "vueonrails";
 import TurbolinksAdapter from 'vue-turbolinks'
-Vue.use(TurbolinksAdapter);
+Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
   if (!isView('services#index')) return

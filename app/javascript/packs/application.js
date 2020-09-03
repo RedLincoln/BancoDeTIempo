@@ -15,25 +15,16 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('Hello World from Webpacker')
 
-import './session_actions'
-import './transaction_form'
 import Vue from 'vue'
+import ActionCable from 'actioncable'
 
-Vue.mixin({
-    beforeDestroy() {
-        if (this.$el.parentNode) {
-            document.addEventListener('turbolinks:visit', () => this.$destroy(), { once: true });
 
-            this.$originalEl = this.$el.outerHTML;
-        }
-    },
-    destroyed() {
-        this.$el.outerHTML = this.$originalEl;
-    }
-})
-
+Vue.prototype.$cable = ActionCable.createConsumer('/cable')
+Vue.prototype.$updateNotificationPath = (id) => {
+    return Routes.update_notification_path(id, { format: 'json' })
+}
+Vue.prototype.$userNotificationsPath = Routes.user_notifications_path({ format: 'json' })
 Vue.prototype.$loginPath = Routes.new_user_session_path()
 Vue.prototype.$signUpPath = Routes.new_user_registration_path()
 Vue.prototype.$signOutPath = Routes.destroy_user_session_path({ format: 'json'})
@@ -44,3 +35,5 @@ Vue.prototype.$getCSRFToken = () => {
     return document.querySelector("meta[name=csrf-token]").getAttribute('content')
 }
 
+import './session_actions'
+import './transaction_form'
