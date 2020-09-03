@@ -62,5 +62,10 @@ describe("date_utils", ()=>{
             const date = new Date("September 4, 2020") // first day is Tuesday (2)
             expect(date_utils.getOffsetWeekDayOfMonth(date)).toBe(1)
         })
+
+        it("give the right offset when the month starts the sunday", ()=>{
+            const date = new Date("November 4, 2020") // first day is Sunday (0)
+            expect(date_utils.getOffsetWeekDayOfMonth(date)).toBe(6)
+        })
     })
 })
