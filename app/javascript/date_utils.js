@@ -35,6 +35,6 @@ export default {
     },
 
     getOffsetWeekDayOfMonth(date){
-        return new Date(date.getFullYear(), date.getMonth(), 1).getDay() - 1
+        return (new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 6) % 7;
     }
 }
