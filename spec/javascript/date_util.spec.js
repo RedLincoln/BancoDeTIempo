@@ -14,7 +14,7 @@ describe("date_utils", ()=>{
                 return new Date("February 15, 1975 23:15:30").valueOf();
             });
 
-            expect(date_utils.getNextMonthDate(Date.now()).getMilliseconds())
+            expect(date_utils.getNextMonthDate(new Date(Date.now())).getMilliseconds())
                 .toBe(new Date('March 1, 1975').getMilliseconds())
         })
 

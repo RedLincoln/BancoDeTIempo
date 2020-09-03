@@ -24,5 +24,9 @@ export default {
             month,
             0
         ).getDate();
+    },
+
+    getNextMonthDate(date) {
+        return new Date(date.getFullYear(), date.getMonth() + 1, 0)
     }
 }
