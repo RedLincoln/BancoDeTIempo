@@ -17,31 +17,60 @@ describe("DatetimePicker.vue", () => {
     });
   });
 
-  const RealDate = Date.now;
+  describe("date-picker content", () => {
+    const RealDate = Date.now;
 
-  afterEach(() => {
-    global.Date.now = RealDate;
-  });
-
-  it("initial state have no datetime selected", () => {
-    const wrapper = shallowMount(DatetimePicker);
-    expect(wrapper.find(".datetime-input").text()).toBe("");
-  });
-
-  it("initial date selection is present Date", async () => {
-    global.Date.now = jest.fn(() => {
-      return new Date("August 19, 1975 23:15:30").valueOf();
+    afterEach(() => {
+      global.Date.now = RealDate;
     });
 
-    const wrapper = shallowMount(DatetimePicker);
+    it("initial state have no datetime selected", () => {
+      const wrapper = shallowMount(DatetimePicker);
+      expect(wrapper.find(".datetime-input").text()).toBe("");
+    });
 
-    const date = new Date(Date.now());
+    it("initial date selection is present Date", async () => {
+      global.Date.now = jest.fn(() => {
+        return new Date("August 19, 1975 23:15:30").valueOf();
+      });
 
-    await wrapper.find(".datetime-input").trigger("click");
+      const wrapper = shallowMount(DatetimePicker);
 
-    const datePicker = wrapper.find(".date-picker");
+      const date = new Date(Date.now());
 
-    expect(datePicker.find(".month").text()).toBe("Agosto");
-    expect(datePicker.find(".year").text()).toBe(date.getFullYear().toString());
+      await wrapper.find(".datetime-input").trigger("click");
+
+      const datePicker = wrapper.find(".date-picker");
+
+      expect(datePicker.find(".month").text()).toBe("Agosto");
+      expect(datePicker.find(".year").text()).toBe(
+        date.getFullYear().toString()
+      );
+    });
+
+    it("date-picker container the days of the month", async () => {
+      global.Date.now = jest.fn(() => {
+        return new Date("February 19, 1975 23:15:30").valueOf();
+      });
+
+      const wrapper = shallowMount(DatetimePicker);
+      const date = new Date(Date.now());
+      const daysInMonth = new Date(
+        date.getFullYear,
+        date.getMonth,
+        0
+      ).getDate();
+
+      console.log(daysInMonth);
+      await wrapper.find(".datetime-input").trigger("click");
+
+      const datePicker = wrapper.find(".date-picker");
+      const days = datePicker.findAll(".days");
+
+      expect(datePicker.find(".month").text()).toBe("Agosto");
+      expect(datePicker.find(".year").text()).toBe(
+        date.getFullYear().toString()
+      );
+    });
   });
 });
