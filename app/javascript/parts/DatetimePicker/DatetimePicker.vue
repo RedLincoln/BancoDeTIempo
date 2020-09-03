@@ -1,13 +1,15 @@
 <template>
   <div class="datetime_picker">
-    <div class="datetime-input" @click="showPicker"></div>
+    <div class="datetime-input" @click="showPicker" ref="input"></div>
     <div v-if="drop" class="date-picker">
       <p>
         <span class="month">{{ month }}</span>
         <span class="year">{{ year }}</span>
       </p>
       <div>
-        <div v-for="day in daysRange" class="day">{{ day }}</div>
+        <div v-for="day in daysRange" class="day" @click="setDate(day)">
+          {{ day }}
+        </div>
       </div>
     </div>
   </div>
@@ -38,6 +40,9 @@ export default {
   methods: {
     showPicker: function() {
       this.drop = true;
+    },
+    setDate: function(day) {
+      this.$refs.input.innerHTML = `${day} ${this.month} ${this.year}`;
     },
   },
 };
