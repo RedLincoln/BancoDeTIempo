@@ -12,9 +12,7 @@
       <input type="hidden" name="authenticity_token" :value="csrfToken">
       <input type="hidden" name="transaction[service_id]" :value="service_id">
       <div class="field">
-        <label for="datetime">Horario: </label><br>
-        <input type="text" name="transaction[datetime]" id="datetime"
-               placeholder="Horario: eg. 07/07/2020 13:00" cols="40">
+        <DatetimePicker></DatetimePicker>
       </div>
       <div class="field">
         <label for="addition_information">Información aditional: </label><br>
@@ -32,9 +30,13 @@
   import axios from 'axios'
   import railsFlash from "../railsFlash";
   import formParams from '../formHelper'
+  import DatetimePicker from "./DatetimePicker/DatetimePicker";
 
   export default {
     props: ['service_id', 'service_asked'],
+    components: {
+      DatetimePicker
+    },
     data: function() {
       return {
         show: false,
