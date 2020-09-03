@@ -1,6 +1,9 @@
 <template>
   <div class="datetime_picker">
-    <div class="datetime-input" @click="showPicker" ref="input"></div>
+    <div  @click="showPicker">
+      <div>Selecciona fecha y hora</div>
+      <div class="datetime-input" ref="input"></div>
+    </div>
     <div v-if="drop" class="date-picker">
       <div>
         <div class="previous-month" @click="loadPreviousMonth">previous</div>
