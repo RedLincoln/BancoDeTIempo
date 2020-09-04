@@ -48,7 +48,6 @@ group :development, :test do
   gem 'webdrivers', '~> 3.0'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'faker'
-  gem 'apparition'
 end
 
 group :development do

@@ -6,7 +6,6 @@ require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 require "capybara/rspec"
 require 'capybara-screenshot/rspec'
-require 'capybara/apparition'
 
 Capybara.javascript_driver = :apparition
 
@@ -26,7 +25,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    driven_by :apparition
+    driven_by :selenium_chrome_headless
   end
 
   config.before(:suite) do
