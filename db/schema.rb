@@ -19,21 +19,6 @@ ActiveRecord::Schema.define(version: 2020_09_02_134847) do
     t.string "supcategory"
   end
 
-  create_table "chat_rooms", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.integer "user_id"
-    t.text "text"
-    t.integer "chat_room_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.text "message"
     t.string "target"
@@ -79,11 +64,7 @@ ActiveRecord::Schema.define(version: 2020_09_02_134847) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", default: "standard"
-    t.integer "chat_room_id"
-    t.integer "message_id"
-    t.index ["chat_room_id"], name: "index_users_on_chat_room_id"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["message_id"], name: "index_users_on_message_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
