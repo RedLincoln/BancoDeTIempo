@@ -181,3 +181,132 @@ Service.create!([{name: 'Reparación de bicicletas',
 Service.create!({name: 'Ayuda con tu Jardín',
                 description: 'Te puedo ayudar a crear y matener un precioso jardin en tu casa.',
                 user: user8, category: jardines_asesoramiento})
+
+clases_basicas_de_programacion = Service.find_by!(name: 'Clases Básicas de programación') #1 user2
+clases_de_matematicas = Service.find_by!(name: 'Clases de Matemáticas') #2 user2
+crear_webs = Service.find_by!(name: 'Crear webs') #3 user2
+el_arte_del_desayuno = Service.find_by!(name: 'El arte del desayuno') #4 user3
+ayuda_con_mudanza = Service.find_by!(name: 'Ayuda con mudanza') #5 user3
+senderismo_caldera = Service.find_by!(name: 'Senderismo en la Caldera de Bandama') #6 user3
+senderismo_fataga_ansite = Service.find_by!(name: 'Desde Fataga a la Fortaleza de Ansite') #7 user3
+sacandole_partido_a_la_programación = Service.find_by!(name: 'Sacándole partido a la programación') #8 user4
+ayuda_con_la_mudanza = Service.find_by!(name: 'Te ayudo con la mundanza!!') #9 user4
+entreno_de_resistencia = Service.find_by!(name: 'Ayuda con entrenamiento de resistencia') #10 user4
+cuidado_perros_y_gatos = Service.find_by!(name: 'Cuidado de perros y gatos') #11 user5
+cuidado_animales_granja = Service.find_by!(name: 'Cuidado de animales de granja') #12 user5
+cultura_de_japon = Service.find_by!(name: 'Cultura de Japón') #13 user5
+clases_de_java = Service.find_by!(name:'Clases de Java') #14 user5
+creacion_de_postres = Service.find_by!(name: 'Creación de Postres') #15 user5
+clases_de_piano = Service.find_by!(name: 'Clases de piano') #16 user5
+apollo_ingles = Service.find_by!(name: 'Apollo de Ingles') #17 user9
+traduccion_ingles = Service.find_by!(name: 'Traducción de ingles') #18 user9
+speaking_ingles = Service.find_by!(name: 'Speaking de Ingles') #19 user9
+reparacion_de_bicicletas = Service.find_by!(name: 'Reparación de bicicletas') #20 user10
+reparacion_de_coches = Service.find_by!(name: 'Reparación de coches') #21 user10
+ayuda_con_jardin = Service.find_by!(name: 'Ayuda con tu Jardín') #22 user8
+
+def rand_in_range(from, to)
+  rand * (to - from) + from
+end
+
+def random_int(from, to)
+  rand_in_range(from, to).to_i
+end
+
+def random_time
+  random_days = random_int(1, 20)
+  random_hours = random_int(8, 20)
+  random_minutes = random_int(0, 59)
+
+  (random_days.day + random_hours.hour + random_minutes.minutes).since
+end
+
+Transaction.create!([{datetime: random_time,
+                      addition_information: 'Hola, te agradeceria ayuda con la mudanza, me hace mucha falta, gracias por adelantado',
+                      client: user1, service: ayuda_con_la_mudanza},
+                     {datetime: random_time,
+                      addition_information: 'Hola, quiero entrenarme para un evento dende es necesario resistencia'\
+                                            ' y agilidad, me puedes ayudar?.', client: user1, service: entreno_de_resistencia},
+                     {datetime: random_time,
+                      addition_information: 'Ultimamente utilizo mucho la bicicleta y por lo tanto se me rompe mucho,'\
+                                            ' me pregunto si me podrias enseñar a darle mantenimiento y a arreglar algunos problemas que tiene',
+                      client: user1, service: reparacion_de_bicicletas}])
+
+Transaction.create!([{datetime: random_time,
+                      addition_information: 'Tengo varias gallinas y poco espacio, me puedes ayudar?',
+                      client: user2, service: cuidado_animales_granja},
+                     {datetime: random_time,
+                      addition_information: 'Siempre me han gustado los postres pero nunca se me han dado bien hacerlos,'\
+                                            ' segun entiendo es importante saber las medidas exactas de las cantidades.'\
+                                            ' Me podrias hechar un mano?', client: user2, service: creacion_de_postres},])
+
+Transaction.create!([{datetime: random_time,
+                      addition_information: 'Necesito alguien que cuide a mis animales de granja.'\
+                                            ' Como no tengo mucho tiempo no puedo encargarme yo por ello'\
+                                            ' me hace falta alguien a tiempo completo no solo un servicio de dos horas.'\
+                                            ' Te interesa?', client: user3, service: cuidado_animales_granja}])
+
+Transaction.create!([{datetime: random_time,
+                      addition_information: 'Estoy estudiando japones para algun dia poder vivir en Japón.'\
+                                            ' Me vendria muy bien tus conociemientos de Japón.',
+                      client: user4, service: cultura_de_japon},
+                     {datetime: random_time,
+                      addition_information: 'Tengo varios textos que traducir para clase, el ingles se me da mal, me ayudas?',
+                      client: user4, service: traduccion_ingles},
+                     {datetime: random_time,
+                      addition_information: 'Necesito la bicicleta para poder desplazarme y no tengo mucho dinero para'\
+                                            'llevarla a reparar, me ayudas?',
+                      client: user4, service: reparacion_de_bicicletas}])
+
+Transaction.create!([{datetime: random_time,
+                      addition_information: 'Es una ruta fácil?, soy principiante en senderismo pero me gusta mucho'\
+                                             ' y me gustaria seguir probando',
+                      client: user5, service: senderismo_fataga_ansite},
+                     {datetime: random_time,
+                      addition_information: 'Esto cansado de siempre desayunar tostadas con mermelada, necesito'\
+                                            ' algo nuevo y delicioso',
+                      client: user5, service: el_arte_del_desayuno},
+                     {datetime: random_time,
+                      addition_information: 'Me vendria bien prácticas la pronunciación :)',
+                      client: user5, service: speaking_ingles},
+                     {datetime: random_time,
+                      addition_information: 'Quiero probar un poco de programación para decidirme si estudiar un ciclo'\
+                                            ' de programación o no.',
+                      client: user5, service: clases_basicas_de_programacion}])
+
+Transaction.create!([{datetime: random_time,
+                      addition_information: 'Tengo curiosidad de lo ofreces.',
+                      client: user6, service: sacandole_partido_a_la_programación},
+                     {datetime: random_time,
+                      addition_information: 'Me voy de vacaciones a Japón dentro de poco y me gustaria saber si pudieras'\
+                                            'darme algunos tips de como comportarme y como sacarle mejor partido al viaje.',
+                      client: user6, service: cultura_de_japon},
+                     {datetime: random_time,
+                      addition_information: 'Seria un dia super ocupado y no tengo a nadie que saque a los perros a pasear'\
+                                            ' te agradeceria que me ayudaras.',
+                      client: user6, service: cuidado_perros_y_gatos},
+                     {datetime: random_time,
+                      addition_information: 'Me mudo dentro de poco y no tengo quien me heche una mano.',
+                      client: user6, service: ayuda_con_mudanza}])
+
+Transaction.create!({datetime: random_time,
+                     addition_information: 'Estoy buscando un hobby nuevo, me gustaría probar la jardineria.',
+                     client: user7, service: ayuda_con_jardin})
+
+Transaction.create!([{datetime: random_time,
+                      addition_information: 'Mi nivel de ingles es muy bajo y necesito que sea mejor.',
+                      client: user8, service: apollo_ingles},
+                     {datetime: random_time,
+                      addition_information: 'Me vendria bien otro par de manos.',
+                      client: user8, service: ayuda_con_mudanza}])
+
+Transaction.create!([{datetime: random_time,
+                      addition_information: 'Necesito aprender un desayuno fuerto para empezar el dia bien.',
+                      client: user9, service: el_arte_del_desayuno},
+                     {datetime: random_time,
+                      addition_information: 'Mi intención no es saber reparar coches, pero si me gustaría entender'\
+                                            ' por que se rompen y como.',
+                      client: user9, service: reparacion_de_coches},
+                     {datetime: random_time,
+                      addition_information: 'Me han regalado unos pollitos y no se que hacer con ellos.',
+                      client: user9, service: cuidado_animales_granja}])
