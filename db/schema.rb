@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_09_05_165005) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -25,7 +28,7 @@ ActiveRecord::Schema.define(version: 2020_09_05_165005) do
     t.string "target"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.boolean "seen", default: false
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
@@ -33,10 +36,10 @@ ActiveRecord::Schema.define(version: 2020_09_05_165005) do
   create_table "services", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "category_id"
+    t.bigint "category_id"
     t.index ["category_id"], name: "index_services_on_category_id"
     t.index ["user_id"], name: "index_services_on_user_id"
   end
@@ -44,8 +47,8 @@ ActiveRecord::Schema.define(version: 2020_09_05_165005) do
   create_table "transactions", force: :cascade do |t|
     t.string "datetime"
     t.text "addition_information"
-    t.integer "service_id"
-    t.integer "client_id"
+    t.bigint "service_id"
+    t.bigint "client_id"
     t.string "status", default: "pending"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -69,4 +72,7 @@ ActiveRecord::Schema.define(version: 2020_09_05_165005) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "notifications", "users"
+  add_foreign_key "services", "categories"
+  add_foreign_key "transactions", "users", column: "client_id"
 end
