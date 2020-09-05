@@ -61,8 +61,8 @@ Category.create!([{name: 'Bicicletas', supcategory: 'Mantenimiento y reparación
                  {name: 'Coches', supcategory: 'Mantenimiento y reparación de vehiculos'},
                  {name: 'Embarcaciones', supcategory: 'Mantenimiento y reparación de vehiculos'}])
 
-Category.create!([{name: 'Clases de cocina', supcategory: 'Cocina y Reposteria'},
-                 {name: 'Elaboración', supcategory: 'Cocina y Reposteria'}])
+Category.create!([{name: 'Clases de cocina', supcategory: 'Cocina y Repostería'},
+                 {name: 'Elaboración', supcategory: 'Cocina y Repostería'}])
 
 Category.create!([{name: 'Visitas culturales', supcategory: 'Ocio y tiempo libre'},
                  {name: 'Excursiones y senderismo', supcategory: 'Ocio y tiempo libre'},
@@ -70,7 +70,7 @@ Category.create!([{name: 'Visitas culturales', supcategory: 'Ocio y tiempo libre
                  {name: 'Actuaciones y animación', supcategory: 'Ocio y tiempo libre'}])
 
 Category.create!([{name: 'Clases y conversación', supcategory: 'Idioma'},
-                 {name: 'Trasucción y correción', supcategory: 'Idioma'}])
+                 {name: 'Traducción y correción', supcategory: 'Idioma'}])
 
 Category.create!([{name: 'Conocimientos y habilidades de alrededor del mundo', supcategory: 'Interculturalidad'},
                  {name: 'Conocimientos sobre otros paises y lugares de interés', supcategory: 'Interculturalidad'},
@@ -90,25 +90,25 @@ user10 = User.create!({name: 'Kaela', email: 'kharg9@dogondesign.com', password:
 admin1 = User.create!({name: 'Marten', email: 'mchartea@issuu.com', password: '8cSAvouS', introduction: '', role: 'admin'})
 admin2 = User.create!({name: 'Bogart', email: 'bscobleb@bbb.org', password: 'f7m3cUlwD7', introduction: '', role: 'admin'})
 
-programacion = Category.find_by(name: 'Programación', supcategory: 'Informática')
-mudanza = Category.find_by(name: 'Mudanza', supcategory: 'Hogar')
-deportes = Category.find_by(name: 'Deportes', supcategory: 'Enseñanza')
-apollo_escolar = Category.find_by(name: 'Apoyo escolar', supcategory: 'Enseñanza')
-clases_y_conversacion = Category.find_by(name: 'Clases y Conversación', supcategory: 'Idioma')
-traduccion_y_correcion = Category.find_by(name: 'Traducción y correción', supcategory: 'Idioma')
-jardines_asesoramiento = Category.find_by(name: 'Asesoramiento', supcategory: 'Huertos y Jardines')
-clases_de_cocina = Category.find_by(name: 'Clases de cocina', supcategory: 'Cocina y Repostería')
-reparacion_bicicletas = Category.find_by(name: 'Bicicletas', supcategory: 'Mantenimiento y reparación de vehiculos')
-reparacion_coches = Category.find_by(name: 'Coches', supcategory: 'Mantenimiento y reparación de vehiculos')
-creando_webs = Category.find_by(name: 'Creación de webs', supcategory: 'Informática')
-excursiones_y_senderismo = Category.find_by(name: 'Excursiones y senderismo', supcategory: 'Ocio y tiempo libre')
-animales_de_compania = Category.find_by(name: 'Animales de compañia', supcategory: 'Animales Domésticos')
-animales_de_granja = Category.find_by(name: 'Animales de granja', supcategory: 'Animales Domésticos')
-conocimiento_y_habilidades_de_alrededor_del_mundo = Category.find_by(name: 'Conocimientos y habilidades de alrededor del mundo',
+programacion = Category.find_by!(name: 'Programación', supcategory: 'Informática')
+mudanza = Category.find_by!(name: 'Mudanza', supcategory: 'Hogar')
+deportes = Category.find_by!(name: 'Deportes', supcategory: 'Enseñanza')
+apollo_escolar = Category.find_by!(name: 'Apoyo escolar', supcategory: 'Enseñanza')
+clases_y_conversacion = Category.find_by!(name: 'Clases y conversación', supcategory: 'Idioma')
+traduccion_y_correcion = Category.find_by!(name: 'Traducción y correción', supcategory: 'Idioma')
+jardines_asesoramiento = Category.find_by!(name: 'Asesoramiento', supcategory: 'Huertos y Jardines')
+clases_de_cocina = Category.find_by!(name: 'Clases de cocina', supcategory: 'Cocina y Repostería')
+reparacion_bicicletas = Category.find_by!(name: 'Bicicletas', supcategory: 'Mantenimiento y reparación de vehiculos')
+reparacion_coches = Category.find_by!(name: 'Coches', supcategory: 'Mantenimiento y reparación de vehiculos')
+creando_webs = Category.find_by!(name: 'Creación de webs', supcategory: 'Informática')
+excursiones_y_senderismo = Category.find_by!(name: 'Excursiones y senderismo', supcategory: 'Ocio y tiempo libre')
+animales_de_compania = Category.find_by!(name: 'Animales de compañia', supcategory: 'Animales Domésticos')
+animales_de_granja = Category.find_by!(name: 'Animales de granja', supcategory: 'Animales Domésticos')
+conocimiento_y_habilidades_de_alrededor_del_mundo = Category.find_by!(name: 'Conocimientos y habilidades de alrededor del mundo',
                                                                      supcategory: 'Interculturalidad')
-musica_y_canto = Category.find_by(name: 'Música y canto', supcategory: 'Enseñanza')
-artes_escenicas = Category.find_by(name: 'Artes escénicas', supcategory: 'Enseñanza')
-elaboracion_cocina = Category.find_by(name: 'Elaboración', supcategory: 'Cocina y Reposteria')
+musica_y_canto = Category.find_by!(name: 'Música y canto', supcategory: 'Enseñanza')
+artes_escenicas = Category.find_by!(name: 'Artes escénicas', supcategory: 'Enseñanza')
+elaboracion_cocina = Category.find_by!(name: 'Elaboración', supcategory: 'Cocina y Repostería')
 
 Service.create!([{name: 'Clases Básicas de programación',
                  description: 'Clases de nivel principiante. Esta destinada para personas que siempre han querido'\
