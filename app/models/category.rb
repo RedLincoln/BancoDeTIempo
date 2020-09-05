@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   validates :name, :supcategory, presence: true
 
-  validates :name, uniqueness: true
+  validates :name, uniqueness: { scope: :supcategory}
 
   def self.grouped_by_supcategory
     hash = Hash.new{ |h,k| h[k]=[]}

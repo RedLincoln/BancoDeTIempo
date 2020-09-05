@@ -5,7 +5,7 @@ RSpec.describe Category, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:supcategory) }
-    it { should validate_uniqueness_of(:name) }
+    it { should validate_uniqueness_of(:name).scoped_to(:supcategory) }
   end
 
   it 'finds grouped by supcategory' do
