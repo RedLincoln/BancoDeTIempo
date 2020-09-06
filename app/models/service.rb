@@ -9,8 +9,9 @@ class Service < ApplicationRecord
     where.not(user: user)
   end
 
-  def self.find_by_category_name
-    all
+  def self.find_by_category_name(category_name = '')
+    return all if category_name == ''
+    Service.joins(:category).where(categories: { name: category_name})
   end
 
 end
