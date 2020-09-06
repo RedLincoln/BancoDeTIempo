@@ -1,7 +1,7 @@
 
 <template>
   <div id="service_filter">
-    <input type="text" name="filter_category" placeholder="Categoría" @click="getCategories" />
+    <input type="text" name="filter_category" placeholder="Categoría" @focus="getCategories" />
     <ul class="categories_list">
       <li v-for="(category, index) in categories" :key="index">{{ category }}</li>
     </ul>

@@ -18,22 +18,42 @@ describe("ServiceFilter.vue", () => {
     $getJsonCategoriesPath: "/categories.json",
   };
 
-  it("fitler by category properly display Categories", async () => {
-    const spy = jest.spyOn(axios, "get");
-    axios.get.mockResolvedValue(categoriesResponse);
-    const wrapper = shallowMount(ServiceFilter, {
-      mocks: mocks,
+  describe("show and hide", () => {
+    it("category filter list initial state is hidden", async () => {
+      const wrapper = shallowMount(ServiceFilter);
+
+      expect(wrapper.find(".categories_list").exists()).toBeFalsy();
     });
 
-    await wrapper.find('[name="filter_category"]').trigger("click");
+    xit("show category filter on focus", async () => {
+      const wrapper = shallowMount(ServiceFilter, {
+        methods: {
+          getCategories: jest.fn(),
+        },
+      });
 
-    const expected = categoriesResponse.data.map((category) => category.name);
-    const recived = wrapper
-      .find(".categories_list")
-      .findAll("li")
-      .wrappers.map((el) => el.text());
+      await wrapper.find("[name='filter_category']").trigger("focus");
+    });
+  });
 
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(recived).toEqual(expected);
+  describe("", () => {
+    it("fitler by category properly display Categories", async () => {
+      const spy = jest.spyOn(axios, "get");
+      axios.get.mockResolvedValue(categoriesResponse);
+      const wrapper = shallowMount(ServiceFilter, {
+        mocks: mocks,
+      });
+
+      await wrapper.find('[name="filter_category"]').trigger("focus");
+
+      const expected = categoriesResponse.data.map((category) => category.name);
+      const recived = wrapper
+        .find(".categories_list")
+        .findAll("li")
+        .wrappers.map((el) => el.text());
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(recived).toEqual(expected);
+    });
   });
 });
