@@ -1,4 +1,5 @@
 class Category < ApplicationRecord
+  has_many :services
   validates :name, :supcategory, presence: true
 
   validates :name, uniqueness: { scope: :supcategory}
