@@ -24,7 +24,7 @@ RSpec.describe Service, type: :model do
       end
 
       it 'with no param returns all' do
-        expect(Service.find_by_category_name).to eql([service1, service2])
+        expect(Service.find_by_category_name.to_a).to eql([service1, service2])
       end
     end
 

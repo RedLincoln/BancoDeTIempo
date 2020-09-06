@@ -8,4 +8,9 @@ class Service < ApplicationRecord
   def self.services_not_made_by(user)
     where.not(user: user)
   end
+
+  def self.find_by_category_name
+    all
+  end
+
 end
