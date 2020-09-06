@@ -50,10 +50,10 @@ describe("ServiceFilter.vue", () => {
       expect(wrapper.find(".categories_list").exists()).toBeTruthy();
     });
 
-    it("hide category filter on blur", async () => {
+    it("hide category filter on click of close bottom", async () => {
       await wrapper.find("[name='filter_category']").trigger("focus");
 
-      await wrapper.find("[name='filter_category']").trigger("blur");
+      await wrapper.find(".close_filter").trigger("click");
 
       expect(wrapper.find(".categories_list").exists()).toBeFalsy();
     });

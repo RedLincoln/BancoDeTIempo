@@ -6,7 +6,7 @@ class CategoryController < ApplicationController
     @supcategories = Category.grouped_by_supcategory
     respond_to do |format|
       format.html
-      format.json { render json: Category.all.to_json }
+      format.json { render json: Category.search_by_name(params[:category_filter]).to_json }
     end
   end
 

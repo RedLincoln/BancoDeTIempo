@@ -16,6 +16,18 @@ RSpec.describe Service, type: :model do
     let(:service1) { create(:service) }
     let(:service2) { create(:service) }
 
+    describe 'find_by_category_name' do
+
+      before(:each) do
+        service1
+        service2
+      end
+
+      it 'with no param returns all' do
+        expect(Service.find_by_category_name).to eql([service1, service2])
+      end
+    end
+
     describe 'services_not_made_by' do
 
       before(:each) do

@@ -47,3 +47,17 @@ $navbar-margin-top: 15px;
 .previous-month:hover {
   cursor: pointer;
 }
+
+.categories_list {
+  line-height: 25px;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.one-letter-square {
+  padding: 0 5px 0 5px;
+}
+
+.close_filter, .categories_list li {
+  cursor: pointer;
+}

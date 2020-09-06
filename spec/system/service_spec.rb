@@ -108,6 +108,8 @@ RSpec.describe 'Service', type: :system do
     it 'can filter by Category' do
       fill_in('filter_category', with: category.name)
 
+      find('#service_filter .apply_filters').click
+
       expect(page).to have_selector("#service_#{service_result1.id}")
       expect(page).to have_selector("#service_#{service_result2.id}")
       expect(page).to_not have_selector("#service_#{service.id}")
