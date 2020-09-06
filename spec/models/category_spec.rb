@@ -42,6 +42,12 @@ RSpec.describe Category, type: :model do
       category2
     end
 
+    it 'returns all Categories with empty search_string' do
+      results = Category.search_by_name('')
+
+      expect(results).to eql([category, category2])
+    end
+
     it 'search categories with names containing a letter' do
       results = Category.search_by_name('H')
 
