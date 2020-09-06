@@ -1,4 +1,4 @@
-# Prototipo de Banco de Tiempo Utilizando Rubo on Rails y Vuejs
+# Prototipo de Banco de Tiempo Utilizando Ruby on Rails y Vuejs
 
 ![Test](https://github.com/RedLincoln/BancoDeTIempo/workflows/Test/badge.svg?branch=master)
 
