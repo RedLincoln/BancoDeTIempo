@@ -16,12 +16,19 @@ describe("ServiceFilter.vue", () => {
     ],
   };
 
+  const resultFilter = {
+    data: [
+      { name: "Asesoramiento", supcategory: "Atención a Personas" },
+      { name: "Asesoramiento", supcategory: "Huertos y Jardines" },
+    ],
+  };
   const mocks = {
     $getJsonCategoriesPath: "/categories.json",
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
     wrapper = shallowMount(ServiceFilter, {
       mocks: mocks,
     });
@@ -85,13 +92,7 @@ describe("ServiceFilter.vue", () => {
       expect(received).toEqual(expected);
     });
 
-    it("filling in category_filter input changes category_list", async () => {
-      const resultFilter = {
-        data: [
-          { name: "Asesoramiento", supcategory: "Atención a Personas" },
-          { name: "Asesoramiento", supcategory: "Huertos y Jardines" },
-        ],
-      };
+    it("once the user stop typing in the input, category_list is filtered", async () => {
       const spy = jest.spyOn(axios, "get");
       axios.get.mockResolvedValue(categoriesResponse);
 
@@ -99,7 +100,9 @@ describe("ServiceFilter.vue", () => {
       spy.mockRestore();
 
       axios.get.mockResolvedValue(resultFilter);
+      wrapper.find('[name="filter_category"]').setValue("As");
       await wrapper.find('[name="filter_category"]').setValue("Ase");
+      jest.runAllTimers();
       await Vue.nextTick();
 
       const expected = resultFilter.data.map((category) => category.name);
@@ -108,6 +111,8 @@ describe("ServiceFilter.vue", () => {
         .findAll("li")
         .wrappers.map((el) => el.text());
 
+      expect(setTimeout).toHaveBeenCalledTimes(2);
+      expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(mocks.$getJsonCategoriesPath, {
         category_filter: "Ase",
       });

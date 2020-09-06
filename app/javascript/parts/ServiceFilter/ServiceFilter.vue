@@ -8,7 +8,7 @@
       v-model="categoryInput"
       @blur="hideCategory"
       @focus="showCategory"
-      @input="getCategories"
+      @input="getCategoriesOnInput"
     />
     <ul v-if="showCategoriesFilter" class="categories_list">
       <li
@@ -22,6 +22,9 @@
 
 <script>
 import axios from "axios";
+
+const waitTime = 2000;
+let inputTimeout = null;
 
 export default {
   data: function () {
@@ -46,10 +49,20 @@ export default {
     showCategory() {
       this.showCategoriesFilter = true;
     },
+    getCategoriesOnInput() {
+      clearTimeout(inputTimeout);
+      inputTimeout = setTimeout(() => {
+        this.getCategories();
+      }, waitTime);
+    },
     getCategories() {
-      axios.get(this.$getJsonCategoriesPath).then((response) => {
-        this.categories = response.data.map((category) => category.name);
-      });
+      axios
+        .get(this.$getJsonCategoriesPath, {
+          category_filter: this.categoryInput,
+        })
+        .then((response) => {
+          this.categories = response.data.map((category) => category.name);
+        });
     },
   },
 };
