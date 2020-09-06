@@ -7,6 +7,7 @@ jest.mock("axios");
 
 describe("ServiceFilter.vue", () => {
   let wrapper;
+  let spy;
   const categoriesResponse = {
     data: [
       { name: "Asesoramiento", supcategory: "Atención a Personas" },
@@ -29,6 +30,8 @@ describe("ServiceFilter.vue", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
+    spy = jest.spyOn(axios, "get");
+    axios.get.mockResolvedValue(categoriesResponse);
     wrapper = shallowMount(ServiceFilter, {
       mocks: mocks,
     });
@@ -58,9 +61,6 @@ describe("ServiceFilter.vue", () => {
 
   describe("", () => {
     it("fitler by category properly display Categories", async () => {
-      const spy = jest.spyOn(axios, "get");
-      axios.get.mockResolvedValue(categoriesResponse);
-
       await wrapper.find('[name="filter_category"]').trigger("focus");
 
       await Vue.nextTick();
@@ -93,14 +93,11 @@ describe("ServiceFilter.vue", () => {
     });
 
     it("once the user stop typing in the input, category_list is filtered", async () => {
-      const spy = jest.spyOn(axios, "get");
-      axios.get.mockResolvedValue(categoriesResponse);
-
       await wrapper.find('[name="filter_category"]').trigger("focus");
       spy.mockRestore();
 
       axios.get.mockResolvedValue(resultFilter);
-      wrapper.find('[name="filter_category"]').setValue("As");
+      await wrapper.find('[name="filter_category"]').setValue("As");
       await wrapper.find('[name="filter_category"]').setValue("Ase");
       jest.runAllTimers();
       await Vue.nextTick();
