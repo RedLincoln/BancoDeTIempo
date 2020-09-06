@@ -45,7 +45,7 @@ RSpec.describe Category, type: :model do
     it 'search categories with names containing a letter' do
       results = Category.search_by_name('H')
 
-      expect(results).to eql(category)
+      expect(results).to eql([category])
     end
   end
 end
