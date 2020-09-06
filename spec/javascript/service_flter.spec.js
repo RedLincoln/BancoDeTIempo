@@ -25,7 +25,7 @@ describe("ServiceFilter.vue", () => {
       expect(wrapper.find(".categories_list").exists()).toBeFalsy();
     });
 
-    xit("show category filter on focus", async () => {
+    it("show category filter on focus", async () => {
       const wrapper = shallowMount(ServiceFilter, {
         methods: {
           getCategories: jest.fn(),
@@ -33,6 +33,8 @@ describe("ServiceFilter.vue", () => {
       });
 
       await wrapper.find("[name='filter_category']").trigger("focus");
+
+      expect(wrapper.find(".categories_list").exists()).toBeTruthy();
     });
   });
 
