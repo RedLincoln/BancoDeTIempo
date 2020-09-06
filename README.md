@@ -1,24 +1,79 @@
-# README
+# Prototipo de Banco de Tiempo Utilizando Rubo on Rails y Vuejs
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Pasos para montar el servidor en modo development
 
-Things you may want to cover:
+Estos pasos se realizaron en un maquina Linux.
 
-* Ruby version
+- Clonar el repositorio [Vagrantfile_vueonrails](https://github.com/RedLincoln/Vagrantfile_vueonrails)
 
-* System dependencies
+```
+  git clone https://github.com/RedLincoln/Vagrantfile_vueonrails.git
+```
 
-* Configuration
+- Entrar en el directorio
 
-* Database creation
+```
+  cd Vagrantfile_vueonrails
+```
 
-* Database initialization
+- Clonamos este repositorio
 
-* How to run the test suite
+```
+  git clone https://github.com/RedLincoln/BancoDeTIempo.git
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+- Levantamos la máquina y provisionarla
 
-* Deployment instructions
+```
+  vagrant up
+```
 
-* ...
+- Entrar en la máquina
+
+```
+  vagrant ssh -L 3000:localhost:3000
+```
+
+- Dentro de la máquina navegamos al directorio del proyecto
+  (\$: implica estar dentro de la máquina)
+
+```
+  $: cd /vagrant/BancoDeTIempo
+```
+
+- Instalamos las dependencias de ruby y las de node
+
+```
+  bundle install
+  yarn install
+```
+
+- Creamos base de datos y migramos
+
+```
+  rails db:create
+  rails db:migrate
+```
+
+- (Opcional) Cargamos datos
+
+```
+  rails db:seed
+```
+
+- Montamos servidor
+
+```
+  rails s
+```
+
+- Comandos para ejecutar los tests
+
+```
+  rspec
+  yarn test
+```
+
+## Posibles problemas
+
+- Se hace uso de Docker para utilizar PostgresQL, si se tienen problemas con la base de datos asegurese de que el contenedor de docker esta inicializado.
