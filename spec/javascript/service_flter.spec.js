@@ -79,10 +79,11 @@ describe("ServiceFilter.vue", () => {
       await wrapper
         .find(".categories_list")
         .findAll("li")
+        .at(categoryIndex)
         .trigger("click");
 
       const expected = categoriesResponse.data[categoryIndex].name;
-      const received = wrapper.find("[name='filter_category']").text();
+      const received = wrapper.find("[name='filter_category']").element.value;
 
       expect(received).toEqual(expected);
     });

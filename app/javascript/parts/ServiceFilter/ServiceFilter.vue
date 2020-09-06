@@ -5,12 +5,17 @@
       type="text"
       name="filter_category"
       placeholder="Categoría"
+      v-model="categoryInput"
       @blur="hideCategory"
       @focus="showCategory"
       @input="getCategories"
     />
     <ul v-if="showCategoriesFilter" class="categories_list">
-      <li v-for="(category, index) in categories" :key="index">{{ category }}</li>
+      <li
+        v-for="(category, index) in categories"
+        :key="index"
+        @click="setCategoryFilter(category)"
+      >{{ category }}</li>
     </ul>
   </div>
 </template>
@@ -21,6 +26,7 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      categoryInput: "",
       showCategoriesFilter: false,
       categories: [],
     };
@@ -31,6 +37,9 @@ export default {
     },
   },
   methods: {
+    setCategoryFilter(categoryName) {
+      this.categoryInput = categoryName;
+    },
     hideCategory() {
       this.showCategoriesFilter = false;
     },
