@@ -21,4 +21,15 @@ RSpec.describe Category, type: :model do
 
     expect(Category.grouped_by_supcategory).to eq(expected)
   end
+
+  it 'to_json format' do
+    category = build_stubbed(:category)
+    expected = {
+        id: category.id,
+        name: category.name,
+        supcategory: category.supcategory
+    }.to_json
+
+    expect(category.to_json).to eql(expected)
+  end
 end

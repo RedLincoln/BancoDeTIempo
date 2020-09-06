@@ -111,7 +111,9 @@ describe("ServiceFilter.vue", () => {
       expect(setTimeout).toHaveBeenCalledTimes(2);
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(mocks.$getJsonCategoriesPath, {
-        category_filter: "Ase",
+        params: {
+          category_filter: "Ase",
+        },
       });
       expect(received).toEqual(expected);
     });

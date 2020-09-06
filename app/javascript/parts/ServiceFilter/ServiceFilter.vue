@@ -22,6 +22,7 @@
 
 <script>
 import axios from "axios";
+import railsFlash from "../../railsFlash";
 
 const waitTime = 2000;
 let inputTimeout = null;
@@ -58,11 +59,14 @@ export default {
     getCategories() {
       axios
         .get(this.$getJsonCategoriesPath, {
-          category_filter: this.categoryInput,
+          params:{
+            category_filter: this.categoryInput
+          },
         })
         .then((response) => {
           this.categories = response.data.map((category) => category.name);
-        });
+        })
+        ;
     },
   },
 };
