@@ -1,36 +1,39 @@
 import { shallowMount } from "@vue/test-utils";
 import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
 import ServiceFilter from "../../app/javascript/parts/ServiceFilter/ServiceFilter";
 
+jest.mock("axios");
+
 describe("ServiceFilter.vue", () => {
-  const categoriesResponse = [
-    { name: "Asesoramiento", supcategory: "Atención a Personas" },
-    { name: "Asesoramiento", supcategory: "Huertos y Jardines" },
-    { name: "Programación", supcategory: "Informática" },
-    { name: "Mudanza", supcategory: "Hogar" },
-  ];
+  const categoriesResponse = {
+    data: [
+      { name: "Asesoramiento", supcategory: "Atención a Personas" },
+      { name: "Asesoramiento", supcategory: "Huertos y Jardines" },
+      { name: "Programación", supcategory: "Informática" },
+      { name: "Mudanza", supcategory: "Hogar" },
+    ],
+  };
 
   const mocks = {
     $getJsonCategoriesPath: "/categories.json",
   };
 
   it("fitler by category properly display Categories", async () => {
+    const spy = jest.spyOn(axios, "get");
+    axios.get.mockResolvedValue(categoriesResponse);
     const wrapper = shallowMount(ServiceFilter, {
       mocks: mocks,
     });
-    const axiosMock = new MockAdapter(axios);
-    axiosMock
-      .onGet(mocks.$getJsonCategoriesPath)
-      .reply(200, categoriesResponse);
 
-    await wrapper.find('[name="filter_category"]').trigger("focus");
+    await wrapper.find('[name="filter_category"]').trigger("click");
 
-    const expected = categoriesResponse.map((category) => category.name);
+    const expected = categoriesResponse.data.map((category) => category.name);
     const recived = wrapper
-      .findAll(".categories_list")
+      .find(".categories_list")
+      .findAll("li")
       .wrappers.map((el) => el.text());
 
-    expect(recived).toBe(expected);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(recived).toEqual(expected);
   });
 });

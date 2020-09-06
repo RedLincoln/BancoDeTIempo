@@ -1,16 +1,28 @@
 
 <template>
   <div id="service_filter">
-    <form :action="$getJsonCategoriesPath" method="GET">
-      <input type="text" name="filter_category" placeholder="Categoría" />
-    </form>
+    <input type="text" name="filter_category" placeholder="Categoría" @click="getCategories" />
+    <ul class="categories_list">
+      <li v-for="(category, index) in categories" :key="index">{{ category }}</li>
+    </ul>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: function () {
-    return {};
+    return {
+      categories: "",
+    };
+  },
+  methods: {
+    getCategories() {
+      axios.get(this.$getJsonCategoriesPath).then((response) => {
+        this.categories = response.data.map((category) => category.name);
+      });
+    },
   },
 };
 </script>
