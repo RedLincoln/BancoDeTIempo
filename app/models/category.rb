@@ -8,8 +8,9 @@ class Category < ApplicationRecord
   end
 
   def self.search_by_name(search_string)
+    regex = Regexp.new(Regexp.escape(search_string), Regexp::IGNORECASE)
     Category.all.select do |category|
-      category.name.include? search_string
+      category.name =~ regex
     end
   end
 
