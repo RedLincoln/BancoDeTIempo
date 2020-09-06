@@ -55,5 +55,12 @@ RSpec.describe Category, type: :model do
 
       expect(results).to eql([category, category2])
     end
+
+    # Ho(la M)undo
+    it 'it ignores whitespaces' do
+      results = Category.search_by_name('laM')
+
+      expect(results).to eql([category])
+    end
   end
 end
