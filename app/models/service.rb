@@ -10,7 +10,7 @@ class Service < ApplicationRecord
   end
 
   def self.find_by_category_name(category_name = '')
-    return all if category_name == ''
+    return all if category_name == '' || category_name == nil
     categories = Category.search_by_name(category_name).map(&:id)
     where(category: categories)
   end
