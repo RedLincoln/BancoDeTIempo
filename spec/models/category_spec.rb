@@ -47,5 +47,13 @@ RSpec.describe Category, type: :model do
 
       expect(results).to eql([category])
     end
+
+    # Hola M<-undo
+    # Buscar por nom<-bre
+    it ' is case-insensitive' do
+      results = Category.search_by_name('M')
+
+      expect(results).to eql([category, category2])
+    end
   end
 end
