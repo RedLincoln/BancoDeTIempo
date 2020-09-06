@@ -29,6 +29,10 @@ RSpec.describe Service, type: :model do
         expect(Service.find_by_category_name.to_a).to eql([service1, service2])
       end
 
+      it 'with nil return all' do
+        expect(Service.find_by_category_name(nil).to_a).to eql([service1, service2])
+      end
+
       it 'find by complete name' do
         expect(Service.find_by_category_name(category1.name).to_a).to eq([service1])
       end
