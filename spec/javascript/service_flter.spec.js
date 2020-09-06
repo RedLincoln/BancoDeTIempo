@@ -1,4 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
+import Vue from "vue";
 import axios from "axios";
 import ServiceFilter from "../../app/javascript/parts/ServiceFilter/ServiceFilter";
 
@@ -18,6 +19,10 @@ describe("ServiceFilter.vue", () => {
     $getJsonCategoriesPath: "/categories.json",
   };
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe("show and hide", () => {
     it("category filter list initial state is hidden", async () => {
       const wrapper = shallowMount(ServiceFilter);
@@ -35,10 +40,23 @@ describe("ServiceFilter.vue", () => {
 
       expect(wrapper.find(".categories_list").exists()).toBeTruthy();
     });
+
+    it("hide category filter on blur", async () => {
+      axios.get.mockResolvedValue({});
+      const wrapper = shallowMount(ServiceFilter, {
+        mocks: mocks,
+      });
+
+      await wrapper.find("[name='filter_category']").trigger("focus");
+
+      await wrapper.find("[name='filter_category']").trigger("blur");
+
+      expect(wrapper.find(".categories_list").exists()).toBeFalsy();
+    });
   });
 
   describe("", () => {
-    xit("fitler by category properly display Categories", async () => {
+    it("fitler by category properly display Categories", async () => {
       const spy = jest.spyOn(axios, "get");
       axios.get.mockResolvedValue(categoriesResponse);
       const wrapper = shallowMount(ServiceFilter, {
@@ -46,6 +64,8 @@ describe("ServiceFilter.vue", () => {
       });
 
       await wrapper.find('[name="filter_category"]').trigger("focus");
+
+      await Vue.nextTick();
 
       const expected = categoriesResponse.data.map((category) => category.name);
       const recived = wrapper
