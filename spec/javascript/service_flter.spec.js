@@ -26,10 +26,9 @@ describe("ServiceFilter.vue", () => {
     });
 
     it("show category filter on focus", async () => {
+      axios.get.mockResolvedValue({});
       const wrapper = shallowMount(ServiceFilter, {
-        methods: {
-          getCategories: jest.fn(),
-        },
+        mocks: mocks,
       });
 
       await wrapper.find("[name='filter_category']").trigger("focus");

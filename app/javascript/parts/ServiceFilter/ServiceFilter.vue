@@ -20,6 +20,7 @@ export default {
   },
   methods: {
     getCategories() {
+      this.showCategoriesFilter = true;
       axios.get(this.$getJsonCategoriesPath).then((response) => {
         this.categories = response.data.map((category) => category.name);
       });
