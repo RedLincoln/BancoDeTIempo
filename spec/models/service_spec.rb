@@ -32,6 +32,10 @@ RSpec.describe Service, type: :model do
       it 'find by complete name' do
         expect(Service.find_by_category_name(category1.name).to_a).to eq([service1])
       end
+
+      it 'find by portion of category name' do
+        expect(Service.find_by_category_name('Category').to_a).to eq([service1, service2])
+      end
     end
 
     describe 'services_not_made_by' do
