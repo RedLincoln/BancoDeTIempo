@@ -32,4 +32,20 @@ RSpec.describe Category, type: :model do
 
     expect(category.to_json).to eql(expected)
   end
+
+  describe 'seach by name' do
+    let(:category) { create(:category, name: 'Hola Mundo')}
+    let(:category2) { create(:category, name: 'Buscar por nombre')}
+
+    before(:each) do
+      category
+      category2
+    end
+
+    it 'search categories with names containing a letter' do
+      results = Category.search_by_name('H')
+
+      expect(results).to eql(category)
+    end
+  end
 end

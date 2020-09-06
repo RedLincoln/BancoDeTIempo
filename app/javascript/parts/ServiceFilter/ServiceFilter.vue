@@ -24,7 +24,7 @@
 import axios from "axios";
 import railsFlash from "../../railsFlash";
 
-const waitTime = 2000;
+const waitTime = 300;
 let inputTimeout = null;
 
 export default {
@@ -66,7 +66,9 @@ export default {
         .then((response) => {
           this.categories = response.data.map((category) => category.name);
         })
-        ;
+        .catch(err => {
+          railsFlash.alert('Error al buscar categorías')
+        });
     },
   },
 };
