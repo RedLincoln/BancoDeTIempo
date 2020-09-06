@@ -10,7 +10,7 @@ class Category < ApplicationRecord
   def self.search_by_name(search_string)
     regex = Regexp.new(Regexp.escape(search_string), Regexp::IGNORECASE)
     Category.all.select do |category|
-      category.name =~ regex
+      category.name.delete(' ') =~ regex
     end
   end
 
