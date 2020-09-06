@@ -69,9 +69,6 @@ describe("ServiceFilter.vue", () => {
 
     it("can click on categories to filter", async () => {
       const categoryIndex = 2;
-      const spy = jest.spyOn(axios, "get");
-      axios.get.mockResolvedValue(categoriesResponse);
-
       await wrapper.find('[name="filter_category"]').trigger("focus");
 
       await Vue.nextTick();
@@ -85,6 +82,35 @@ describe("ServiceFilter.vue", () => {
       const expected = categoriesResponse.data[categoryIndex].name;
       const received = wrapper.find("[name='filter_category']").element.value;
 
+      expect(received).toEqual(expected);
+    });
+
+    it("filling in category_filter input changes category_list", async () => {
+      const resultFilter = {
+        data: [
+          { name: "Asesoramiento", supcategory: "Atención a Personas" },
+          { name: "Asesoramiento", supcategory: "Huertos y Jardines" },
+        ],
+      };
+      const spy = jest.spyOn(axios, "get");
+      axios.get.mockResolvedValue(categoriesResponse);
+
+      await wrapper.find('[name="filter_category"]').trigger("focus");
+      spy.mockRestore();
+
+      axios.get.mockResolvedValue(resultFilter);
+      await wrapper.find('[name="filter_category"]').setValue("Ase");
+      await Vue.nextTick();
+
+      const expected = resultFilter.data.map((category) => category.name);
+      const received = wrapper
+        .find(".categories_list")
+        .findAll("li")
+        .wrappers.map((el) => el.text());
+
+      expect(spy).toHaveBeenCalledWith(mocks.$getJsonCategoriesPath, {
+        category_filter: "Ase",
+      });
       expect(received).toEqual(expected);
     });
   });
