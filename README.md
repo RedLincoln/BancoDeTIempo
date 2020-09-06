@@ -1,5 +1,7 @@
 # Prototipo de Banco de Tiempo Utilizando Rubo on Rails y Vuejs
 
+![Test](https://github.com/RedLincoln/BancoDeTIempo/workflows/Test/badge.svg?branch=master)
+
 ## Pasos para montar el servidor en modo development
 
 Estos pasos se realizaron en un maquina Linux.
