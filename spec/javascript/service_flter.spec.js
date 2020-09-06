@@ -58,13 +58,33 @@ describe("ServiceFilter.vue", () => {
 
       await Vue.nextTick();
       const expected = categoriesResponse.data.map((category) => category.name);
-      const recived = wrapper
+      const received = wrapper
         .find(".categories_list")
         .findAll("li")
         .wrappers.map((el) => el.text());
 
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(recived).toEqual(expected);
+      expect(received).toEqual(expected);
+    });
+
+    it("can click on categories to filter", async () => {
+      const categoryIndex = 2;
+      const spy = jest.spyOn(axios, "get");
+      axios.get.mockResolvedValue(categoriesResponse);
+
+      await wrapper.find('[name="filter_category"]').trigger("focus");
+
+      await Vue.nextTick();
+
+      await wrapper
+        .find(".categories_list")
+        .findAll("li")
+        .trigger("click");
+
+      const expected = categoriesResponse.data[categoryIndex].name;
+      const received = wrapper.find("[name='filter_category']").text();
+
+      expect(received).toEqual(expected);
     });
   });
 });
