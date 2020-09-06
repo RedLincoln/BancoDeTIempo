@@ -1,0 +1,38 @@
+name: Test
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-16.04
+    services:
+      postgres:
+        image: postgres:9.6
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_USER: postgres
+          POSTGRES_DB: db/test_pg
+        ports: ["5432:5432"]
+
+    steps:
+      - name: Checking code
+        uses: actions/checkout@v2
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+      - name: Installing ruby dependencies
+        run: bundle install
+      - name: Setup nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - name: Installing node dependecies
+        run: yarn install --frozen-lockfile
+      - name: Creating and migrating database
+        run: rails db:migrate RAILS_ENV=test
+      - name: Running rails tests
+        run: rspec
+      - name: Running vue tests
+        run: yarn test
