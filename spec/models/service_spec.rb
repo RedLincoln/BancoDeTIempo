@@ -13,8 +13,10 @@ RSpec.describe Service, type: :model do
   end
 
   describe 'finders' do
-    let(:service1) { create(:service) }
-    let(:service2) { create(:service) }
+    let(:category1) { create(:category, name: 'AcceptCategory')}
+    let(:category2) { create(:category, name: 'BadCategory')}
+    let(:service1) { create(:service, category: category1) }
+    let(:service2) { create(:service, category: category2) }
 
     describe 'find_by_category_name' do
 
@@ -25,6 +27,10 @@ RSpec.describe Service, type: :model do
 
       it 'with no param returns all' do
         expect(Service.find_by_category_name.to_a).to eql([service1, service2])
+      end
+
+      it 'find by complete name' do
+        expect(Service.find_by_category_name(category1.name).to_a).to eq([service1])
       end
     end
 
