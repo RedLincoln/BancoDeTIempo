@@ -72,7 +72,6 @@ RSpec.describe Service, type: :model do
     let(:service6) { create(:service) }
 
     before(:each) do
-      Service.destroy_all
       service1
       service2
       service3
@@ -95,6 +94,11 @@ RSpec.describe Service, type: :model do
 
     it "last page returns the last records" do
       expect(Service.all.pagination(page: 2).to_a).to eql([service6])
+    end
+
+    it "out of bound pages returns no record" do
+      expect(Service.all.pagination(page: 3).to_a).to eql([])
+      expect(Service.all.pagination(page: -1).to_a).to eql([])
     end
   end
 end
