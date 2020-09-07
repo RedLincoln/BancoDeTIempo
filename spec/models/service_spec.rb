@@ -108,5 +108,12 @@ RSpec.describe Service, type: :model do
     it "get the total of pages when the last page is not filled" do
       expect(Service.all.page_count).to eq(2)
     end
+
+    it "get the total of pages when the last page is empty" do
+      service6.destroy!
+      expect(Service.all.page_count).to eq(1)
+    end
+
+
   end
 end
