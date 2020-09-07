@@ -72,9 +72,13 @@ RSpec.describe Service, type: :model do
     let(:service6) { create(:service) }
 
     before(:each) do
+      Service.destroy_all
       service1
       service2
       service3
+      service4
+      service5
+      service6
     end
 
     it "can get a fixed amount" do
@@ -86,10 +90,11 @@ RSpec.describe Service, type: :model do
     end
 
     it "default page size is 5" do
-      service4
-      service5
-      service6
       expect(Service.all.pagination(page: 1).to_a).to eql([service1, service2, service3, service4, service5])
+    end
+
+    it "last page returns the last records" do
+      expect(Service.all.pagination(page: 2).to_a).to eql([service6])
     end
   end
 end
