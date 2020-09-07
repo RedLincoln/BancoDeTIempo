@@ -34,7 +34,7 @@ describe("ServiceFilter.vue", () => {
     axios.get.mockResolvedValue(categoriesResponse);
   });
 
-  xdescribe("show and hide", () => {
+  describe("show and hide", () => {
     beforeEach(() => {
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
@@ -62,7 +62,7 @@ describe("ServiceFilter.vue", () => {
     });
   });
 
-  xdescribe("", () => {
+  describe("", () => {
     beforeEach(() => {
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
@@ -133,22 +133,32 @@ describe("ServiceFilter.vue", () => {
 
     beforeEach(() => {
       delete window.location;
-      window.location = {
-        search: "?filter_category=initial",
-      };
-      wrapper = mount(ServiceFilter, {
-        mocks: mocks,
-      });
     });
 
     afterEach(() => {
       window.location = location;
     });
 
-    it("must be the on in window.location.search", () => {
+    it("must be the one in window.location.search", () => {
+      window.location = {
+        search: "?filter_category=initial",
+      };
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+      });
       expect(wrapper.find('[name="filter_category"]').element.value).toBe(
         "initial"
       );
+    });
+
+    it("if filter_category is not in search_string then input is empty", () => {
+      window.location = {
+        search: "",
+      };
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+      });
+      expect(wrapper.find('[name="filter_category"]').element.value).toBe("");
     });
   });
 });

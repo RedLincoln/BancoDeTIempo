@@ -8,8 +8,8 @@
       </div>
       <Searcher
         placeholder="Categorías"
-        :search_string="search_string"
-        field_name="filter_category"
+        search_string="category_filter"
+        :field_name="search_string"
         :search_url="$getJsonCategoriesPath"
         :initialValue="initialValue"
       />
