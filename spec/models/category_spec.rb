@@ -52,6 +52,12 @@ RSpec.describe Category, type: :model do
       expect(results).to eql([category, category2])
     end
 
+    it 'returns all Categories with nil search_string' do
+      results = Category.search_by_name(nil)
+
+      expect(results).to eql([category, category2])
+    end
+
     it 'search categories with names containing a letter' do
       results = Category.search_by_name('H')
 
@@ -91,6 +97,12 @@ RSpec.describe Category, type: :model do
 
     it 'returns all Categories with empty search_string' do
       results = Category.search_by_supcategory('')
+
+      expect(results).to eql([category, category2])
+    end
+
+    it 'returns all Categories with nil search_string' do
+      results = Category.search_by_supcategory(nil)
 
       expect(results).to eql([category, category2])
     end

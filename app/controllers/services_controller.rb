@@ -3,7 +3,9 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:update, :edit, :destroy]
 
   def index
-    @services = Service.find_by_category_name(params[:filter_category]).services_not_made_by(current_user)
+    @services = Service.find_by_category_name(params[:filter_category])
+                    .find_by_category_supcategory(params[:filter_supcategory])
+                    .services_not_made_by(current_user)
     @pages = (1..@services.page_count).to_a
     @services = @services.pagination(page: params[:page].to_i)
   end
