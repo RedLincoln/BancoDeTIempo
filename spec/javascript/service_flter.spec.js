@@ -54,7 +54,7 @@ describe("ServiceFilter.vue", () => {
     });
   });
 
-  describe.only("SupCategory:", () => {
+  describe("SupCategory:", () => {
     beforeEach(() => {
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
@@ -174,7 +174,7 @@ describe("ServiceFilter.vue", () => {
       window.location = location;
     });
 
-    it("must be the one in window.location.search", () => {
+    it("category must be the one in window.location.search", () => {
       window.location = {
         search: "?filter_category=initial",
       };
@@ -186,7 +186,19 @@ describe("ServiceFilter.vue", () => {
       );
     });
 
-    it("if filter_category is not in search_string then input is empty", () => {
+    it("supcategory must be the one in window.location.search", () => {
+      window.location = {
+        search: "?filter_supcategory=initial",
+      };
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+      });
+      expect(wrapper.find('[name="filter_supcategory"]').element.value).toBe(
+        "initial"
+      );
+    });
+
+    it("if filter_category is not in search_string then category input is empty", () => {
       window.location = {
         search: "",
       };
