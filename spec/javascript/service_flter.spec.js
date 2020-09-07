@@ -118,4 +118,21 @@ describe("ServiceFilter.vue", () => {
       expect(received).toEqual(expected);
     });
   });
+
+  describe("initial field value", () => {
+    const { location } = window;
+
+    beforeAll(() => {
+      delete window.location;
+    });
+
+    afterAll(() => {
+      window.location = location;
+    });
+
+    it("must be the on in window.location.search", () => {
+      window.location = { search: "?category_filter='initial'" };
+      expect(wrapper.find('[name="filter_category"]').text()).toBe("initial");
+    });
+  });
 });

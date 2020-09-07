@@ -48,7 +48,7 @@ $navbar-margin-top: 15px;
   cursor: pointer;
 }
 
-.categories_list {
+.content_list {
   line-height: 25px;
   height: 200px;
   overflow-y: scroll;
@@ -58,6 +58,6 @@ $navbar-margin-top: 15px;
   padding: 0 5px 0 5px;
 }
 
-.close_filter, .categories_list li {
+.close_filter, .content_list li {
   cursor: pointer;
 }
