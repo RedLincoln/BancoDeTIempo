@@ -90,4 +90,30 @@ RSpec.describe 'Service', type: :system do
     end
   end
 
+  describe 'filter:' do
+    let(:user) { create(:user) }
+    let(:category) { create(:category) }
+    let(:service_result1) { create(:service, category: category)}
+    let(:service_result2) { create(:service, category: category)}
+    let(:service) { create(:service)}
+
+    before(:each) do
+      sign_in user
+      service_result1
+      service_result2
+      service
+      visit services_path
+    end
+
+    it 'can filter by Category', js: true do
+      fill_in('filter_category', with: category.name)
+
+      find('#service_filter .apply_filters').click
+
+      expect(page).to have_selector("#service_#{service_result1.id}")
+      expect(page).to have_selector("#service_#{service_result2.id}")
+      expect(page).to_not have_selector("#service_#{service.id}")
+    end
+  end
+
 end

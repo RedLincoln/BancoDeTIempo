@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Category, type: :model do
 
+  describe 'associations' do
+    it { should have_many(:services) }
+  end
+
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:supcategory) }
@@ -20,5 +24,53 @@ RSpec.describe Category, type: :model do
     }
 
     expect(Category.grouped_by_supcategory).to eq(expected)
+  end
+
+  it 'to_json format' do
+    category = build_stubbed(:category)
+    expected = {
+        id: category.id,
+        name: category.name,
+        supcategory: category.supcategory
+    }.to_json
+
+    expect(category.to_json).to eql(expected)
+  end
+
+  describe 'seach by name' do
+    let(:category) { create(:category, name: 'Hola Mundo')}
+    let(:category2) { create(:category, name: 'Buscar por nombre')}
+
+    before(:each) do
+      category
+      category2
+    end
+
+    it 'returns all Categories with empty search_string' do
+      results = Category.search_by_name('')
+
+      expect(results).to eql([category, category2])
+    end
+
+    it 'search categories with names containing a letter' do
+      results = Category.search_by_name('H')
+
+      expect(results).to eql([category])
+    end
+
+    # Hola M<-undo
+    # Buscar por nom<-bre
+    it ' is case-insensitive' do
+      results = Category.search_by_name('M')
+
+      expect(results).to eql([category, category2])
+    end
+
+    # Ho(la M)undo
+    it 'it ignores whitespaces' do
+      results = Category.search_by_name('laM')
+
+      expect(results).to eql([category])
+    end
   end
 end

@@ -19,11 +19,12 @@
 import Vue from 'vue'
 import ActionCable from 'actioncable'
 
-
 Vue.prototype.$cable = ActionCable.createConsumer('/cable')
 Vue.prototype.$updateNotificationPath = (id) => {
     return Routes.update_notification_path(id, { format: 'json' })
 }
+
+Vue.prototype.$servicesPath = Routes.services_path()
 Vue.prototype.$userNotificationsPath = Routes.user_notifications_path({ format: 'json' })
 Vue.prototype.$loginPath = Routes.new_user_session_path()
 Vue.prototype.$signUpPath = Routes.new_user_registration_path()
@@ -31,9 +32,11 @@ Vue.prototype.$signOutPath = Routes.destroy_user_session_path({ format: 'json'})
 Vue.prototype.$userServicesPath = Routes.user_services_path()
 Vue.prototype.$createTransactionPath = Routes.transactions_path({ format: 'js'})
 Vue.prototype.$userProfilePath = Routes.user_index_path()
+Vue.prototype.$getJsonCategoriesPath = Routes.categories_path({ format: 'json' })
 Vue.prototype.$getCSRFToken = () => {
     return document.querySelector("meta[name=csrf-token]").getAttribute('content')
 }
 
 import './session_actions'
 import './transaction_form'
+import './service_filter'
