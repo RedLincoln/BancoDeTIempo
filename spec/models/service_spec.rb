@@ -89,7 +89,7 @@ RSpec.describe Service, type: :model do
       service4
       service5
       service6
-      expect(Service.all.amount(page: 1).to_a).to eql([service1, service2, service3, service4, service5])
+      expect(Service.all.pagination(page: 1).to_a).to eql([service1, service2, service3, service4, service5])
     end
   end
 end
