@@ -100,5 +100,9 @@ RSpec.describe Service, type: :model do
       expect(Service.all.pagination(page: 3).to_a).to eql([])
       expect(Service.all.pagination(page: 0).to_a).to eql([])
     end
+
+    it "nil page return page 1" do
+      expect(Service.all.pagination(page: nil).to_a).to eql([service1, service2, service3, service4, service5])
+    end
   end
 end
