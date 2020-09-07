@@ -116,4 +116,30 @@ RSpec.describe 'Service', type: :system do
     end
   end
 
+  describe 'pagination' do
+    let(:service1) { create(:service) }
+    let(:service2) { create(:service) }
+    let(:service3) { create(:service) }
+    let(:service4) { create(:service) }
+    let(:service5) { create(:service) }
+    let(:service_in_second_page) { create(:service) }
+
+    before(:each) do
+      service1
+      service2
+      service3
+      service4
+      service5
+      service_in_second_page
+    end
+
+    it 'can navigate to second page' do
+      visit services_path
+
+      expect(page).to_not have_selector("#service_#{service_in_second_page.id}")
+      page.find('.service_pagination a', text: '2').click
+      expect(page).to have_selector("#service_#{service_in_second_page.id}")
+    end
+  end
+
 end

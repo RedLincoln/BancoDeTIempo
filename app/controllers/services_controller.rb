@@ -4,6 +4,7 @@ class ServicesController < ApplicationController
 
   def index
     @services = Service.find_by_category_name(params[:filter_category]).services_not_made_by(current_user).pagination
+    @total_pages = @services.page_count
   end
 
   def new
