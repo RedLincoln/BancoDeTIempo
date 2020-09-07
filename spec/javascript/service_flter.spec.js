@@ -42,7 +42,7 @@ describe("ServiceFilter.vue", () => {
       });
     });
 
-    it("filters are initialy hidden", () => {
+    it.only("filters are initialy hidden", () => {
       expect(wrapper.find(".dropdown-content").exists()).toBeFalsy();
     });
 
