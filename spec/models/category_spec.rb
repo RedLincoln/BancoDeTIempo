@@ -37,7 +37,7 @@ RSpec.describe Category, type: :model do
     expect(category.to_json).to eql(expected)
   end
 
-  describe 'seach by name' do
+  describe 'search by name' do
     let(:category) { create(:category, name: 'Hola Mundo')}
     let(:category2) { create(:category, name: 'Buscar por nombre')}
 
@@ -72,9 +72,15 @@ RSpec.describe Category, type: :model do
 
       expect(results).to eql([category])
     end
+
+    it 'can search with whitespaces in search_query' do
+      results = Category.search_by_name('o la')
+
+      expect(results).to eql([category])
+    end
   end
 
-  describe 'seach by supcategory' do
+  describe 'search by supcategory' do
     let(:category) { create(:category, supcategory: 'Hola Mundo')}
     let(:category2) { create(:category, supcategory: 'Buscar por nombre')}
 
@@ -106,6 +112,12 @@ RSpec.describe Category, type: :model do
     # Ho(la M)undo
     it 'it ignores whitespaces' do
       results = Category.search_by_supcategory('laM')
+
+      expect(results).to eql([category])
+    end
+
+    it 'can search with whitespaces in search_query' do
+      results = Category.search_by_supcategory('o la')
 
       expect(results).to eql([category])
     end
