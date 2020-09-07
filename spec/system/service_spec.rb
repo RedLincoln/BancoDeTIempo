@@ -105,7 +105,7 @@ RSpec.describe 'Service', type: :system do
       visit services_path
     end
 
-    it 'can filter by Category' do
+    it 'can filter by Category', js: true do
       fill_in('filter_category', with: category.name)
 
       find('#service_filter .apply_filters').click
