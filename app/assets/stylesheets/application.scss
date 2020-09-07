@@ -58,6 +58,10 @@ $navbar-margin-top: 15px;
   padding: 0 5px 0 5px;
 }
 
-.close_filter, .content_list li {
+.close_filter, .content_list li, .logout_button, .toggle_button {
   cursor: pointer;
+}
+
+.font-size-large {
+  font-size: x-large;
 }
