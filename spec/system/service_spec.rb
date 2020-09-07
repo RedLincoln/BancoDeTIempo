@@ -93,15 +93,16 @@ RSpec.describe 'Service', type: :system do
   describe 'filter:' do
     let(:user) { create(:user) }
     let(:category) { create(:category) }
+    let(:supcategory) { create(:category) }
     let(:service_result1) { create(:service, category: category)}
     let(:service_result2) { create(:service, category: category)}
-    let(:service) { create(:service)}
+    let(:service_supcategory) { create(:service, category: supcategory)}
 
     before(:each) do
       sign_in user
       service_result1
       service_result2
-      service
+      service_supcategory
       visit services_path
     end
 
@@ -112,7 +113,17 @@ RSpec.describe 'Service', type: :system do
 
       expect(page).to have_selector("#service_#{service_result1.id}")
       expect(page).to have_selector("#service_#{service_result2.id}")
-      expect(page).to_not have_selector("#service_#{service.id}")
+      expect(page).to_not have_selector("#service_#{service_supcategory.id}")
+    end
+
+    it 'can filter by supCategory', js: true do
+      fill_in('filter_supcategory', with: category.name)
+
+      find('#service_filter .apply_filters').click
+
+      expect(page).to_not have_selector("#service_#{service_result1.id}")
+      expect(page).to_not have_selector("#service_#{service_result2.id}")
+      expect(page).to have_selector("#service_#{service_supcategory.id}")
     end
   end
 

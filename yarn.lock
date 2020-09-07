@@ -7922,6 +7922,10 @@ uuid@^8.3.0:
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
 
+v-click-outside@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-3.1.0.tgz#941be55f54982291b2e1beaa8447e5830b7afe29"
+
 v8-compile-cache@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.1.1.tgz#54bc3cdd43317bca91e35dcaf305b1a7237de745"

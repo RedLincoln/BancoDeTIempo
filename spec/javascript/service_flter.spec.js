@@ -52,14 +52,6 @@ describe("ServiceFilter.vue", () => {
 
       expect(wrapper.find(".content_list").exists()).toBeTruthy();
     });
-
-    it("hide category filter on click of close bottom", async () => {
-      await wrapper.find("[name='filter_category']").trigger("focus");
-
-      await wrapper.find(".close_filter").trigger("click");
-
-      expect(wrapper.find(".content_list").exists()).toBeFalsy();
-    });
   });
 
   describe("", () => {
@@ -117,7 +109,6 @@ describe("ServiceFilter.vue", () => {
         .findAll("li")
         .wrappers.map((el) => el.text());
 
-      expect(setTimeout).toHaveBeenCalledTimes(2);
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(mocks.$getJsonCategoriesPath, {
         params: {

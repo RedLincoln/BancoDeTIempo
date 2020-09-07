@@ -1,5 +1,5 @@
 <template>
-  <div class="searcher">
+  <div class="searcher" v-click-outside="hideContent">
     <input
       type="text"
       :name="field_name"
@@ -8,11 +8,6 @@
       @focus="showContent"
       @input="getContentOnInput"
     />
-    <span
-      v-if="show"
-      class="close_filter one-letter-square border rounded-circle bg-secondary text-light"
-      @click="hideContent"
-    >x</span>
     <ul v-if="show" class="content_list list-group">
       <li
         class="list-group-item list-group-item-action"
@@ -26,11 +21,15 @@
 
 <script>
 import axios from "axios";
+import vClickOutside from "v-click-outside";
 
 const waitTime = 300;
 let inputTimeout = null;
 
 export default {
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
   props: {
     initialValue: String,
     placeholder: String,
