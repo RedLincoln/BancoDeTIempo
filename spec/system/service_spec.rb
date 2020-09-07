@@ -93,10 +93,10 @@ RSpec.describe 'Service', type: :system do
   describe 'filter:' do
     let(:user) { create(:user) }
     let(:category) { create(:category) }
-    let(:supcategory) { create(:category) }
+    let(:match_supcategory) { create(:category, supcategory: 'Working supcategory') }
     let(:service_result1) { create(:service, category: category)}
     let(:service_result2) { create(:service, category: category)}
-    let(:service_supcategory) { create(:service, category: supcategory)}
+    let(:service_supcategory) { create(:service, category: match_supcategory)}
 
     before(:each) do
       sign_in user
@@ -117,7 +117,7 @@ RSpec.describe 'Service', type: :system do
     end
 
     it 'can filter by supCategory', js: true do
-      fill_in('filter_supcategory', with: category.name)
+      fill_in('filter_supcategory', with: match_supcategory.supcategory)
 
       find('#service_filter .apply_filters').click
 
