@@ -11,13 +11,15 @@
         search_string="category_filter"
         :field_name="category_search_string"
         :search_url="$getJsonCategoriesPath"
-        :initialValue="initialValue"
+        :initialValue="categoryInitialValue"
         :dataRetriveCallback="categoriesCallback"
       />
       <Searcher
         placeholder="Categoría Raiz"
-        field_name="filter_supcategory"
+        search_string="supcategory_filter"
+        :field_name="supcategory_search_string"
         :search_url="$getJsonCategoriesPath"
+        :initialValue="supcategoryInitialValue"
         :dataRetriveCallback="supcategoriesCallback"
       />
     </form>
@@ -34,12 +36,17 @@ export default {
   data: function () {
     return {
       category_search_string: "filter_category",
+      supcategory_search_string: "filter_supcategory",
     };
   },
   computed: {
-    initialValue() {
+    categoryInitialValue() {
       const params = new URLSearchParams(window.location.search);
       return params.get(this.category_search_string);
+    },
+    supcategoryInitialValue() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(this.supcategory_search_string);
     },
   },
   methods: {
