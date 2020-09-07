@@ -134,6 +134,7 @@ RSpec.describe 'Service', type: :system do
     end
 
     it 'can navigate to second page' do
+      sign_in user
       visit services_path
 
       expect(page).to_not have_selector("#service_#{service_in_second_page.id}")
