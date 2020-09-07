@@ -32,12 +32,15 @@ describe("ServiceFilter.vue", () => {
     jest.useFakeTimers();
     spy = jest.spyOn(axios, "get");
     axios.get.mockResolvedValue(categoriesResponse);
-    wrapper = mount(ServiceFilter, {
-      mocks: mocks,
-    });
   });
 
-  describe("show and hide", () => {
+  xdescribe("show and hide", () => {
+    beforeEach(() => {
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+      });
+    });
+
     it("category filter list initial state is hidden", async () => {
       expect(wrapper.find(".content_list").exists()).toBeFalsy();
     });
@@ -59,7 +62,13 @@ describe("ServiceFilter.vue", () => {
     });
   });
 
-  describe("", () => {
+  xdescribe("", () => {
+    beforeEach(() => {
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+      });
+    });
+
     it("fitler by category properly display Categories", async () => {
       await wrapper.find('[name="filter_category"]').trigger("focus");
       await Vue.nextTick();
@@ -122,17 +131,24 @@ describe("ServiceFilter.vue", () => {
   describe("initial field value", () => {
     const { location } = window;
 
-    beforeAll(() => {
+    beforeEach(() => {
       delete window.location;
+      window.location = {
+        search: "?filter_category=initial",
+      };
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+      });
     });
 
-    afterAll(() => {
+    afterEach(() => {
       window.location = location;
     });
 
     it("must be the on in window.location.search", () => {
-      window.location = { search: "?category_filter='initial'" };
-      expect(wrapper.find('[name="filter_category"]').text()).toBe("initial");
+      expect(wrapper.find('[name="filter_category"]').element.value).toBe(
+        "initial"
+      );
     });
   });
 });

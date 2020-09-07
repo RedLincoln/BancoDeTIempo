@@ -32,6 +32,7 @@ let inputTimeout = null;
 
 export default {
   props: {
+    initialValue: String,
     placeholder: String,
     search_url: {
       type: String,
@@ -49,7 +50,7 @@ export default {
   data() {
     return {
       show: false,
-      fieldInput: "",
+      fieldInput: this.initialValue,
       values: [],
     };
   },

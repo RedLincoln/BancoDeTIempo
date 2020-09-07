@@ -8,9 +8,10 @@
       </div>
       <Searcher
         placeholder="Categorías"
-        search_string="category_filter"
+        :search_string="search_string"
         field_name="filter_category"
         :search_url="$getJsonCategoriesPath"
+        :initialValue="initialValue"
       />
     </form>
   </div>
@@ -24,7 +25,15 @@ export default {
     Searcher,
   },
   data: function () {
-    return {};
+    return {
+      search_string: "filter_category",
+    };
+  },
+  computed: {
+    initialValue() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(this.search_string);
+    },
   },
 };
 </script>
