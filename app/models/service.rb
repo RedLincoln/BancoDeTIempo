@@ -15,4 +15,7 @@ class Service < ApplicationRecord
     where(category: categories)
   end
 
+  def self.amount(amount)
+    Service.limit(amount)
+  end
 end
