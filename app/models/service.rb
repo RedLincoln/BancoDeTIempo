@@ -19,6 +19,10 @@ class Service < ApplicationRecord
     5
   end
 
+  def self.page_count
+    1 + count / default_page_size
+  end
+
   def self.pagination(page: 1)
     page = 1 if page == nil
     return none if page <= 0

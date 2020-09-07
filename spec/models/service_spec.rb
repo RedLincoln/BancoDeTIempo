@@ -106,7 +106,7 @@ RSpec.describe Service, type: :model do
     end
 
     it "get the total of pages when the last page is not filled" do
-      expect(Serviec.all.page_count).to eq(2)
+      expect(Service.all.page_count).to eq(2)
     end
   end
 end
