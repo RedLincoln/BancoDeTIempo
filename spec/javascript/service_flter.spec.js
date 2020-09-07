@@ -46,23 +46,35 @@ describe("ServiceFilter.vue", () => {
       expect(wrapper.find(".dropdown-content").exists()).toBeFalsy();
     });
 
-    it.only("click on filter toggle the filters input", async () => {
+    it("click on filter toggle the filters input", async () => {
       await wrapper.find(".filter-dropdown").trigger("click");
       expect(wrapper.find(".dropdown-content").exists()).toBeTruthy();
       await wrapper.find(".filter-dropdown").trigger("click");
       expect(wrapper.find(".dropdown-content").exists()).toBeFalsy();
     });
 
-    it("category filter list initial state is hidden", async () => {
-      expect(wrapper.find(".content_list").exists()).toBeFalsy();
-    });
+    describe("category filter", () => {
+      beforeEach(() => {
+        wrapper = mount(ServiceFilter, {
+          mocks: mocks,
+          data() {
+            return {
+              show: true,
+            };
+          },
+        });
+      });
+      it("category filter list initial state is hidden", async () => {
+        expect(wrapper.find(".content_list").exists()).toBeFalsy();
+      });
 
-    it("show category filter on focus", async () => {
-      axios.get.mockResolvedValue({});
+      it("show category filter on focus", async () => {
+        axios.get.mockResolvedValue({});
 
-      await wrapper.find("[name='filter_category']").trigger("focus");
+        await wrapper.find("[name='filter_category']").trigger("focus");
 
-      expect(wrapper.find(".content_list").exists()).toBeTruthy();
+        expect(wrapper.find(".content_list").exists()).toBeTruthy();
+      });
     });
   });
 
@@ -70,6 +82,11 @@ describe("ServiceFilter.vue", () => {
     beforeEach(() => {
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
       });
     });
 
@@ -114,6 +131,11 @@ describe("ServiceFilter.vue", () => {
     beforeEach(() => {
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
       });
     });
 
@@ -192,6 +214,11 @@ describe("ServiceFilter.vue", () => {
       };
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
       });
       expect(wrapper.find('[name="filter_category"]').element.value).toBe(
         "initial"
@@ -204,6 +231,11 @@ describe("ServiceFilter.vue", () => {
       };
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
       });
       expect(wrapper.find('[name="filter_supcategory"]').element.value).toBe(
         "initial"
@@ -216,6 +248,11 @@ describe("ServiceFilter.vue", () => {
       };
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
       });
       expect(wrapper.find('[name="filter_category"]').element.value).toBe("");
     });

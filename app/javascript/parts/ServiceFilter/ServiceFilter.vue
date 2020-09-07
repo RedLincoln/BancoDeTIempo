@@ -3,7 +3,7 @@
   <div id="service_filter" class="container border rounded pt-2 pb-2 mb-3">
     <form :action="$servicesPath" method="GET">
       <div class="d-flex align-items-center border-bottom mb-2 justify-content-between">
-        <h4 class="mb-0 filter-dropdown">Filtros</h4>
+        <h4 class="mb-0 filter-dropdown" @click="toggleFilters">Filtros</h4>
         <button
           v-if="show"
           type="submit"
@@ -57,6 +57,9 @@ export default {
     },
   },
   methods: {
+    toggleFilters() {
+      this.show = !this.show;
+    },
     setSupcategory(supcategoryValue) {
       this.supcategoryValue = supcategoryValue;
     },
