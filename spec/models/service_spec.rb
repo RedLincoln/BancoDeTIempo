@@ -98,7 +98,11 @@ RSpec.describe Service, type: :model do
 
     it "out of bound pages returns no record" do
       expect(Service.all.pagination(page: 3).to_a).to eql([])
-      expect(Service.all.pagination(page: 0).to_a).to eql([])
+      expect(Service.all.pagination(page: -1).to_a).to eql([])
+    end
+
+    it 'page 0 should return content of page 1' do
+      expect(Service.all.pagination(page: 0).to_a).to eql([service1, service2, service3, service4, service5])
     end
 
     it "nil page return page 1" do

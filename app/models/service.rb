@@ -26,7 +26,7 @@ class Service < ApplicationRecord
 
   def self.pagination(page: 1)
     page = 1 if page == nil
-    return none if page <= 0
+    return none if page < 0
     amount(limit: default_page_size, offset: (page-1) * default_page_size)
   end
 

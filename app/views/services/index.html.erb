@@ -16,3 +16,10 @@
     </article>
   <% end %>
 </div>
+<ul class="service_pagination pagination">
+  <% @pages.each do |page| %>
+    <li class="page-item">
+    <%= link_to page, request.params.merge(page: page), class: 'page-link'%>
+    </li>
+  <% end %>
+</ul>
