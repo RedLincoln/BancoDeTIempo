@@ -1,8 +1,6 @@
-require 'faker'
-
 FactoryBot.define do
   factory :service do
-    name { Faker::Name.unique.name }
+    sequence(:name) { |n| "name_#{n}"}
     description { "Casa" }
     category
     user

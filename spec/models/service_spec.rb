@@ -67,6 +67,9 @@ RSpec.describe Service, type: :model do
     let(:service1) { create(:service) }
     let(:service2) { create(:service) }
     let(:service3) { create(:service) }
+    let(:service4) { create(:service) }
+    let(:service5) { create(:service) }
+    let(:service6) { create(:service) }
 
     before(:each) do
       service1
@@ -80,6 +83,13 @@ RSpec.describe Service, type: :model do
 
     it "can get a fixed amount with offset" do
       expect(Service.all.amount(limit: 2, offset: 1).to_a).to eql([service2, service3])
+    end
+
+    it "default page size is 5" do
+      service4
+      service5
+      service6
+      expect(Service.all.amount(page: 1).to_a).to eql([service1, service2, service3, service4, service5])
     end
   end
 end
