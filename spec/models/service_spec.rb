@@ -58,7 +58,7 @@ RSpec.describe Service, type: :model do
       end
 
       it 'find by complete name' do
-        expect(Service.find_by_category_supcategory(category1.name).to_a).to eq([service1])
+        expect(Service.find_by_category_supcategory(category1.supcategory).to_a).to eq([service1])
       end
 
       it 'find by portion of category name' do

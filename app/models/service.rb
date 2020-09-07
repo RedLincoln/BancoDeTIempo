@@ -15,6 +15,12 @@ class Service < ApplicationRecord
     where(category: categories)
   end
 
+  def self.find_by_category_supcategory(supcategory = '')
+    return all if supcategory == '' || supcategory == nil
+    categories = Category.search_by_supcategory(supcategory).map(&:id)
+    where(category: categories)
+  end
+
   def self.default_page_size
     5
   end
