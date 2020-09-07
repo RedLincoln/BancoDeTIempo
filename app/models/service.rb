@@ -20,7 +20,7 @@ class Service < ApplicationRecord
   end
 
   def self.page_count
-    1 + count / default_page_size
+    (count.to_f / default_page_size).ceil
   end
 
   def self.pagination(page: 1)
