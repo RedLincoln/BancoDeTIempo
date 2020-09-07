@@ -9,11 +9,11 @@ class Category < ApplicationRecord
   end
 
   def self.search_by_name(search_string)
-    search_by_field(search_string, :name)
+    search_by_field(search_string, 'name')
   end
 
   def self.search_by_supcategory(search_string)
-    search_by_field(search_string, :supcategory)
+    search_by_field(search_string, 'supcategory')
   end
 
   def self.grouped_by_supcategory
@@ -29,7 +29,7 @@ class Category < ApplicationRecord
   def self.search_by_field(search_string, field)
     regex = Regexp.new(Regexp.escape(search_string), Regexp::IGNORECASE)
     Category.all.select do |category|
-      category[field].delete(' ') =~ regex
+      category.send(field).delete(' ') =~ regex
     end
   end
 end

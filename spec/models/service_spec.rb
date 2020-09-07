@@ -13,8 +13,8 @@ RSpec.describe Service, type: :model do
   end
 
   describe 'finders' do
-    let(:category1) { create(:category, name: 'AcceptCategory')}
-    let(:category2) { create(:category, name: 'BadCategory')}
+    let(:category1) { create(:category, name: 'AcceptCategory', supcategory: 'AcceptSupcategory')}
+    let(:category2) { create(:category, name: 'BadCategory', supcategory: 'BadSupcategory')}
     let(:service1) { create(:service, category: category1) }
     let(:service2) { create(:service, category: category2) }
 
@@ -42,7 +42,7 @@ RSpec.describe Service, type: :model do
       end
     end
 
-    describe 'find_by_category_name' do
+    describe 'find_by_category_supcategory' do
 
       before(:each) do
         service1
@@ -50,19 +50,19 @@ RSpec.describe Service, type: :model do
       end
 
       it 'with no param returns all' do
-        expect(Service.find_by_category_name.to_a).to eql([service1, service2])
+        expect(Service.find_by_category_supcategory.to_a).to eql([service1, service2])
       end
 
       it 'with nil return all' do
-        expect(Service.find_by_category_name(nil).to_a).to eql([service1, service2])
+        expect(Service.find_by_category_supcategory(nil).to_a).to eql([service1, service2])
       end
 
       it 'find by complete name' do
-        expect(Service.find_by_category_name(category1.name).to_a).to eq([service1])
+        expect(Service.find_by_category_supcategory(category1.name).to_a).to eq([service1])
       end
 
       it 'find by portion of category name' do
-        expect(Service.find_by_category_name('Category').to_a).to eq([service1, service2])
+        expect(Service.find_by_category_supcategory('Category').to_a).to eq([service1, service2])
       end
     end
 
