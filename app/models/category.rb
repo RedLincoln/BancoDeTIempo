@@ -15,6 +15,13 @@ class Category < ApplicationRecord
     end
   end
 
+  def self.search_by_supcategory(search_string)
+    regex = Regexp.new(Regexp.escape(search_string), Regexp::IGNORECASE)
+    Category.all.select do |category|
+      category.supcategory.delete(' ') =~ regex
+    end
+  end
+
   def self.grouped_by_supcategory
     hash = Hash.new{ |h,k| h[k]=[]}
     Category.all.each do |category|
