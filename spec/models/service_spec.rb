@@ -104,5 +104,9 @@ RSpec.describe Service, type: :model do
     it "nil page return page 1" do
       expect(Service.all.pagination(page: nil).to_a).to eql([service1, service2, service3, service4, service5])
     end
+
+    it "get the total of pages when the last page is not filled" do
+      expect(Serviec.all.page_count).to eq(2)
+    end
   end
 end
