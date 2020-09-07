@@ -73,4 +73,41 @@ RSpec.describe Category, type: :model do
       expect(results).to eql([category])
     end
   end
+
+  describe 'seach by supcategory' do
+    let(:category) { create(:category, supcategory: 'Hola Mundo')}
+    let(:category2) { create(:category, supcategory: 'Buscar por nombre')}
+
+    before(:each) do
+      category
+      category2
+    end
+
+    it 'returns all Categories with empty search_string' do
+      results = Category.search_by_supcategory('')
+
+      expect(results).to eql([category, category2])
+    end
+
+    it 'search categories with supcategories containing a letter' do
+      results = Category.search_by_supcategory('H')
+
+      expect(results).to eql([category])
+    end
+
+    # Hola M<-undo
+    # Buscar por nom<-bre
+    it 'is case-insensitive' do
+      results = Category.search_by_supcategory('M')
+
+      expect(results).to eql([category, category2])
+    end
+
+    # Ho(la M)undo
+    it 'it ignores whitespaces' do
+      results = Category.search_by_supcategory('laM')
+
+      expect(results).to eql([category])
+    end
+  end
 end

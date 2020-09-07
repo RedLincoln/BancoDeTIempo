@@ -124,7 +124,7 @@ RSpec.describe 'Service', type: :system do
       expect(page).to_not have_selector("#service_#{service_result1.id}")
       expect(page).to_not have_selector("#service_#{service_result2.id}")
       expect(page).to have_selector("#service_#{service_supcategory.id}")
-    endpp
+    end
   end
 
   describe 'pagination' do

@@ -42,6 +42,30 @@ RSpec.describe Service, type: :model do
       end
     end
 
+    describe 'find_by_category_name' do
+
+      before(:each) do
+        service1
+        service2
+      end
+
+      it 'with no param returns all' do
+        expect(Service.find_by_category_name.to_a).to eql([service1, service2])
+      end
+
+      it 'with nil return all' do
+        expect(Service.find_by_category_name(nil).to_a).to eql([service1, service2])
+      end
+
+      it 'find by complete name' do
+        expect(Service.find_by_category_name(category1.name).to_a).to eq([service1])
+      end
+
+      it 'find by portion of category name' do
+        expect(Service.find_by_category_name('Category').to_a).to eq([service1, service2])
+      end
+    end
+
     describe 'services_not_made_by' do
 
       before(:each) do
