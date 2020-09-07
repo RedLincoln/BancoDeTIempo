@@ -75,7 +75,7 @@ RSpec.describe Service, type: :model do
     end
 
     it "can get a fixed amount" do
-      expect(Service.all.amount(2).to_a).to eql([service1, service2])
+      expect(Service.all.amount(limit: 2).to_a).to eql([service1, service2])
     end
 
     it "can get a fixed amount with offset" do

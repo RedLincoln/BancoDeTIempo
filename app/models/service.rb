@@ -15,7 +15,7 @@ class Service < ApplicationRecord
     where(category: categories)
   end
 
-  def self.amount(amount)
-    Service.limit(amount)
+  def self.amount(limit: Service.count, offset: 0)
+    Service.limit(limit).offset(offset)
   end
 end
