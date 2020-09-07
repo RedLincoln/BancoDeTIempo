@@ -27,7 +27,7 @@ class Category < ApplicationRecord
   private
 
   def self.search_by_field(search_string, field)
-    regex = Regexp.new(Regexp.escape(search_string), Regexp::IGNORECASE)
+    regex = Regexp.new(Regexp.escape(search_string.delete(' ')), Regexp::IGNORECASE)
     Category.all.select do |category|
       category.send(field).delete(' ') =~ regex
     end
