@@ -1,8 +1,6 @@
-require 'faker'
-
 FactoryBot.define do
   factory :category do
-    name { Faker::Types.rb_string }
+    sequence(:name) { |n| "name_#{n}" }
     supcategory { 'SUPCATEGORY' }
   end
 end

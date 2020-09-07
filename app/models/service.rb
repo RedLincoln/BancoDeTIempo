@@ -15,9 +15,13 @@ class Service < ApplicationRecord
     where(category: categories)
   end
 
+  def self.default_page_size
+    5
+  end
+
   def self.pagination(page: 1)
     return none if page <= 0
-    amount(limit: 5, offset: (page-1) * 5)
+    amount(limit: default_page_size, offset: (page-1) * default_page_size)
   end
 
   def self.amount(limit: Service.count, offset: 0)

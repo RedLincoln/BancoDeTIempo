@@ -1,9 +1,7 @@
-require 'faker'
-
 FactoryBot.define do
   factory :user do
     name { 'George Lucas' }
-    email { Faker::Internet.unique.email }
+    sequence(:email) { |n| "name#{n}@example#{n}.com" }
     password { 'password' }
 
     factory :admin do
