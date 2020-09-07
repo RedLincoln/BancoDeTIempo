@@ -114,6 +114,10 @@ RSpec.describe Service, type: :model do
       expect(Service.all.page_count).to eq(1)
     end
 
+    it "get the total of pages when there is no records" do
+      Service.destroy_all
+      expect(Service.all.page_count).to eq(1)
+    end
 
   end
 end
