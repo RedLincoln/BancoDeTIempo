@@ -62,4 +62,20 @@ RSpec.describe Service, type: :model do
       end
     end
   end
+
+  describe "pagination" do
+    let(:service1) { create(:service) }
+    let(:service2) { create(:service) }
+    let(:service3) { create(:service) }
+
+    before(:each) do
+      service1
+      service2
+      service3
+    end
+
+    it "can get a fixed amount" do
+      expect(Service.all.amount(2).to_a).to eql([service1, service2])
+    end
+  end
 end
