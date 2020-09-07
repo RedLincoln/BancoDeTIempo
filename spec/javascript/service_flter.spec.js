@@ -42,7 +42,14 @@ describe("ServiceFilter.vue", () => {
       });
     });
 
-    it.only("filters are initialy hidden", () => {
+    it("filters are initialy hidden", () => {
+      expect(wrapper.find(".dropdown-content").exists()).toBeFalsy();
+    });
+
+    it.only("click on filter toggle the filters input", async () => {
+      await wrapper.find(".filter-dropdown").trigger("click");
+      expect(wrapper.find(".dropdown-content").exists()).toBeTruthy();
+      await wrapper.find(".filter-dropdown").trigger("click");
       expect(wrapper.find(".dropdown-content").exists()).toBeFalsy();
     });
 

@@ -41,6 +41,7 @@ export default {
   },
   data: function () {
     return {
+      show: false,
       category_search_string: "filter_category",
       supcategory_search_string: "filter_supcategory",
     };
