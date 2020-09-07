@@ -102,6 +102,7 @@ RSpec.describe Service, type: :model do
       service4
       service5
       service6
+      Service.set_default_page_size 5
     end
 
     it "can get a fixed amount" do
@@ -110,10 +111,6 @@ RSpec.describe Service, type: :model do
 
     it "can get a fixed amount with offset" do
       expect(Service.all.amount(limit: 2, offset: 1).to_a).to eql([service2, service3])
-    end
-
-    it "default page size is 5" do
-      expect(Service.all.pagination(page: 1).to_a).to eql([service1, service2, service3, service4, service5])
     end
 
     it "last page returns the last records" do

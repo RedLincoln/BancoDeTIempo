@@ -17,24 +17,24 @@ RSpec.describe 'Service Transactions', type: :system do
     it 'User can ask for services', :aggregate_failures, js: true do
       visit services_path
 
-      within "#service_#{service.id}" do
-        find(".open_petition").click
+      find(".make-service-petition").click
+
+      within "form.service-petition" do
         find(".transaction-datetime", visible: false).execute_script("this.value = '07/07/2020, 12:00'")
-        fill_in('addition_information', with: 'Pintar casa')
-        find(".send_petition").click
+        fill_in('addition-information', with: 'Pintar casa')
+        fill_in('.transaction-duration', with: '2')
+        find(".send-petition").click
       end
 
-      find('#flash-messages .notice')
-      expect(page).to_not have_selector("#service_#{service.id} .open_petition")
-      visit user_index_path
+      visit user_account_path
 
-      within "#transaction_list #service_#{service.id}_petition" do
-        expect(page).to have_selector('.service_name', text: service.name)
-        expect(page).to have_selector('.service_description', text: service.description)
-        expect(page).to have_selector('.time_petition', text:'07/07/2020, 12:00')
-        expect(page).to have_selector('.additional_information', text: 'Pintar casa')
+      within "#transaction-list #service-#{service.id}-petition" do
+        expect(page).to have_selector('.service-name', text: service.name)
+        expect(page).to have_selector('.service-description', text: service.description)
+        expect(page).to have_selector('.date-and-duration', text:'07/07/2020, 12:00-14:00')
+        expect(page).to have_selector('.additional-information', text: 'Pintar casa')
         expect(page).to have_selector('.transaction_status')
-        expect(page).to have_selector('.offeror_name', text: offeringUser.name)
+        expect(page).to have_selector('.service-owner', text: offeringUser.name)
       end
     end
 

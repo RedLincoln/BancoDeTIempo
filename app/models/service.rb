@@ -1,9 +1,13 @@
 class Service < ApplicationRecord
+  @@page_size = 10
+
   validates :name, :description, presence: true
   validates :name, uniqueness: { scope: :user_id}
 
   belongs_to :user
   belongs_to :category
+
+
 
   def self.services_not_made_by(user)
     where.not(user: user)
@@ -21,19 +25,19 @@ class Service < ApplicationRecord
     where(category: categories)
   end
 
-  def self.default_page_size
-    5
+  def self.set_default_page_size page_size
+    @@page_size = page_size
   end
 
   def self.page_count
     return 1 if count == 0
-    (count.to_f / default_page_size).ceil
+    (count.to_f / @@page_size).ceil
   end
 
   def self.pagination(page: 1)
     page = 1 if page == nil || page == 0
     return none if page < 0
-    amount(limit: default_page_size, offset: (page-1) * default_page_size)
+    amount(limit: @@page_size, offset: (page-1) * @@page_size)
   end
 
   def self.amount(limit: Service.count, offset: 0)
