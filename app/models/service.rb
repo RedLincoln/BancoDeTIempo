@@ -16,10 +16,11 @@ class Service < ApplicationRecord
   end
 
   def self.pagination(page: 1)
+    return none if page <= 0
     amount(limit: 5, offset: (page-1) * 5)
   end
 
   def self.amount(limit: Service.count, offset: 0)
-    Service.limit(limit).offset(offset)
+    limit(limit).offset(offset)
   end
 end
