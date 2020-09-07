@@ -20,6 +20,7 @@ class Service < ApplicationRecord
   end
 
   def self.page_count
+    return 1 if count == 0
     (count.to_f / default_page_size).ceil
   end
 
