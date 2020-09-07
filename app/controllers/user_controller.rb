@@ -2,7 +2,7 @@ class UserController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @transaction = Transaction.all
+    @transaction = current_user.transactions
   end
 
   def services

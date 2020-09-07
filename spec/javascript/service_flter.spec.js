@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import axios from "axios";
 import Vue from "vue";
 import ServiceFilter from "../../app/javascript/parts/ServiceFilter/ServiceFilter";
@@ -32,14 +32,14 @@ describe("ServiceFilter.vue", () => {
     jest.useFakeTimers();
     spy = jest.spyOn(axios, "get");
     axios.get.mockResolvedValue(categoriesResponse);
-    wrapper = shallowMount(ServiceFilter, {
+    wrapper = mount(ServiceFilter, {
       mocks: mocks,
     });
   });
 
   describe("show and hide", () => {
     it("category filter list initial state is hidden", async () => {
-      expect(wrapper.find(".categories_list").exists()).toBeFalsy();
+      expect(wrapper.find(".content_list").exists()).toBeFalsy();
     });
 
     it("show category filter on focus", async () => {
@@ -47,7 +47,7 @@ describe("ServiceFilter.vue", () => {
 
       await wrapper.find("[name='filter_category']").trigger("focus");
 
-      expect(wrapper.find(".categories_list").exists()).toBeTruthy();
+      expect(wrapper.find(".content_list").exists()).toBeTruthy();
     });
 
     it("hide category filter on click of close bottom", async () => {
@@ -55,18 +55,18 @@ describe("ServiceFilter.vue", () => {
 
       await wrapper.find(".close_filter").trigger("click");
 
-      expect(wrapper.find(".categories_list").exists()).toBeFalsy();
+      expect(wrapper.find(".content_list").exists()).toBeFalsy();
     });
   });
 
   describe("", () => {
     it("fitler by category properly display Categories", async () => {
       await wrapper.find('[name="filter_category"]').trigger("focus");
-
       await Vue.nextTick();
+
       const expected = categoriesResponse.data.map((category) => category.name);
       const received = wrapper
-        .find(".categories_list")
+        .find(".content_list")
         .findAll("li")
         .wrappers.map((el) => el.text());
 
@@ -81,7 +81,7 @@ describe("ServiceFilter.vue", () => {
       await Vue.nextTick();
 
       await wrapper
-        .find(".categories_list")
+        .find(".content_list")
         .findAll("li")
         .at(categoryIndex)
         .trigger("click");
@@ -104,7 +104,7 @@ describe("ServiceFilter.vue", () => {
 
       const expected = resultFilter.data.map((category) => category.name);
       const received = wrapper
-        .find(".categories_list")
+        .find(".content_list")
         .findAll("li")
         .wrappers.map((el) => el.text());
 
