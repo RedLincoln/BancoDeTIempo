@@ -13,6 +13,7 @@ describe("ServiceFilter.vue", () => {
       { name: "Asesoramiento", supcategory: "Atención a Personas" },
       { name: "Asesoramiento", supcategory: "Huertos y Jardines" },
       { name: "Programación", supcategory: "Informática" },
+      { name: "Clases", supcategory: "Informática" },
       { name: "Mudanza", supcategory: "Hogar" },
     ],
   };

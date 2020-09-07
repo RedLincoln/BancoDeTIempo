@@ -50,6 +50,9 @@ export default {
     },
   },
   methods: {
+    setSupcategory(supcategoryValue) {
+      this.supcategoryValue = supcategoryValue;
+    },
     categoriesCallback(response) {
       return response.data.map((category) => category.name);
     },
