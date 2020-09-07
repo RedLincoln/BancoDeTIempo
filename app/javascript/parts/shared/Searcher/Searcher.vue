@@ -45,6 +45,10 @@ export default {
       type: String,
       default: "search_string",
     },
+    dataRetriveCallback: {
+      type: Function,
+      required: true,
+    },
   },
   data() {
     return {
@@ -82,7 +86,7 @@ export default {
           },
         })
         .then((response) => {
-          this.values = response.data.map((category) => category.name);
+          this.values = this.dataRetriveCallback(response);
         });
     },
   },

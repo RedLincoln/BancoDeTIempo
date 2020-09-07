@@ -54,7 +54,51 @@ describe("ServiceFilter.vue", () => {
     });
   });
 
-  describe("", () => {
+  describe.only("SupCategory:", () => {
+    beforeEach(() => {
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+      });
+    });
+
+    it("filter by supcategory properly display supcategories", async () => {
+      await wrapper.find('[name="filter_supcategory"]').trigger("focus");
+      await Vue.nextTick();
+
+      const expected = [
+        ...new Set(
+          categoriesResponse.data.map((category) => category.supcategory)
+        ),
+      ];
+      const received = wrapper
+        .find(".content_list")
+        .findAll("li")
+        .wrappers.map((el) => el.text());
+
+      expect(received).toEqual(expected);
+    });
+
+    it("can click on supcategories to filter", async () => {
+      const supCategoryIndex = 0;
+      await wrapper.find('[name="filter_supcategory"]').trigger("focus");
+
+      await Vue.nextTick();
+
+      await wrapper
+        .find(".content_list")
+        .findAll("li")
+        .at(supCategoryIndex)
+        .trigger("click");
+
+      const expected = categoriesResponse.data[supCategoryIndex].supcategory;
+      const received = wrapper.find("[name='filter_supcategory']").element
+        .value;
+
+      expect(received).toEqual(expected);
+    });
+  });
+
+  describe("Category:", () => {
     beforeEach(() => {
       wrapper = mount(ServiceFilter, {
         mocks: mocks,
