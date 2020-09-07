@@ -42,6 +42,10 @@ describe("ServiceFilter.vue", () => {
       });
     });
 
+    it("filters are initialy hidden", () => {
+      expect(wrapper.find(".dropdown-content").exists()).toBeFalsy();
+    });
+
     it("category filter list initial state is hidden", async () => {
       expect(wrapper.find(".content_list").exists()).toBeFalsy();
     });

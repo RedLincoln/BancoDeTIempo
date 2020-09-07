@@ -3,25 +3,27 @@
   <div id="service_filter" class="container border rounded pt-2 pb-2 mb-3">
     <form :action="$servicesPath" method="GET">
       <div class="d-flex align-items-center border-bottom mb-2 justify-content-between">
-        <h4 class="mb-0">Filtros</h4>
+        <h4 class="mb-0 filter-dropdown">Filtros</h4>
         <button type="submit" class="apply_filters btn btn-primary btn-sm">Aplicar filtros</button>
       </div>
-      <Searcher
-        placeholder="Categorías"
-        search_string="category_filter"
-        :field_name="category_search_string"
-        :search_url="$getJsonCategoriesPath"
-        :initialValue="categoryInitialValue"
-        :dataRetriveCallback="categoriesCallback"
-      />
-      <Searcher
-        placeholder="Categoría Raiz"
-        search_string="supcategory_filter"
-        :field_name="supcategory_search_string"
-        :search_url="$getJsonCategoriesPath"
-        :initialValue="supcategoryInitialValue"
-        :dataRetriveCallback="supcategoriesCallback"
-      />
+      <div class="dropdown-content">
+        <Searcher
+          placeholder="Categorías"
+          search_string="category_filter"
+          :field_name="category_search_string"
+          :search_url="$getJsonCategoriesPath"
+          :initialValue="categoryInitialValue"
+          :dataRetriveCallback="categoriesCallback"
+        />
+        <Searcher
+          placeholder="Categoría Raiz"
+          search_string="supcategory_filter"
+          :field_name="supcategory_search_string"
+          :search_url="$getJsonCategoriesPath"
+          :initialValue="supcategoryInitialValue"
+          :dataRetriveCallback="supcategoriesCallback"
+        />
+      </div>
     </form>
   </div>
 </template>
