@@ -16,21 +16,15 @@ class User < ApplicationRecord
   end
 
   def have_transaction?(service)
-    transactions.any? do |transaction|
-      transaction.service.id == service.id
-    end
+    have_transaction_helper(service, transactions)
   end
 
   def have_transaction_as_client?(service)
-    transactions_client.any? do |transaction|
-      transaction.service.id == service.id
-    end
+    have_transaction_helper(service, transactions_client)
   end
 
   def have_transaction_as_owner?(service)
-    transactions_client.any? do |transaction|
-      transaction.service.id == service.id
-    end
+    have_transaction_helper(service, transactions_owner)
   end
 
   def find_service(service_id)
@@ -39,5 +33,13 @@ class User < ApplicationRecord
 
   def find_notification(notification_id)
     Notification.find_by! id:notification_id, user_id: id
+  end
+
+  private
+
+  def have_transaction_helper(service, transactions)
+    transactions.any? do |transaction|
+      transaction.service.id == service.id
+    end
   end
 end
