@@ -14,9 +14,9 @@ class Transaction < ApplicationRecord
   end
 
   def duration_range
-    start = "#{datetime.hour}:#{datetime.min}"
+    start = datetime.strftime("%H:%M")
     finalDatetime = datetime + 2.hour
-    finish = "#{finalDatetime.hour}:#{datetime.min}"
+    finish = finalDatetime.strftime("%H:%M")
     "#{start}-#{finish}"
   end
 
