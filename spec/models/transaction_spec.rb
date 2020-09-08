@@ -12,6 +12,7 @@ RSpec.describe Transaction, type: :model do
     let(:user) { create(:user) }
 
     it { should validate_presence_of(:datetime) }
+    it { should validate_presence_of(:duration) }
 
     it 'service owner can not be the client' do
       transaction = Transaction.new(service: service, client: service.user)
