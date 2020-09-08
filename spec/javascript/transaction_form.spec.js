@@ -60,5 +60,11 @@ describe("transaction_form.vue", () => {
       await wrapper.find("#transaction-duration").trigger("input");
       expect(wrapper.find("#transaction-duration").element.value).toBe("0");
     });
+
+    it("duration value remove left side zeros", async () => {
+      wrapper.find("#transaction-duration").element.value = "01";
+      await wrapper.find("#transaction-duration").trigger("input");
+      expect(wrapper.find("#transaction-duration").element.value).toBe("1");
+    });
   });
 });
