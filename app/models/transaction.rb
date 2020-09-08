@@ -13,6 +13,13 @@ class Transaction < ApplicationRecord
     }
   end
 
+  def duration_range
+    start = "#{datetime.hour}:#{datetime.min}"
+    finalDatetime = datetime + 2.hour
+    finish = "#{finalDatetime.hour}:#{datetime.min}"
+    "#{start}-#{finish}"
+  end
+
   private
 
   def service_owner_can_not_be_the_client
