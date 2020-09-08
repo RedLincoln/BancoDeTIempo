@@ -3,7 +3,7 @@
     <div>
       <button type="button" class="toggle-button border rounded-circle mr-2" id="notification-list"
       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="toggleDropdown">!</button>
-      <span id="notifications-counter" class="position-absolute">{{ counter }}</span>
+      <span id="notifications-counter" class="position-absolute text-white">{{ counter }}</span>
     </div>
     <div>
     <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">

@@ -32,6 +32,7 @@ Vue.prototype.$signOutPath = Routes.destroy_user_session_path({ format: 'json'})
 Vue.prototype.$userServicesPath = Routes.user_services_path()
 Vue.prototype.$createTransactionPath = Routes.transactions_path({ format: 'js'})
 Vue.prototype.$userProfilePath = Routes.user_index_path()
+Vue.prototype.$userAccountPath = Routes.user_account_path()
 Vue.prototype.$getJsonCategoriesPath = Routes.categories_path({ format: 'json' })
 Vue.prototype.$getCSRFToken = () => {
     return document.querySelector("meta[name=csrf-token]").getAttribute('content')

@@ -1,3 +1,8 @@
+<%
+  showActions = false if showActions.nil?
+  showEditActions = false if showEditActions.nil?
+%>
+
 <table class="services-list table">
     <thead class="thead-dark">
     <tr>
@@ -5,7 +10,7 @@
         <th scope="col">Usuario que lo ofrece</th>
         <th scope="col">Categoría</th>
         <th scope="col">Descripción</th>
-        <% if showActions %>
+        <% if showActions || showEditActions %>
           <th scope="col"></th>
         <% end %>
     </tr>
@@ -22,7 +27,15 @@
               <%= link_to 'Pedir', new_service_petition_path(service.id), class: "make-service-petition btn btn-success" %>
           </td>
         <% end %>
-    </tr>
+        <% if showEditActions %>
+          <td>
+            <div>
+              <%= link_to 'Editar', edit_service_path(service), class: 'edit_service btn btn-sm btn-primary mr-2' %>
+              <%= button_to 'Eliminar', service_path(service), class: 'delete_service btn btn-sm btn-danger', method: :delete, remote: true %>
+            </div>
+          </td>
+        <% end %>
+      </tr>
     <% end %>
     </tbody>
 </table>
