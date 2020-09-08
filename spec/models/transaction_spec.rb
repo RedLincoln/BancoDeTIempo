@@ -12,7 +12,7 @@ RSpec.describe Transaction, type: :model do
     let(:user) { create(:user) }
 
     it { should validate_presence_of(:datetime) }
-    it { should validate_presence_of(:duration) }
+    it { should validate_numericality_of(:duration) }
 
     it 'service owner can not be the client' do
       transaction = Transaction.new(service: service, client: service.user)
@@ -22,7 +22,7 @@ RSpec.describe Transaction, type: :model do
     end
 
     it 'valid when client and owner are different' do
-      transaction = Transaction.new(datetime: "10/10/2020 10:30", service: service, client: user)
+      transaction = Transaction.new(datetime: "10/10/2020 10:30", duration: 2, service: service, client: user)
 
       expect(transaction).to be_valid
     end
