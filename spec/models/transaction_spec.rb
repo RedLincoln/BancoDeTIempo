@@ -36,8 +36,16 @@ RSpec.describe Transaction, type: :model do
                                       datetime: DateTime.new(2020, 2, 2, 10, 25, 0),
                                       duration: 2)}
 
+    let(:single_digit_min_transaction) { build_stubbed(:transaction,
+                                      datetime: DateTime.new(2020, 2, 2, 10, 3, 0),
+                                      duration: 2)}
+
     it 'must be in a specific output format' do
       expect(transaction.duration_range).to eq('10:25-12:25')
+    end
+
+    it 'minutes must be 2 digits' do
+      expect(single_digit_min_transaction.duration_range).to eq('10:03-12:03')
     end
   end
 
