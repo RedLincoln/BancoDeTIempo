@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import axios from "axios";
-import Vue from "vue";
 import TransactionForm from "../../app/javascript/parts/transaction_form";
+import DatetimePicker from "../../app/javascript/parts/DatetimePicker/DatetimePicker";
 
 jest.mock("axios");
 
@@ -96,8 +96,9 @@ describe("transaction_form.vue", () => {
       wrapper.find("#transaction-duration").element.value = "2";
       await wrapper.find("#transaction-duration").trigger("input");
 
-      wrapper.vm.$emit("selected-time", time);
-      await wrapper.vm.$nextTick();
+      await wrapper
+        .findComponent(DatetimePicker)
+        .vm.$emit("selected-time", time);
 
       expect(wrapper.find(".duration-time-range").text()).toBe("8:00 - 10:00");
     });

@@ -23,22 +23,25 @@
       <input type="hidden" name="authenticity_token" :value="$getCSRFToken()" />
       <input type="hidden" name="transaction[service_id]" :value="service_id" />
       <div class="field">
-        <DatetimePicker></DatetimePicker>
+        <DatetimePicker @selected-time="setDurationRange"></DatetimePicker>
       </div>
       <div class="field form-group">
         <label for="transaction-duration">Duración: </label>
-        <input
-          type="number"
-          min="0"
-          max="23"
-          placeholder="Número de horas"
-          :value="duration"
-          @input="validateInteger"
-          @keydown.delete="handleDurationDelete"
-          name="transaction[duration]"
-          id="transaction-duration"
-          class="form-control"
-        />
+        <div>
+          <input
+            type="number"
+            min="0"
+            max="23"
+            placeholder="Número de horas"
+            :value="duration"
+            @input="validateInteger"
+            @keydown.delete="handleDurationDelete"
+            name="transaction[duration]"
+            id="transaction-duration"
+            class="form-control"
+          />
+          <span class="duration-time-range">{{ rangeDuration }}</span>
+        </div>
       </div>
       <div class="field form-group">
         <label for="addition_information">Información aditional:</label>
@@ -80,6 +83,7 @@ export default {
     return {
       errors: {},
       duration: 0,
+      rangeDuration: "",
     };
   },
   computed: {
@@ -88,6 +92,19 @@ export default {
     },
   },
   methods: {
+    formatMinutes(minutes) {
+      return minutes < 10 ? `0${minutes}` : minutes;
+    },
+    toHourAndMinutes(seconds) {
+      const hours = seconds / (60 * 60);
+      const minutes = this.formatMinutes((seconds - hours * (60 * 60)) / 60);
+      return `${hours}:${minutes}`;
+    },
+    setDurationRange(timeInSeconds) {
+      const start = this.toHourAndMinutes(timeInSeconds);
+      const end = this.toHourAndMinutes(timeInSeconds + 2 * 60 * 60);
+      this.rangeDuration = `${start} - ${end}`;
+    },
     validateInteger(event) {
       const value = parseFloat(event.target.value);
       if (_.isInteger(value) && value <= 23) {
