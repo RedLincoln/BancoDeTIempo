@@ -14,7 +14,7 @@
       <tr id="service-<%= transaction.service.id %>-petition">
         <td class="transaction-status"><%= transaction.status %></td>
         <td class="service-name"><%= transaction.service.name %></td>
-        <td class="date-and-duration"><%= transaction.datetime %></td>
+        <td class="date-and-duration"><%= "#{transaction.date_format} #{transaction.duration_range}" %></td>
         <td class="service-owner"><%= transaction.service.user.name %></td>
         <td class="service-description"><%= transaction.service.description %></td>
         <td class="additional-information"><%= transaction.addition_information %></td>

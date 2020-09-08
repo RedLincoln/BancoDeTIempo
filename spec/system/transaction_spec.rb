@@ -20,7 +20,7 @@ RSpec.describe 'Service Transactions', type: :system do
       find(".make-service-petition").click
 
       within "form.service-petition" do
-        find(".transaction-datetime", visible: false).execute_script("this.value = '2020/07/07 12:00'")
+        find(".transaction-datetime", visible: false).execute_script("this.value = '2020/06/07 12:00'")
         fill_in('addition-information', with: 'Pintar casa')
         fill_in('transaction-duration', with: '2')
         find(".send-petition").click
