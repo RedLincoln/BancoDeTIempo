@@ -29,6 +29,8 @@
         <label for="transaction-duration">Duración: </label>
         <input
           placeholder="Número de horas"
+          :value="duration"
+          @input="validateInteger"
           name="transaction[duration]"
           id="transaction-duration"
           class="form-control"
@@ -73,6 +75,7 @@ export default {
   data: function() {
     return {
       errors: {},
+      duration: 0,
     };
   },
   computed: {
@@ -81,6 +84,11 @@ export default {
     },
   },
   methods: {
+    validateInteger(event) {
+      console.log(event.target.value);
+      this.duration = 0;
+      this.$forceUpdate();
+    },
     sendPetition: function(e) {
       axios
         .post(

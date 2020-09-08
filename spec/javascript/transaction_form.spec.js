@@ -48,7 +48,7 @@ describe("transaction_form.vue", () => {
         transaction: {
           addition_information: "",
           datetime: " ",
-          duration: "",
+          duration: "0",
           service_id: propsData.service_id.toString(),
         },
         utf8: "✓",
@@ -56,8 +56,9 @@ describe("transaction_form.vue", () => {
     });
 
     it("duration value can only be an integer", async () => {
-      await wrapper.find("#transaction-duration").setValue("Haol");
-      expect(wrapper.find("#transaction-duration").element.value).toBe("");
+      wrapper.find("#transaction-duration").element.value = "Haol";
+      await wrapper.find("#transaction-duration").trigger("input");
+      expect(wrapper.find("#transaction-duration").element.value).toBe("0");
     });
   });
 });
