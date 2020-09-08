@@ -7,9 +7,10 @@ Rails.application.routes.draw do
 
   # Transaction
   post 'transactions', :to => 'transaction#create', :as => 'transactions'
-
-  # Account
   get 'service/:id/petition', :to => 'transaction#new', :as => 'new_service_petition'
+
+  #Account
+  get 'profile/account', :to => 'account#index', :as => 'user_account'
 
   get 'categories/new', :to => 'category#new', :as => 'new_category'
   get 'categories', :to => 'category#index', :as => 'categories'

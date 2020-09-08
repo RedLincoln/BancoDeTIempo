@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div v-if="drop" class="date-picker d-flex">
+    <div v-if="drop" class="date-picker d-flex border rounded p-2">
       <div class="w-75">
         <div
           class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2"
@@ -262,6 +262,10 @@ export default {
 .time-picker ul li:hover {
   cursor: pointer;
   background-color: #007bff;
+}
+
+#transaction-datetime {
+  cursor: pointer;
 }
 
 .active {

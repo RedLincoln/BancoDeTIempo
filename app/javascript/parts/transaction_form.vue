@@ -42,23 +42,25 @@
             id="transaction-duration"
             class="form-control"
           />
-          <span class="duration-time-range">{{ rangeDuration }}</span>
+          <span class="duration-time-range text-muted">{{
+            rangeDuration
+          }}</span>
         </div>
       </div>
       <div class="field form-group">
-        <label for="addition_information">Información aditional:</label>
+        <label for="addition-information">Información aditional:</label>
         <br />
         <textarea
           class="form-control"
           name="transaction[addition_information]"
-          id="addition_information"
+          id="addition-information"
           placeholder="Añade información extra"
           rows="3"
           cols="40"
         ></textarea>
       </div>
       <div class="actions">
-        <button class="send_petition btn btn-primary">Enviar</button>
+        <button class="send-petition btn btn-primary">Enviar</button>
       </div>
     </form>
   </div>
@@ -84,14 +86,16 @@ export default {
   data: function() {
     return {
       errors: {},
-      timeRangeInSeconds: 0,
+      timeRangeInSeconds: -1,
       duration: 0,
       rangeDuration: "Selecciona una hora para ver el rango",
     };
   },
   watch: {
     duration() {
-      this.setDurationRange();
+      if (this.timeRangeInSeconds >= 0) {
+        this.setDurationRange();
+      }
     },
     timeRangeInSeconds() {
       this.setDurationRange();
@@ -110,7 +114,7 @@ export default {
       let minutes = seconds / 60;
       const hours = Math.floor(minutes / 60);
       minutes = minutes - hours * 60;
-      return `${hours}:${this.formatMinutes(minutes)}`;
+      return `${hours % 24}:${this.formatMinutes(minutes)}`;
     },
     setDurationRange() {
       const start = this.toHourAndMinutes(this.timeRangeInSeconds);

@@ -107,6 +107,7 @@ RSpec.describe 'Service', type: :system do
     end
 
     it 'can filter by Category', js: true do
+      find(".filter-dropdown").click
       fill_in('filter_category', with: category.name)
 
       find('#service_filter .apply_filters').click
@@ -117,6 +118,7 @@ RSpec.describe 'Service', type: :system do
     end
 
     it 'can filter by supCategory', js: true do
+      find(".filter-dropdown").click
       fill_in('filter_supcategory', with: match_supcategory.supcategory)
 
       find('#service_filter .apply_filters').click
@@ -142,6 +144,7 @@ RSpec.describe 'Service', type: :system do
       service4
       service5
       service_in_second_page
+      Service.set_default_page_size(5)
     end
 
     it 'can navigate to second page' do

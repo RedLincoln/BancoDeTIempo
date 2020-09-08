@@ -4,10 +4,10 @@
     <template v-if="isLoggedReactive">
       <Notifications :user_id="user_id"></Notifications>
       <NavigationDropdown :title="user_name" :links="getLinks()"/>
-      <Link class="logout_button btn btn-danger" text="Cerrar sesión" :isNotAnAnchor="true" @click.native="logout"/>
+      <Link class="logout_button btn btn-danger text-white" text="Cerrar sesión" :isNotAnAnchor="true" @click.native="logout"/>
     </template>
     <template v-else>
-      <Link class="login_button btn btn-info" text="Iniciar sesión" :href="$loginPath"/>
+      <Link class="login_button btn btn-info text-white" text="Iniciar sesión" :href="$loginPath"/>
       <Link class="sign_up_button btn btn-light" text="Registrarse" :href="$signUpPath"/>
     </template>
   </div>
