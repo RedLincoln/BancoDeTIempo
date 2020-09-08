@@ -66,5 +66,13 @@ describe("transaction_form.vue", () => {
       await wrapper.find("#transaction-duration").trigger("input");
       expect(wrapper.find("#transaction-duration").element.value).toBe("1");
     });
+
+    it("duration input set to 0 when there is only one element and u delete it", async () => {
+      wrapper.find("#transaction-duration").element.value = "01";
+      await wrapper.find("#transaction-duration").trigger("input");
+      expect(wrapper.find("#transaction-duration").element.value).toBe("1");
+      await wrapper.find("#transaction-duration").trigger("keydown.delete");
+      expect(wrapper.find("#transaction-duration").element.value).toBe("0");
+    });
   });
 });

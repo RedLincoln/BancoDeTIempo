@@ -29,6 +29,8 @@
         <label for="transaction-duration">Duración: </label>
         <input
           type="number"
+          min="0"
+          max="23"
           placeholder="Número de horas"
           :value="duration"
           @input="validateInteger"
@@ -86,7 +88,7 @@ export default {
   },
   methods: {
     validateInteger(event) {
-      if (_.isInteger(parseInt(event.target.value))) {
+      if (_.isInteger(parseFloat(event.target.value))) {
         this.duration = parseInt(event.target.value);
       }
       this.$forceUpdate();
