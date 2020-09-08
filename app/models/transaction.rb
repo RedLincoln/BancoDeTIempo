@@ -20,6 +20,10 @@ class Transaction < ApplicationRecord
     "#{start}-#{finish}"
   end
 
+  def date_format
+    datetime.strftime("%d/%m/%Y")
+  end
+
   private
 
   def service_owner_can_not_be_the_client
