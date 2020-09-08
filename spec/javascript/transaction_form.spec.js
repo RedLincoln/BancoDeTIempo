@@ -90,5 +90,16 @@ describe("transaction_form.vue", () => {
       await wrapper.find("#transaction-duration").trigger("input");
       expect(wrapper.find("#transaction-duration").element.value).toBe("2");
     });
+
+    it("duration show time range when time is emitted", async () => {
+      const time = 8 * 60 * 60;
+      wrapper.find("#transaction-duration").element.value = "2";
+      await wrapper.find("#transaction-duration").trigger("input");
+
+      wrapper.vm.$emit("selected-time", time);
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(".duration-time-range").text()).toBe("8:00 - 10:00");
+    });
   });
 });
