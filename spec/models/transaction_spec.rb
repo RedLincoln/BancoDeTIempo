@@ -21,7 +21,7 @@ RSpec.describe Transaction, type: :model do
     end
 
     it 'valid when client and owner are different' do
-      transaction = Transaction.new(service: service, client: user)
+      transaction = Transaction.new(datetime: "10/10/2020 10:30", service: service, client: user)
 
       expect(transaction).to be_valid
     end
