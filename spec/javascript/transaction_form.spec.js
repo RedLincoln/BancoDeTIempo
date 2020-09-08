@@ -84,6 +84,8 @@ describe("transaction_form.vue", () => {
     });
 
     it("duration value must be less of equal to 23", async () => {
+      wrapper.find("#transaction-duration").element.value = "2";
+      await wrapper.find("#transaction-duration").trigger("input");
       wrapper.find("#transaction-duration").element.value = "24";
       await wrapper.find("#transaction-duration").trigger("input");
       expect(wrapper.find("#transaction-duration").element.value).toBe("2");

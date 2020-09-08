@@ -89,8 +89,9 @@ export default {
   },
   methods: {
     validateInteger(event) {
-      if (_.isInteger(parseFloat(event.target.value))) {
-        this.duration = parseInt(event.target.value);
+      const value = parseFloat(event.target.value);
+      if (_.isInteger(value) && value <= 23) {
+        this.duration = value;
       }
       this.$forceUpdate();
     },
