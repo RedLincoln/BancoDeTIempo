@@ -1,7 +1,7 @@
 class Transaction < ApplicationRecord
   after_commit :broadcast
   validates :datetime, presence: true
-  validates :duration, numericality: { only_integer: true, greater_than: 0}
+  validates :duration, numericality: { only_integer: true, greater_than: 0, less_than: 24}
   belongs_to :client, class_name: :User
   belongs_to :service
 
