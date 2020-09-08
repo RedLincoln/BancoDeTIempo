@@ -1,30 +1,6 @@
 <h2>Servicios</h2>
 <span id="service-filter"></span>
-<table class="services-list table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Nombre de Servicio</th>
-      <th scope="col">Usuario que lo ofrece</th>
-      <th scope="col">Categoría</th>
-      <th scope="col">Descripción</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @services.each do |service| %>
-      <tr id="service_<%= service.id %>" class="service_post">
-          <td class="service_name pt-4 pb-4"><%= service.name %></td>
-          <td class="pt-4 pb-4"><%= service.user.name %></td>
-          <td class="pt-4 pb-4"><%= service.category.name %></td>
-          <td class="service_description pt-4 pb-4"><%= service.description %></td>
-          <td class="action-container pt-4 pb-4">
-            <div class="transaction_action" data-service-data="<%= { service_asked: current_user.have_transaction?(service),
-                                                                     service_id: service.id }.to_json %>"></div>
-          </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'shared/services', services: @services, showActions: true %>
 <ul class="service_pagination pagination">
   <% @pages.each do |page| %>
     <li class="page-item">

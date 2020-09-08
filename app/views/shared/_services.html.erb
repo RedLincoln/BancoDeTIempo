@@ -1,0 +1,28 @@
+<table class="services-list table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Nombre de Servicio</th>
+        <th scope="col">Usuario que lo ofrece</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Descripción</th>
+        <% if showActions %>
+          <th scope="col"></th>
+        <% end %>
+    </tr>
+    </thead>
+    <tbody>
+    <% services.each do |service| %>
+    <tr id="service_<%= service.id %>" class="service_post">
+        <td class="service_name pt-4 pb-4"><%= service.name %></td>
+        <td class="pt-4 pb-4"><%= service.user.name %></td>
+        <td class="pt-4 pb-4"><%= service.category.name %></td>
+        <td class="service_description pt-4 pb-4"><%= service.description %></td>
+        <% if showActions %>
+          <td class="action-container pt-4 pb-4">
+              <%= link_to 'Pedir', new_service_petition_path(service.id), class: "make-service-petition btn btn-success" %>
+          </td>
+        <% end %>
+    </tr>
+    <% end %>
+    </tbody>
+</table>

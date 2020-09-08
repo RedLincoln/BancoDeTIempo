@@ -10,14 +10,12 @@ import TurbolinksAdapter from 'vue-turbolinks'
 Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
-  if (!isView('services#index')) return
-  const vues = document.querySelectorAll('.transaction_action')
-  Array.prototype.forEach.call(vues, (el) => {
-    const props = JSON.parse(el.dataset.serviceData)
-    new Vue({
-      el,
-      render: h => h(App, {props: props})
-    })
-  })
+  if (!isView('transaction#new')) return
+  const el = document.getElementById('#transaction-action')
+  const props = JSON.parse(el.dataset.serviceData)
 
+  new Vue({
+    el,
+    render: h => h(App, {props: props})
+  })
 })

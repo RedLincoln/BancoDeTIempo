@@ -1,73 +1,47 @@
-import { shallowMount} from "@vue/test-utils";
-import MockAdapter from "axios-mock-adapter";
-import axios from 'axios'
-import transaction_form from "../../app/javascript/parts/transaction_form";
+import { mount } from "@vue/test-utils";
+import axios from "axios";
+import TransactionForm from "../../app/javascript/parts/transaction_form";
 
-jest.mock('../../app/javascript/setupAxios')
+jest.mock("axios");
 
-describe ('transaction_form.vue',  ()=>{
+describe("transaction_form.vue", () => {
+  describe("", () => {
+    let wrapper;
+    let spy;
+    const propsData = {
+      service_id: 1,
+    };
 
-    describe('', ()=>{
-        let wrapper
+    const mocks = {
+      $createTransactionPath: "/transactions.js",
+      $getCSRFToken: () => "",
+    };
 
-        beforeEach(()=>{
-            wrapper = shallowMount(transaction_form, {
-                mocks: {
-                    $getCSRFToken: () => ''
-                }
-            })
-        })
+    beforeEach(() => {
+      jest.clearAllMocks();
+      spy = jest.spyOn(axios, "post");
+      wrapper = mount(TransactionForm, {
+        propsData,
+        mocks,
+      });
+    });
 
-        it ('initially hide content', ()=>{
-            expect(wrapper.find('.form').exists()).toBeFalsy()
-        })
+    it("expect send petition behaviour", () => {
+      axios.post.mockResolvedValue("");
+      wrapper.find("form.service-petition").trigger("submit");
 
-        it ('show content when click on button', async() => {
-            await wrapper.find('.open_petition').trigger('click')
-
-            expect(wrapper.find('.form').exists()).toBeTruthy()
-        })
-
-    })
-
-    describe('', () => {
-        let wrapper
-        let axiosMock
-        const $createTransactionPath =  '/transactions.js'
-
-        beforeEach(()=> {
-            jest.clearAllMocks()
-            axiosMock  = new MockAdapter(axios)
-
-            wrapper = shallowMount(transaction_form, {
-                data(){
-                    return {
-                        show: true
-                    }
-                },
-                mocks: {
-                    $createTransactionPath: $createTransactionPath,
-                    $getCSRFToken: () => ''
-                }
-            })
-        })
-
-        it ('show content', ()=>{
-            expect(wrapper.find('.form').exists()).toBeTruthy()
-        })
-
-        it ('hides content when click on button', async() => {
-            await wrapper.find('.open_petition').trigger('click')
-            expect(wrapper.find('.form').exists()).toBeFalsy()
-        })
-
-        it ('sends petition once clicked in send petition', () => {
-            const spy = jest.spyOn(axios, 'post')
-            axiosMock.onPost($createTransactionPath).reply(200, { message: 'err'})
-
-            wrapper.find('.form').trigger('submit')
-
-            expect(spy).toBeCalledTimes(1)
-        })
-    })
-})
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(mocks.$createTransactionPath, {
+        "": "",
+        authenticity_token: "",
+        transaction: {
+          addition_information: "",
+          datetime: " ",
+          duration: "",
+          service_id: propsData.service_id.toString(),
+        },
+        utf8: "✓",
+      });
+    });
+  });
+});

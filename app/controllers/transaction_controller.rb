@@ -1,6 +1,11 @@
 class TransactionController < ApplicationController
   before_action :authenticate_user!
 
+  def new
+    @service = Service.find(params[:id])
+    @transaction = Transaction.new
+  end
+
   def create
     @workflow = CreateTransactions.new(transaction_params)
     @workflow.create
