@@ -158,6 +158,11 @@ export default {
     },
   },
   methods: {
+    emitSelectedTime() {
+      const hours = this.activeHourhour === undefined ? 0 : this.activeMinutes;
+      const minutes = this.activeMinutes === undefined ? 0 : this.activeMinutes;
+      this.$emit("selected-time", hours * 60 * 60 + minutes * 60);
+    },
     getMinutes() {
       if (this.activeMinutes === undefined && this.activeHour === undefined)
         return "";
@@ -206,9 +211,11 @@ export default {
     },
     selectHour(hour) {
       this.activeHour = hour;
+      this.emitSelectedTime();
     },
     selectMinutes(minutes) {
       this.activeMinutes = minutes;
+      this.emitSelectedTime();
     },
     setDate: function(day) {
       this.activeDay = day;

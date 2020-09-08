@@ -83,7 +83,7 @@ export default {
     return {
       errors: {},
       duration: 0,
-      rangeDuration: "",
+      rangeDuration: "Selecciona una hora para ver el rango",
     };
   },
   computed: {
