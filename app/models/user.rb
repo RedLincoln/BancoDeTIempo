@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :services
-  has_many :transactions, foreign_key: 'client_id'
+  has_many :transactions_owner, through: :services, source: :transactions
+  has_many :transactions_client, foreign_key: 'client_id', class_name: 'Transaction'
   has_many :notifications
   enum role: {standard: 'standard', admin: 'admin'}
   # Include default devise modules. Others available are:
@@ -9,6 +10,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true
+
+  def transactions
+    transactions_client + transactions_owner
+  end
 
   def have_transaction?(service)
     transactions.any? do |transaction|

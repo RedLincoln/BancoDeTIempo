@@ -1,23 +1,23 @@
-<table id="transaction-list">
-  <thead>
+<table class="table" id="transaction-list">
+  <thead class="thead-dark">
     <tr>
-      <th>Estado del servicio</th>
-      <th>Nombre de servicio</th>
-      <th>Fecha y hora</th>
-      <th>Propietario del servicio</th>
-      <th>Descripción de servicio</th>
-      <th>Información adicional</th>
+      <th scope="col">Estado del servicio</th>
+      <th scope="col">Nombre de servicio</th>
+      <th scope="col">Fecha y hora</th>
+      <th scope="col">Propietario del servicio</th>
+      <th scope="col">Descripción de servicio</th>
+      <th scope="col">Información adicional</th>
     </tr>
   </thead>
   <tbody>
     <% transactions.each do |transaction| %>
       <tr id="service-<%= transaction.service.id %>-petition">
-        <td class="transaction-status"><%= transaction.status %></td>
-        <td class="service-name"><%= transaction.service.name %></td>
-        <td class="date-and-duration"><%= "#{transaction.date_format} #{transaction.duration_range}" %></td>
-        <td class="service-owner"><%= transaction.service.user.name %></td>
-        <td class="service-description"><%= transaction.service.description %></td>
-        <td class="additional-information"><%= transaction.addition_information %></td>
+        <td class="pt-4 pb-4 transaction-status"><%= transaction.status %></td>
+        <td class="pt-4 pb-4 service-name"><%= transaction.service.name %></td>
+        <td class="pt-4 pb-4 date-and-duration"><%= "#{transaction.date_format} #{transaction.duration_range}" %></td>
+        <td class="pt-4 pb-4 service-owner"><%= transaction.service.user.name %></td>
+        <td class="pt-4 pb-4 service-description"><%= transaction.service.description %></td>
+        <td class="pt-4 pb-4 additional-information"><%= transaction.addition_information %></td>
       </tr>
     <% end %>
   </tbody>

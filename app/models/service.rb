@@ -1,5 +1,6 @@
 class Service < ApplicationRecord
   @@page_size = 10
+  has_many :transactions
 
   validates :name, :description, presence: true
   validates :name, uniqueness: { scope: :user_id}

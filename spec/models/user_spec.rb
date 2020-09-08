@@ -4,7 +4,8 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { should have_many(:services)}
-    it { should have_many(:transactions)}
+    it { should have_many(:transactions_client)}
+    it { should have_many(:transactions_owner).through(:services)}
     it { should have_many(:notifications)}
   end
 
