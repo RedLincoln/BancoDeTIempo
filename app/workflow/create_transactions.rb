@@ -1,7 +1,8 @@
 class CreateTransactions
-  attr_accessor :datetime, :addition_information, :service, :client, :success, :transaction
+  attr_accessor :datetime, :addition_information, :service, :client, :success, :duration, :transaction
 
-  def initialize(datetime: '', addition_information: '', service_id: -1, client: nil)
+  def initialize(datetime: '', addition_information: '', service_id: -1, client: nil, duration: -1)
+    @duration = duration
     @datetime = datetime
     @addition_information = addition_information
     @service = get_service(service_id)
@@ -10,7 +11,7 @@ class CreateTransactions
   end
 
   def build
-    self.transaction = Transaction.new(datetime: @datetime, addition_information: @addition_information,
+    self.transaction = Transaction.new(datetime: @datetime, duration: @duration, addition_information: @addition_information,
                                        service: @service, client: @client)
   end
 

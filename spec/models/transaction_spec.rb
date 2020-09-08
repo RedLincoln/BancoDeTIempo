@@ -31,6 +31,13 @@ RSpec.describe Transaction, type: :model do
 
   end
 
+  describe 'duration_range' do
+
+    it '' do
+
+    end
+  end
+
   describe 'default' do
 
     it 'status' do
