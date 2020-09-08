@@ -96,13 +96,16 @@ export default {
       return minutes < 10 ? `0${minutes}` : minutes;
     },
     toHourAndMinutes(seconds) {
-      const hours = seconds / (60 * 60);
-      const minutes = this.formatMinutes((seconds - hours * (60 * 60)) / 60);
-      return `${hours}:${minutes}`;
+      let minutes = seconds / 60;
+      const hours = Math.floor(minutes / 60);
+      minutes = minutes - hours * 60;
+      return `${hours}:${this.formatMinutes(minutes)}`;
     },
     setDurationRange(timeInSeconds) {
       const start = this.toHourAndMinutes(timeInSeconds);
-      const end = this.toHourAndMinutes(timeInSeconds + 2 * 60 * 60);
+      const end = this.toHourAndMinutes(
+        timeInSeconds + this.duration * 60 * 60
+      );
       this.rangeDuration = `${start} - ${end}`;
     },
     validateInteger(event) {

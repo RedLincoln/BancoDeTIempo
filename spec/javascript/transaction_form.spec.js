@@ -105,6 +105,7 @@ describe("transaction_form.vue", () => {
 
     it("duration show time range when time is emitted with minutes", async () => {
       const time = 8 * 60 * 60 + 45 * 60;
+      console.log(time);
       wrapper.find("#transaction-duration").element.value = "1";
       await wrapper.find("#transaction-duration").trigger("input");
 
