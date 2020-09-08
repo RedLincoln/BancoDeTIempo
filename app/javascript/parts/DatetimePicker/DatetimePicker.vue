@@ -3,6 +3,7 @@
     <input
       type="hidden"
       v-model="computedDateTime"
+      data-type="datetime"
       name="transaction[datetime]"
       class="transaction-datetime"
     />
@@ -152,7 +153,7 @@ export default {
       const hours = this.getHours();
       const time = ` ${hours}${minutes}`;
       if (this.activeDay !== undefined) {
-        datetime = `${this.activeDay}/${this.monthIndex + 1}/${this.year}`;
+        datetime = `${this.year}/${this.monthIndex}/${this.activeDay}`;
       }
       return `${datetime}${time}`;
     },

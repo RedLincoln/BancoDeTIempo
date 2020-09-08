@@ -45,7 +45,7 @@ describe('form helper', ()=>{
         beforeEach(() => {
             let form = document.createElement('form')
             form.innerHTML = `<input name="name[1]" value="the_value1">
-                              <input d-type="datetime" name="name[2]" value="2020/0/2 12:00">`
+                              <input data-type="datetime" name="name[2]" value="2020/0/2 12:00">`
             params = form.elements
         })
 
@@ -55,7 +55,7 @@ describe('form helper', ()=>{
             expect(expected).toEqual({
                 name: {
                     1: 'the_value1',
-                    2: Date.new(2020, 0, 2, 12, 0, 0)
+                    2: new Date(2020, 0, 2, 12, 0, 0).getTime()
                 }})
         })
     })

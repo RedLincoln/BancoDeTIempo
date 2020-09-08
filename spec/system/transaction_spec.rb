@@ -20,7 +20,7 @@ RSpec.describe 'Service Transactions', type: :system do
       find(".make-service-petition").click
 
       within "form.service-petition" do
-        find(".transaction-datetime", visible: false).execute_script("this.value = '07/07/2020, 12:00'")
+        find(".transaction-datetime", visible: false).execute_script("this.value = '2020/07/07 12:00'")
         fill_in('addition-information', with: 'Pintar casa')
         fill_in('transaction-duration', with: '2')
         find(".send-petition").click
@@ -31,7 +31,7 @@ RSpec.describe 'Service Transactions', type: :system do
       within "#transaction-list #service-#{service.id}-petition" do
         expect(page).to have_selector('.service-name', text: service.name)
         expect(page).to have_selector('.service-description', text: service.description)
-        expect(page).to have_selector('.date-and-duration', text:'07/07/2020, 12:00-14:00')
+        expect(page).to have_selector('.date-and-duration', text:'07/07/2020 12:00-14:00')
         expect(page).to have_selector('.additional-information', text: 'Pintar casa')
         expect(page).to have_selector('.transaction_status')
         expect(page).to have_selector('.service-owner', text: offeringUser.name)

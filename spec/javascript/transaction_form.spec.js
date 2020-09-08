@@ -39,6 +39,7 @@ describe("transaction_form.vue", () => {
 
     it("expect send petition behaviour", () => {
       axios.post.mockResolvedValue("");
+      wrapper.find(".transaction-datetime").setValue("2020/07/07 10:00");
       wrapper.find("form.service-petition").trigger("submit");
 
       expect(spy).toHaveBeenCalledTimes(1);
@@ -47,7 +48,7 @@ describe("transaction_form.vue", () => {
         authenticity_token: "",
         transaction: {
           addition_information: "",
-          datetime: " ",
+          datetime: new Date(2020, 7, 7, 10, 0).getTime(),
           duration: "0",
           service_id: propsData.service_id.toString(),
         },

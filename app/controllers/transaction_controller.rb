@@ -26,7 +26,8 @@ class TransactionController < ApplicationController
 
   def transaction_params
     {
-        datetime: params[:transaction][:datetime],
+        datetime: Time.at(params[:transaction][:datetime] / 1000),
+        duration: params[:transaction][:duration],
         addition_information: params[:transaction][:addition_information],
         service_id: params[:transaction][:service_id],
         client: current_user
