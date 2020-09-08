@@ -37,17 +37,15 @@
           </thead>
           <tbody>
             <template v-for="week in daysRange">
-              <tr>
-                <template v-for="day in week">
-                  <td v-if="isOffsetDay(day)">{{ day }}</td>
-                  <td v-else-if="isBeforeToday(day)" class="day text-muted">{{ day }}</td>
-                  <td
-                    v-else
-                    class="day hover-primary"
-                    @click="setDate(day)"
-                    :class="{ active: activeDay === day }"
-                  >{{ day }}</td>
-                </template>
+              <tr v-for="(day, index) in week" :key="index">
+                <td v-if="isOffsetDay(day)">{{ day }}</td>
+                <td v-else-if="isBeforeToday(day)" class="day text-muted">{{ day }}</td>
+                <td
+                  v-else
+                  class="day hover-primary"
+                  @click="setDate(day)"
+                  :class="{ active: activeDay === day }"
+                >{{ day }}</td>
               </tr>
             </template>
           </tbody>
@@ -56,7 +54,8 @@
       <div class="time-picker w-25 row ml-3">
         <ul class="hour-picker col">
           <li
-            v-for="hour in hourRange"
+            v-for="(hour, index) in hourRange"
+            :key="index"
             class="time"
             @click="selectHour(hour)"
             :class="{ active: activeHour === hour }"
@@ -66,7 +65,8 @@
         </ul>
         <ul class="minutes-picker col">
           <li
-            v-for="minutes in minutesRange"
+            v-for="(minutes, index) in minutesRange"
+            :key="index"
             class="time"
             @click="selectMinutes(minutes)"
             :class="{ active: activeMinutes === minutes }"

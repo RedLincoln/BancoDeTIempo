@@ -12,6 +12,13 @@ describe("transaction_form.vue", () => {
       service_id: 1,
     };
 
+    const rejectResponse = {
+      errors: {
+        datetime: "Datetime cant be empty",
+        duration: "Duration must be a integer",
+      },
+    };
+
     const mocks = {
       $createTransactionPath: "/transactions.js",
       $getCSRFToken: () => "",
@@ -42,6 +49,20 @@ describe("transaction_form.vue", () => {
         },
         utf8: "✓",
       });
+    });
+
+    it("errors must be visible on reject", () => {
+      axios.post.mockRejectedValue(rejectResponse);
+      wrapper.find("form.service-petition").trigger("submit");
+
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      expect(wrapper.find(".errors li").text()).toBe(
+        rejectResponse.errors.datetime
+      );
+      expect(wrapper.find(".errors li").text()).toBe(
+        rejectResponse.errors.duration
+      );
     });
   });
 });
