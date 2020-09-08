@@ -32,9 +32,12 @@ RSpec.describe Transaction, type: :model do
   end
 
   describe 'duration_range' do
+    let(:transaction) { build_stubbed(:transaction,
+                                      datetime: DateTime.new(2020, 2, 2, 10, 25, 0),
+                                      duration: 2)}
 
-    it '' do
-
+    it 'must be in a specific output format' do
+      expect(transaction.duration_range).to eq('10:25-12:25')
     end
   end
 

@@ -12,6 +12,7 @@ class TransactionController < ApplicationController
 
     if @workflow.success?
       respond_to do |format|
+        format.html { redirect_to services_path }
         format.js { render json: {message: 'Petición realisada'} }
       end
     else

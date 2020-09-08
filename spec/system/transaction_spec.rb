@@ -33,7 +33,7 @@ RSpec.describe 'Service Transactions', type: :system do
         expect(page).to have_selector('.service-description', text: service.description)
         expect(page).to have_selector('.date-and-duration', text:'07/07/2020 12:00-14:00')
         expect(page).to have_selector('.additional-information', text: 'Pintar casa')
-        expect(page).to have_selector('.transaction_status')
+        expect(page).to have_selector('.transaction-status')
         expect(page).to have_selector('.service-owner', text: offeringUser.name)
       end
     end

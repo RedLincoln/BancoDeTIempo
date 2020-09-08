@@ -1,27 +1,24 @@
-<div id="transaction_list">
-  <% transactions.each do |transaction| %>
-    <div id="service_<%= transaction.service.id %>_petition" class="border-top border-bottom mt-4 pb-2 pt-2">
-      <div class="mb-1">
-        <span class="font-weight-bold">Nombre de servicio: </span>
-        <span class="service_name"><%= transaction.service.name %></span>
-      </div>
-      <div class="mb-1">
-        <span class="font-weight-bold">Descripción del servicio:</span><br>
-        <span class="service_description"><%= transaction.service.description %></span>
-      </div>
-      <div class="mb-1">
-        <span class="font-weight-bold">Nombre del usuario que ofrece el servicio: </span>
-        <span class="offeror_name"><%= transaction.service.user.name %></span>
-      </div>
-      <div class="mb-1">
-        <span class="font-weight-bold">Estado de petición: </span>
-        <span class="transaction_status"><%= transaction.status %></span>
-      </div>
-      <% unless transaction.datetime.empty? || transaction.addition_information.empty? %>
-        <h4>Información de la petición</h4>
-      <% end %>
-      <div class="time_petition"><%= transaction.datetime %></div>
-      <div class="additional_information"><%= transaction.addition_information %></div>
-    </div>
-  <% end %>
-</div>
+<table id="transaction-list">
+  <thead>
+    <tr>
+      <th>Estado del servicio</th>
+      <th>Nombre de servicio</th>
+      <th>Fecha y hora</th>
+      <th>Propietario del servicio</th>
+      <th>Descripción de servicio</th>
+      <th>Información adicional</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% transactions.each do |transaction| %>
+      <tr id="service-<%= transaction.service.id %>-petition">
+        <td class="transaction-status"><%= transaction.status %></td>
+        <td class="service-name"><%= transaction.service.name %></td>
+        <td class="date-and-duration"><%= transaction.datetime %></td>
+        <td class="service-owner"><%= transaction.service.user.name %></td>
+        <td class="service-description"><%= transaction.service.description %></td>
+        <td class="additional-information"><%= transaction.addition_information %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
