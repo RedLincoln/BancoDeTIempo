@@ -159,7 +159,7 @@ export default {
   },
   methods: {
     emitSelectedTime() {
-      const hours = this.activeHourhour === undefined ? 0 : this.activeMinutes;
+      const hours = this.activeHour === undefined ? 0 : this.activeHour;
       const minutes = this.activeMinutes === undefined ? 0 : this.activeMinutes;
       this.$emit("selected-time", hours * 60 * 60 + minutes * 60);
     },

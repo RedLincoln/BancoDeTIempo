@@ -105,13 +105,26 @@ describe("transaction_form.vue", () => {
 
     it("duration show time range when time is emitted with minutes", async () => {
       const time = 8 * 60 * 60 + 45 * 60;
-      console.log(time);
+
       wrapper.find("#transaction-duration").element.value = "1";
       await wrapper.find("#transaction-duration").trigger("input");
 
       await wrapper
         .findComponent(DatetimePicker)
         .vm.$emit("selected-time", time);
+
+      expect(wrapper.find(".duration-time-range").text()).toBe("8:45 - 9:45");
+    });
+
+    it("duration change time range on duration change", async () => {
+      const time = 8 * 60 * 60 + 45 * 60;
+
+      await wrapper
+        .findComponent(DatetimePicker)
+        .vm.$emit("selected-time", time);
+
+      wrapper.find("#transaction-duration").element.value = "1";
+      await wrapper.find("#transaction-duration").trigger("input");
 
       expect(wrapper.find(".duration-time-range").text()).toBe("8:45 - 9:45");
     });
