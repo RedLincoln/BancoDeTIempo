@@ -21,6 +21,12 @@ class User < ApplicationRecord
     end
   end
 
+  def have_transaction_as_client?(service)
+    transactions_client.any? do |transaction|
+      transaction.service.id == service.id
+    end
+  end
+
   def find_service(service_id)
     Service.find_by! id: service_id, user_id: id
   end
