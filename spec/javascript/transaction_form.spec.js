@@ -74,5 +74,13 @@ describe("transaction_form.vue", () => {
       await wrapper.find("#transaction-duration").trigger("keydown.delete");
       expect(wrapper.find("#transaction-duration").element.value).toBe("0");
     });
+
+    it("duration value can only be positive", async () => {
+      wrapper.find("#transaction-duration").element.value = "-";
+      await wrapper.find("#transaction-duration").trigger("input");
+      wrapper.find("#transaction-duration").element.value = "1";
+      await wrapper.find("#transaction-duration").trigger("input");
+      expect(wrapper.find("#transaction-duration").element.value).toBe("1");
+    });
   });
 });
