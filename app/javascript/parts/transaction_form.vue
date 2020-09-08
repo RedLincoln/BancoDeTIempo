@@ -4,6 +4,15 @@
 
 <template>
   <div class="transaction-form dropdown">
+    <ul v-if="haveErrors" class="errors">
+      <li
+        v-for="(error, name, index) in errors"
+        :key="index"
+        :class="`error_${name}`"
+      >
+        {{ error }}
+      </li>
+    </ul>
     <form
       class="service-petition border-top mt-2"
       :action="$createTransactionPath"
@@ -42,6 +51,7 @@ import axios from "axios";
 import railsFlash from "../railsFlash";
 import formParams from "../formHelper";
 import DatetimePicker from "./DatetimePicker/DatetimePicker";
+import _ from "lodash/lang";
 
 export default {
   props: {
@@ -53,11 +63,18 @@ export default {
   components: {
     DatetimePicker,
   },
-  data: function () {
-    return {};
+  data: function() {
+    return {
+      errors: {},
+    };
+  },
+  computed: {
+    haveErrors() {
+      return !_.isEmpty(this.errors);
+    },
   },
   methods: {
-    sendPetition: function (e) {
+    sendPetition: function(e) {
       axios
         .post(
           this.$createTransactionPath,
@@ -65,8 +82,12 @@ export default {
         )
         .then((response) => {
           railsFlash.notice(response.data.message);
+          this.errors = {};
         })
-        .catch((err) => railsFlash.alert(err.data.message));
+        .catch((err) => {
+          railsFlash.alert(err.data.message);
+          this.errors = err.data.errors;
+        });
     },
   },
 };

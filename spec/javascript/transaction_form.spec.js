@@ -1,5 +1,6 @@
 import { mount } from "@vue/test-utils";
 import axios from "axios";
+import Vue from "vue";
 import TransactionForm from "../../app/javascript/parts/transaction_form";
 
 jest.mock("axios");
@@ -13,9 +14,12 @@ describe("transaction_form.vue", () => {
     };
 
     const rejectResponse = {
-      errors: {
-        datetime: "Datetime cant be empty",
-        duration: "Duration must be a integer",
+      data: {
+        message: "Errors",
+        errors: {
+          datetime: "Datetime cant be empty",
+          duration: "Duration must be a integer",
+        },
       },
     };
 
@@ -51,17 +55,18 @@ describe("transaction_form.vue", () => {
       });
     });
 
-    it("errors must be visible on reject", () => {
+    it("errors must be visible on reject", async () => {
       axios.post.mockRejectedValue(rejectResponse);
-      wrapper.find("form.service-petition").trigger("submit");
+      await wrapper.find("form.service-petition").trigger("submit");
 
+      await Vue.nextTick();
       expect(spy).toHaveBeenCalledTimes(1);
 
-      expect(wrapper.find(".errors li").text()).toBe(
-        rejectResponse.errors.datetime
+      expect(wrapper.find(".errors .error_datetime").text()).toBe(
+        rejectResponse.data.errors.datetime
       );
-      expect(wrapper.find(".errors li").text()).toBe(
-        rejectResponse.errors.duration
+      expect(wrapper.find(".errors .error_duration").text()).toBe(
+        rejectResponse.data.errors.duration
       );
     });
   });
