@@ -23,7 +23,9 @@
       <input type="hidden" name="authenticity_token" :value="$getCSRFToken()" />
       <input type="hidden" name="transaction[service_id]" :value="service_id" />
       <div class="field">
-        <DatetimePicker @selected-time="setDurationRange"></DatetimePicker>
+        <DatetimePicker
+          @selected-time="updateTimeRangeInSeconds"
+        ></DatetimePicker>
       </div>
       <div class="field form-group">
         <label for="transaction-duration">Duración: </label>
@@ -82,9 +84,18 @@ export default {
   data: function() {
     return {
       errors: {},
+      timeRangeInSeconds: 0,
       duration: 0,
       rangeDuration: "Selecciona una hora para ver el rango",
     };
+  },
+  watch: {
+    duration() {
+      this.setDurationRange();
+    },
+    timeRangeInSeconds() {
+      this.setDurationRange();
+    },
   },
   computed: {
     haveErrors() {
@@ -101,12 +112,15 @@ export default {
       minutes = minutes - hours * 60;
       return `${hours}:${this.formatMinutes(minutes)}`;
     },
-    setDurationRange(timeInSeconds) {
-      const start = this.toHourAndMinutes(timeInSeconds);
+    setDurationRange() {
+      const start = this.toHourAndMinutes(this.timeRangeInSeconds);
       const end = this.toHourAndMinutes(
-        timeInSeconds + this.duration * 60 * 60
+        this.timeRangeInSeconds + this.duration * 60 * 60
       );
       this.rangeDuration = `${start} - ${end}`;
+    },
+    updateTimeRangeInSeconds(timeRangeInSeconds) {
+      this.timeRangeInSeconds = timeRangeInSeconds;
     },
     validateInteger(event) {
       const value = parseFloat(event.target.value);
