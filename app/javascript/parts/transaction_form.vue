@@ -34,6 +34,7 @@
           placeholder="Número de horas"
           :value="duration"
           @input="validateInteger"
+          @keydown.delete="handleDurationDelete"
           name="transaction[duration]"
           id="transaction-duration"
           class="form-control"
@@ -92,6 +93,11 @@ export default {
         this.duration = parseInt(event.target.value);
       }
       this.$forceUpdate();
+    },
+    handleDurationDelete() {
+      if (this.duration < 10) {
+        this.duration = 0;
+      }
     },
     sendPetition: function(e) {
       axios
