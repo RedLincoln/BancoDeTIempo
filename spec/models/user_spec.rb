@@ -53,6 +53,12 @@ RSpec.describe User, type: :model do
       expect(client.have_transaction_as_client?(service)).to be(true)
     end
 
+    it 'finds if a user have a transactions as a owner' do
+      transaction
+
+      expect(client.have_transaction_as_owner?(service)).to be(true)
+    end
+
     describe 'notification finder' do
       let(:userNotification) { create(:notification )}
 
