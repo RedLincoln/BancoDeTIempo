@@ -28,6 +28,7 @@
       <div class="field form-group">
         <label for="transaction-duration">Duración: </label>
         <input
+          type="number"
           placeholder="Número de horas"
           :value="duration"
           @input="validateInteger"
@@ -85,8 +86,9 @@ export default {
   },
   methods: {
     validateInteger(event) {
-      console.log(event.target.value);
-      this.duration = 0;
+      if (_.isInteger(parseInt(event.target.value))) {
+        this.duration = parseInt(event.target.value);
+      }
       this.$forceUpdate();
     },
     sendPetition: function(e) {
