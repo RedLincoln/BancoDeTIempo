@@ -5,7 +5,7 @@
 <template>
   <div class="navigation_dropdown dropdown" ref="dropdown">
     <div class="d-flex align-items-center">
-      <span class="dropdown_title toggle_button btn dropdown-toggle" id="dropdownUserLinks"
+      <span class="dropdown_title toggle_button btn dropdown-toggle bg-light" id="dropdownUserLinks"
          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="toggleShow">{{ title }}</span>
     </div>
       <ul v-if="show" class="dropdown_content dropdown-menu show" aria-labelledby="dropdownUserLinks">

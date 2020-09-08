@@ -4,7 +4,8 @@
       <th scope="col">Estado del servicio</th>
       <th scope="col">Nombre de servicio</th>
       <th scope="col">Fecha y hora</th>
-      <th scope="col">Propietario del servicio</th>
+      <th scope="col">Realiza del servicio</th>
+      <th scope="col">Recibe el servicio</th>
       <th scope="col">Descripción de servicio</th>
       <th scope="col">Información adicional</th>
     </tr>
@@ -15,7 +16,14 @@
         <td class="pt-4 pb-4 transaction-status"><%= transaction.status %></td>
         <td class="pt-4 pb-4 service-name"><%= transaction.service.name %></td>
         <td class="pt-4 pb-4 date-and-duration"><%= "#{transaction.date_format} #{transaction.duration_range}" %></td>
-        <td class="pt-4 pb-4 service-owner"><%= transaction.service.user.name %></td>
+        <td
+          class="pt-4 pb-4 service-owner <%= (current_user.have_transaction_as_owner? transaction.service) ? 'mark-name' : '' %>">
+          <%= transaction.service.user.name %>
+        </td>
+        <td
+          class="pt-4 pb-4 service-client" <%= current_user.have_transaction_as_client? transaction.service ? 'mark-name' : '' %>>
+          <%= transaction.client.name %>
+        </td>
         <td class="pt-4 pb-4 service-description"><%= transaction.service.description %></td>
         <td class="pt-4 pb-4 additional-information"><%= transaction.addition_information %></td>
       </tr>

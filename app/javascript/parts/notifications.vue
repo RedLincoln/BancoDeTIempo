@@ -1,9 +1,9 @@
 <template>
   <div id="notifications" class="dropdown">
     <div>
-      <button type="button" class="toggle-button border rounded-circle" id="notification-list"
+      <button type="button" class="toggle-button border rounded-circle mr-2" id="notification-list"
       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="toggleDropdown">!</button>
-      <small id="notifications-counter" class="border rounded-circle position-absolute font-weight-bold">{{ counter }}</small>
+      <span id="notifications-counter" class="position-absolute">{{ counter }}</span>
     </div>
     <div>
     <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
