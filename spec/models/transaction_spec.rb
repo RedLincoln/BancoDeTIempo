@@ -31,6 +31,16 @@ RSpec.describe Transaction, type: :model do
 
   end
 
+  describe 'date_format' do
+    let(:transaction) { build_stubbed(:transaction,
+                                      datetime: DateTime.new(2020, 10, 12))}
+
+    it 'expect output format for dates' do
+      expect(transaction.date_format).to eq('12/10/2020')
+    end
+
+  end
+
   describe 'duration_range' do
     let(:transaction) { build_stubbed(:transaction,
                                       datetime: DateTime.new(2020, 2, 2, 10, 25, 0),
