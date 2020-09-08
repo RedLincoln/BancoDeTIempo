@@ -2942,8 +2942,8 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
 electron-to-chromium@^1.3.562:
-  version "1.3.562"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.562.tgz#79c20277ee1c8d0173a22af00e38433b752bc70f"
+  version "1.3.563"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.563.tgz#9da4e4f0d76c4b221784cc9ca81a8464e8180408"
 
 elliptic@^6.5.3:
   version "6.5.3"
@@ -4919,7 +4919,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.4, lodash@^4.17.5, lodash@~4.17.10:
+lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.4, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
 
@@ -7923,8 +7923,8 @@ uuid@^8.3.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
 
 v-click-outside@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-3.1.0.tgz#941be55f54982291b2e1beaa8447e5830b7afe29"
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-3.1.1.tgz#c9b779e356776ce86c8b432a37758327053b69fe"
 
 v8-compile-cache@^2.1.1:
   version "2.1.1"

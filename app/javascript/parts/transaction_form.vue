@@ -25,13 +25,20 @@
       <div class="field">
         <DatetimePicker></DatetimePicker>
       </div>
-      <div class="field">
-        <input name="transaction[duration]" />
+      <div class="field form-group">
+        <label for="transaction-duration">Duración: </label>
+        <input
+          placeholder="Número de horas"
+          name="transaction[duration]"
+          id="transaction-duration"
+          class="form-control"
+        />
       </div>
-      <div class="field">
+      <div class="field form-group">
         <label for="addition_information">Información aditional:</label>
         <br />
         <textarea
+          class="form-control"
           name="transaction[addition_information]"
           id="addition_information"
           placeholder="Añade información extra"
@@ -40,7 +47,7 @@
         ></textarea>
       </div>
       <div class="actions">
-        <button class="send_petition btn btn-sm btn-primary">Enviar</button>
+        <button class="send_petition btn btn-primary">Enviar</button>
       </div>
     </form>
   </div>
@@ -81,7 +88,6 @@ export default {
           formParams.getPostParams(e.target.elements)
         )
         .then((response) => {
-          railsFlash.notice(response.data.message);
           this.errors = {};
         })
         .catch((err) => {

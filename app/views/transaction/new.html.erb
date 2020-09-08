@@ -1,3 +1,6 @@
-<%= render 'shared/services', services: [@service], showActions: false %>
+<div class="mt-7">
+  <h2 class="mb-5 border-bottom d-inline-block border-dark">Pedir servicio</h2>
+  <%= render 'shared/services', services: [@service], showActions: false %>
 
-<span class="transaction-action"></span>
+  <span id="service-transaction-form" data-service-data="<%= { service_id: @service.id }.to_json %>"></span>
+</div>

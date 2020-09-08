@@ -55,19 +55,9 @@ describe("transaction_form.vue", () => {
       });
     });
 
-    it("errors must be visible on reject", async () => {
-      axios.post.mockRejectedValue(rejectResponse);
-      await wrapper.find("form.service-petition").trigger("submit");
-
-      await Vue.nextTick();
-      expect(spy).toHaveBeenCalledTimes(1);
-
-      expect(wrapper.find(".errors .error_datetime").text()).toBe(
-        rejectResponse.data.errors.datetime
-      );
-      expect(wrapper.find(".errors .error_duration").text()).toBe(
-        rejectResponse.data.errors.duration
-      );
+    it("duration value can only be an integer", async () => {
+      await wrapper.find("#transaction-duration").setValue("Haol");
+      expect(wrapper.find("#transaction-duration").element.value).toBe("");
     });
   });
 });

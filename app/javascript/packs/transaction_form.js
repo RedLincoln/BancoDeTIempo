@@ -10,9 +10,9 @@ import TurbolinksAdapter from 'vue-turbolinks'
 Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
-  if (!isView('transaction#new')) return
-  const el = document.getElementById('#transaction-action')
-  const props = JSON.parse(el.dataset.serviceData)
+  if (!isView('transaction#new')) return;
+  const el = document.getElementById('service-transaction-form');
+  const props = JSON.parse(el.dataset.serviceData);
 
   new Vue({
     el,
