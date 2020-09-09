@@ -115,6 +115,10 @@ RSpec.describe Service, type: :model do
       it 'get service with search string as part of the name' do
         expect(Service.search_by_name('service').to_a).to eql(expectBoth)
       end
+
+      it 'get service with case-insensitive' do
+        expect(Service.search_by_name('this').to_a).to eql(expectFirst)
+      end
     end
   end
 
