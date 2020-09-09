@@ -9,6 +9,9 @@ class Service < ApplicationRecord
   belongs_to :category
 
 
+  def self.search_by_name(search_string = '')
+    all
+  end
 
   def self.services_not_made_by(user)
     where.not(user: user)

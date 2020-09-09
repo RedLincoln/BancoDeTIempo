@@ -94,10 +94,18 @@ RSpec.describe Service, type: :model do
       let(:expectBoth) { [service, service2] }
       let(:expectFirst) { [service] }
       let(:expectLast) { [service2] }
+      let(:expectNone) { [] }
+
+      before(:each) do
+        init_services
+      end
 
       it 'get all services when search string is an empty string' do
-        init_services
-        expect(Service.search_by_name.to_a).to eql[expectBoth]
+        expect(Service.search_by_name('').to_a).to eql(expectBoth)
+      end
+
+      it 'get no service when string is not in service name'  do
+        expect(Service.search_by_name('This line is not in the name').to_a).to eql(expectNone)
       end
     end
   end
