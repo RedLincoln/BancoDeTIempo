@@ -85,6 +85,21 @@ RSpec.describe Service, type: :model do
         expect(services).to eq([service1, service2])
       end
     end
+
+    describe 'search_by_name' do
+      let(:service) {create(:service, name: 'This is the first service name')}
+      let(:service2) {create(:service, name: 'Name for the service')}
+
+      let(:init_services) { [service, service2]}
+      let(:expectBoth) { [service, service2] }
+      let(:expectFirst) { [service] }
+      let(:expectLast) { [service2] }
+
+      it 'get all services when search string is an empty string' do
+        init_services
+        expect(Service.search_by_name.to_a).to eql[expectBoth]
+      end
+    end
   end
 
   describe "pagination" do
