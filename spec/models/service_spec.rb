@@ -127,6 +127,10 @@ RSpec.describe Service, type: :model do
       it 'get service with whitespaces in search string' do
         expect(Service.search_by_name('first service').to_a).to eql(expectFirst)
       end
+
+      it 'can limit the amount of results' do
+        expect(Service.search_by_name('', 1).to_a).to eql(expectFirst)
+      end
     end
   end
 
