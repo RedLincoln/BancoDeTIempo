@@ -1,3 +1,15 @@
+
+<ul>
+  <li>
+    <%= link_to 'Todas', user_account_path, class: 'all-tab'%>
+  </li>
+  <li>
+    <%= link_to 'Ofrecidas', user_account_path(transaction_type: 'owner'), class: 'offering-tab' %>
+  </li>
+  <li>
+    <%= link_to 'Pedidas', user_account_path(transaction_type: 'client'), class: 'petition-tab' %>
+  </li>
+</ul>
 <table class="table" id="transaction-list">
   <thead class="thead-dark">
     <tr>

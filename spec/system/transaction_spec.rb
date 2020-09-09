@@ -55,15 +55,15 @@ RSpec.describe 'Service Transactions', type: :system do
       expect(page).to have_selector("#transaction-list #service-#{transaction_client.service.id}-petition")
       expect(page).to have_selector("#transaction-list #service-#{transaction_owner.service.id}-petition")
 
-      find('.offering_tab').click
-
-      expect(page).to have_selector("#transaction-list #service-#{transaction_client.service.id}-petition")
-      expect(page).to_not have_selector("#transaction-list #service-#{transaction_owner.service.id}-petition")
-
-      find('.petition_tab').click
+      find('.offering-tab').click
 
       expect(page).to_not have_selector("#transaction-list #service-#{transaction_client.service.id}-petition")
       expect(page).to have_selector("#transaction-list #service-#{transaction_owner.service.id}-petition")
+
+      find('.petition-tab').click
+
+      expect(page).to have_selector("#transaction-list #service-#{transaction_client.service.id}-petition")
+      expect(page).to_not have_selector("#transaction-list #service-#{transaction_owner.service.id}-petition")
     end
   end
 end
