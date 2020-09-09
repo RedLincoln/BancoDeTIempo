@@ -2,7 +2,7 @@ let arrayRegex = /(.+)\[(.+)\]/
 
 const convertDatetime = (stringDatetime) => {
     stringDatetime = stringDatetime.trim()
-    const [date, time] = stringDatetime.split(' ')
+    const [ date, time] = stringDatetime.split(' ')
     const [ year, month, day] = date.split('/')
     const [ hour, minutes ] = time.split(':')
     return new Date(year, month , day, hour, minutes).getTime()

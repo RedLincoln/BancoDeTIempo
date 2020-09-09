@@ -14,7 +14,7 @@
       </li>
     </ul>
     <form
-      class="service-petition border-top mt-2"
+      class="service-petition border-top mt-2 pt-5"
       :action="$createTransactionPath"
       method="post"
       @submit.prevent="sendPetition"

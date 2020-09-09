@@ -58,5 +58,16 @@ describe('form helper', ()=>{
                     2: new Date(2020, 0, 2, 12, 0, 0).getTime()
                 }})
         })
+
+        it("empty string is converted to empty string", ()=>{
+            params.item(1).value =""
+            const expected = formHelper.getPostParams(params)
+
+            expect(expected).toEqual({
+                name: {
+                    1: 'the_value1',
+                    2: ""
+                }})
+        })
     })
 })

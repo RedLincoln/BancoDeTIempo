@@ -28,7 +28,7 @@
           <span class="mb-0 ml-2 font-weight-bold font-size-large">Filtros</span>
         </button>
       </div>
-      <div v-if="show" class="dropdown-content">
+      <div v-if="show" class="dropdown-content mt-3">
         <div v-click-outside="hideCategory">
           <Searcher
             placeholder="Categorías"
