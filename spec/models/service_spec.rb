@@ -111,6 +111,10 @@ RSpec.describe Service, type: :model do
       it 'get all services when search string is nil' do
         expect(Service.search_by_name(nil).to_a).to eql(expectBoth)
       end
+
+      it 'get service with search string as part of the name' do
+        expect(Service.search_by_name('service').to_a).to eql(expectBoth)
+      end
     end
   end
 

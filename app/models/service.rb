@@ -12,8 +12,8 @@ class Service < ApplicationRecord
   def self.search_by_name(search_string = '')
     return all if search_string == '' || search_string.nil?
     regex = Regexp.new(Regexp.escape(search_string), Regexp::IGNORECASE)
-    all.select do |category|
-      category =~ regex
+    all.select do |service|
+      service.name =~ regex
     end
   end
 
