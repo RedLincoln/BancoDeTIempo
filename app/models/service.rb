@@ -13,7 +13,7 @@ class Service < ApplicationRecord
     return all if search_string == '' || search_string.nil?
     regex = Regexp.new(Regexp.escape(search_string), Regexp::IGNORECASE)
     all.select do |service|
-      service.name =~ regex
+      service.name.delete(' ') =~ regex
     end
   end
 
