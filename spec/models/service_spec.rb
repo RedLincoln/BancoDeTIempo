@@ -119,6 +119,11 @@ RSpec.describe Service, type: :model do
       it 'get service with case-insensitive' do
         expect(Service.search_by_name('this').to_a).to eql(expectFirst)
       end
+
+      it 'get service ignoring whitespaces in name' do
+        expect(Service.search_by_name('fortheser').to_a).to eql(expectLast)
+      end
+
     end
   end
 
