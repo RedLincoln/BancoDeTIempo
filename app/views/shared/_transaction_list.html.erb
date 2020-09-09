@@ -21,7 +21,7 @@
           <%= transaction.service.user.name %>
         </td>
         <td
-          class="pt-4 pb-4 service-client" <%= (current_user.have_transaction_as_client?(transaction.service)) ? 'mark-name' : '' %>>
+          class="pt-4 pb-4 service-client <%= (current_user.have_transaction_as_client?(transaction.service)) ? 'mark-name' : '' %>">
           <%= transaction.client.name %>
         </td>
         <td class="pt-4 pb-4 service-description"><%= transaction.service.description %></td>
