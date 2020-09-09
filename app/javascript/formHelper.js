@@ -3,6 +3,9 @@ let arrayRegex = /(.+)\[(.+)\]/
 const convertDatetime = (stringDatetime) => {
     stringDatetime = stringDatetime.trim()
     const [ date, time] = stringDatetime.split(' ')
+    if (date === undefined || time === undefined){
+        return ""
+    }
     const [ year, month, day] = date.split('/')
     const [ hour, minutes ] = time.split(':')
     return new Date(year, month , day, hour, minutes).getTime()
