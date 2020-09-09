@@ -146,6 +146,9 @@ export default {
         )
         .then((response) => {
           this.errors = {};
+          if (!_.isUndefined(response.data.redirect)){
+            Turbolinks.visit(response.data.redirect)
+          }
         })
         .catch((err) => {
           railsFlash.alert(err.data.message);

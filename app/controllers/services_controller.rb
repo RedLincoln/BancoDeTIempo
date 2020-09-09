@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_service, only: [:update, :edit, :destroy]
+  before_action :authenticate_user!, only: [:new, :destroy, :edit]
+  before_action :set_service, only: [:update, :edit, :destroy, :update, :create]
 
   def index
     @services = Service.find_by_category_name(params[:filter_category])

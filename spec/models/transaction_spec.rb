@@ -59,13 +59,6 @@ RSpec.describe Transaction, type: :model do
     end
   end
 
-  describe 'default' do
-
-    it 'status' do
-      expect(Transaction.new.status).to eq('pending')
-    end
-  end
-
   describe 'filters' do
     let(:transaction) { build_stubbed(:transaction) }
 
