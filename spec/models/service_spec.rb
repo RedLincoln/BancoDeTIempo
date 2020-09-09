@@ -124,6 +124,9 @@ RSpec.describe Service, type: :model do
         expect(Service.search_by_name('fortheser').to_a).to eql(expectLast)
       end
 
+      it 'get service with whitespaces in search string' do
+        expect(Service.search_by_name('first service').to_a).to eql(expectFirst)
+      end
     end
   end
 
