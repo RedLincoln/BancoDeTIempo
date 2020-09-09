@@ -107,6 +107,10 @@ RSpec.describe Service, type: :model do
       it 'get no service when string is not in service name'  do
         expect(Service.search_by_name('This line is not in the name').to_a).to eql(expectNone)
       end
+
+      it 'get all services when search string is nil' do
+        expect(Service.search_by_name(nil).to_a).to eql(expectBoth)
+      end
     end
   end
 
