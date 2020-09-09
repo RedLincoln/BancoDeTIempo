@@ -10,7 +10,11 @@ class Service < ApplicationRecord
 
 
   def self.search_by_name(search_string = '')
-    all
+    return all if search_string == ''
+    regex = Regexp.new(Regexp.escape(search_string), Regexp::IGNORECASE)
+    all.select do |category|
+      category =~ regex
+    end
   end
 
   def self.services_not_made_by(user)
