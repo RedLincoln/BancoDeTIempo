@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get 'notification/update'
+
+  get 'services/search', :to => 'services#search', :as => 'search_services'
   resources :services
+
 
   #notificaitons
   patch 'notifications/:id', :to => 'notifications#update', :as => 'update_notification'

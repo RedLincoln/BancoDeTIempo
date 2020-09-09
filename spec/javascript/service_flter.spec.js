@@ -69,8 +69,6 @@ describe("ServiceFilter.vue", () => {
       });
 
       it("show category filter on focus", async () => {
-        axios.get.mockResolvedValue({});
-
         await wrapper.find("[name='filter_category']").trigger("focus");
 
         expect(wrapper.find(".content_list").exists()).toBeTruthy();
@@ -208,7 +206,7 @@ describe("ServiceFilter.vue", () => {
       window.location = location;
     });
 
-    it("category must be the one in window.location.search", () => {
+    it("category must be the one in window.location.search", async () => {
       window.location = {
         search: "?filter_category=initial",
       };
@@ -220,12 +218,13 @@ describe("ServiceFilter.vue", () => {
           };
         },
       });
+      await Vue.nextTick()
       expect(wrapper.find('[name="filter_category"]').element.value).toBe(
         "initial"
       );
     });
 
-    it("supcategory must be the one in window.location.search", () => {
+    it("supcategory must be the one in window.location.search", async () => {
       window.location = {
         search: "?filter_supcategory=initial",
       };
@@ -237,6 +236,7 @@ describe("ServiceFilter.vue", () => {
           };
         },
       });
+      await Vue.nextTick();
       expect(wrapper.find('[name="filter_supcategory"]').element.value).toBe(
         "initial"
       );

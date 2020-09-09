@@ -2,7 +2,7 @@
   <div class="datetime_picker">
     <input
       type="hidden"
-      v-model="computedDateTime"
+      :value="computedDateTime"
       data-type="datetime"
       name="transaction[datetime]"
       class="transaction-datetime"

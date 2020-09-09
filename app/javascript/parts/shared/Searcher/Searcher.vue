@@ -1,21 +1,13 @@
 <template>
-  <div class="searcher" v-click-outside="hideContent">
+  <div class="searcher">
     <input
       type="text"
       :name="field_name"
       :placeholder="placeholder"
       v-model="fieldInput"
-      @focus="showContent"
+      @focus="fetchContent(fieldInput)"
       @input="getContentOnInput"
     />
-    <ul v-if="show" class="content_list list-group">
-      <li
-        class="list-group-item list-group-item-action"
-        v-for="(value, index) in values"
-        :key="index"
-        @click="setFieldValue(value)"
-      >{{ value }}</li>
-    </ul>
   </div>
 </template>
 
@@ -45,32 +37,20 @@ export default {
       type: String,
       default: "search_string",
     },
-    dataRetriveCallback: {
-      type: Function,
-      required: true,
-    },
   },
   data() {
     return {
-      show: false,
       fieldInput: this.initialValue,
-      values: [],
     };
   },
   watch: {
-    show() {
-      if (this.show) this.fetchContent("");
+    initialValue(newVal, oldVal) {
+      this.fieldInput = newVal;
     },
   },
   methods: {
     setFieldValue(value) {
       this.fieldInput = value;
-    },
-    showContent() {
-      this.show = true;
-    },
-    hideContent() {
-      this.show = false;
     },
     getContentOnInput() {
       clearTimeout(inputTimeout);
@@ -86,7 +66,7 @@ export default {
           },
         })
         .then((response) => {
-          this.values = this.dataRetriveCallback(response);
+          this.$emit("send-response", response);
         });
     },
   },

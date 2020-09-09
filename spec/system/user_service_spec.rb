@@ -20,8 +20,8 @@ RSpec.describe 'User Service', type: :system do
     expect(current_path).to eql(new_service_path)
     visit user_services_path
 
-    expect(page).to have_selector("#service_#{service1.id} .name", text: service1.name)
-    expect(page).to have_selector("#service_#{service2.id} .name", text: service2.name)
+    expect(page).to have_selector("#service_#{service1.id} .service_name", text: service1.name)
+    expect(page).to have_selector("#service_#{service2.id} .service_name", text: service2.name)
 
     within "#service_#{service1.id}" do
       page.find('.edit_service').click

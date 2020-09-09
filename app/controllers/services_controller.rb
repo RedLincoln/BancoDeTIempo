@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :destroy, :edit]
-  before_action :set_service, only: [:update, :edit, :destroy, :update, :create]
+  before_action :set_service, only: [:update, :edit, :destroy, :update]
 
   def index
     @services = Service.find_by_category_name(params[:filter_category])
@@ -47,6 +47,12 @@ class ServicesController < ApplicationController
         format.html { render new_service_path }
         format.js { flash.now[:alert] = 'Error al crear servicio' }
       end
+    end
+  end
+
+  def search
+    respond_to do |format|
+      format.json { render json: { services: Service.search_by_name(params[:search_string]).first(5) } }
     end
   end
 
