@@ -45,13 +45,14 @@ RSpec.describe 'Service Transactions', type: :system do
   describe 'user transactions views' do
 
     before(:each) do
+      page.driver.browser.manage.window.resize_to(1920, 1080)
       transaction_client
       transaction_owner
       sign_in request_user
       visit user_account_path
     end
 
-    it 'have multiple tabs to show transactions ownership' do
+    it 'have multiple tabs to show transactions ownership', js: true do
       expect(page).to have_selector("#transaction-list #service-#{transaction_client.service.id}-petition")
       expect(page).to have_selector("#transaction-list #service-#{transaction_owner.service.id}-petition")
 
