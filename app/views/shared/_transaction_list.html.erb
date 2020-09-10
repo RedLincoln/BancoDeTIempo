@@ -23,7 +23,7 @@
   <tbody>
     <% transactions.each do |transaction| %>
       <tr id="service-<%= transaction.service.id %>-petition">
-        <td class="pt-4 pb-4 transaction-status"><%= transaction.status %></td>
+        <td class="pt-4 pb-4 transaction-status"><%= transaction.read_attribute_before_type_cast(:status) %></td>
         <td class="pt-4 pb-4 service-name"><%= transaction.service.name %></td>
         <td class="pt-4 pb-4">
           <strong><%= transaction.duration %> horas</strong>
