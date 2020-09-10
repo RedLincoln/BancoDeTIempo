@@ -14,12 +14,10 @@ describe("transaction_form.vue", () => {
     };
 
     const rejectResponse = {
-      data: {
         message: "Errors",
         errors: {
           datetime: "Datetime cant be empty",
           duration: "Duration must be a integer",
-        },
       },
     };
 

@@ -65,6 +65,18 @@ RSpec.describe Transaction, type: :model do
     it 'to_json' do
       expect(transaction.to_json).to eql({service: transaction.service}.to_json)
     end
+  end
 
+  describe 'status' do
+    include ActiveSupport::Testing::TimeHelpers
+    # dd/mm/yyyy HH:MM
+    # 10/10/2020 10:00 duration 2 hours
+    let(:transaction) { build_stubbed(:transaction,
+                                      datetime: DateTime.new(2020, 10, 10, 10, 0),
+                                      duration: 2)}
+
+    it 'default status is negotiating' do
+      expect(transaction).to be_negotiating
+    end
   end
 end

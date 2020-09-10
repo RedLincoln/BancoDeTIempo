@@ -5,13 +5,7 @@
 <template>
   <div class="transaction-form dropdown">
     <ul v-if="haveErrors" class="errors">
-      <li
-        v-for="(error, name, index) in errors"
-        :key="index"
-        :class="`error_${name}`"
-      >
-        {{ error }}
-      </li>
+      <li v-for="(error, index) in errors" :key="index" :class="`error_${name}`">{{ error }}</li>
     </ul>
     <form
       class="service-petition border-top mt-2 pt-5"
@@ -23,12 +17,10 @@
       <input type="hidden" name="authenticity_token" :value="$getCSRFToken()" />
       <input type="hidden" name="transaction[service_id]" :value="service_id" />
       <div class="field">
-        <DatetimePicker
-          @selected-time="updateTimeRangeInSeconds"
-        ></DatetimePicker>
+        <DatetimePicker @selected-time="updateTimeRangeInSeconds"></DatetimePicker>
       </div>
       <div class="field form-group">
-        <label for="transaction-duration">Duración: </label>
+        <label for="transaction-duration">Duración:</label>
         <div>
           <input
             type="number"
@@ -42,9 +34,9 @@
             id="transaction-duration"
             class="form-control"
           />
-          <span class="duration-time-range text-muted">{{
-            rangeDuration
-          }}</span>
+          <span class="duration-time-range text-muted">
+            {{ rangeDuration }}
+          </span>
         </div>
       </div>
       <div class="field form-group">
@@ -83,9 +75,9 @@ export default {
   components: {
     DatetimePicker,
   },
-  data: function() {
+  data: function () {
     return {
-      errors: {},
+      errors: [],
       timeRangeInSeconds: -1,
       duration: 0,
       rangeDuration: "Selecciona una hora para ver el rango",
@@ -138,20 +130,23 @@ export default {
         this.duration = 0;
       }
     },
-    sendPetition: function(e) {
-      axios
-        .post(
+    validateForm(newErrors){
+      this.errors = [];
+      Object.values(newErrors).forEach(errors => {
+        errors.forEach(error => this.errors.push(error))
+      });
+    },
+    sendPetition: async function (e) {
+      try {
+        await axios.post(
           this.$createTransactionPath,
           formParams.getPostParams(e.target.elements)
-        )
-        .then((response) => {
-          this.errors = {};
-          Turbolinks.visit(this.$servicesPath)
-        })
-        .catch((err) => {
-          railsFlash.alert(err.data.message);
-          this.errors = err.data.errors;
-        });
+        );
+        Turbolinks.visit(this.$servicesPath);
+      } catch (e) {
+        railsFlash.alert(e.response.data.message);
+        this.validateForm(e.response.data.errors)
+      }
     },
   },
 };
