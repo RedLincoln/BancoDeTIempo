@@ -32,6 +32,14 @@ RSpec.describe CreateMessages do
       expect(Message.exists?(message: 'This is a Message')).to eq(false)
     end
 
+    it 'service_id not in database' do
+      creator = CreateMessages.new(message: 'This is a Message', author: author, service_petition: Transaction.new)
+      creator.create
+
+      expect(creator).to_not be_success
+      expect(Message.exists?(message: 'This is a Message')).to eq(false)
+    end
+
   end
 
 end
