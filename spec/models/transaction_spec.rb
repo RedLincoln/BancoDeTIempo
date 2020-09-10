@@ -83,5 +83,10 @@ RSpec.describe Transaction, type: :model do
       transaction.accepted!
       expect(transaction).to be_accepted
     end
+
+    it 'can change from negotiating to canceled' do
+      transaction.canceled!
+      expect(transaction).to be_canceled
+    end
   end
 end
