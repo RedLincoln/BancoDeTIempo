@@ -71,7 +71,7 @@ RSpec.describe Transaction, type: :model do
     include ActiveSupport::Testing::TimeHelpers
     # dd/mm/yyyy HH:MM
     # 10/10/2020 10:00 duration 2 hours
-    let(:transaction) { build_stubbed(:transaction,
+    let(:transaction) { create(:transaction,
                                       datetime: DateTime.new(2020, 10, 10, 10, 0),
                                       duration: 2)}
 
