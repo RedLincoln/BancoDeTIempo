@@ -14,7 +14,7 @@ class CreateMessages
 
   def create
     @success = User.exists?(id: @author.id) && Transaction.exists?(id: @service_petition.id)
-    build.save if @success
+    @success = build.save if @success
   end
 
   def success?
