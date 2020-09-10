@@ -18,6 +18,7 @@
       <th scope="col">Recibe el servicio</th>
       <th scope="col">Descripción de servicio</th>
       <th scope="col">Información adicional</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -41,6 +42,9 @@
         </td>
         <td class="pt-4 pb-4 service-description"><%= transaction.service.description %></td>
         <td class="pt-4 pb-4 additional-information"><%= transaction.addition_information %></td>
+        <td>
+          <%= link_to 'Mensajes', transaction_messages_path(transaction.id), role: 'button', class: 'messages btn btn-orange' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
