@@ -1,12 +1,11 @@
 class Transaction < ApplicationRecord
   after_commit :broadcast
-  enum status: {negotiating: 'Negociación', accepted: 'Aceptada', canceled: 'Cancelada'}
+  enum status: {negotiating: 'Negociación', accepted: 'Aceptada', canceled: 'Cancelada', done: 'Realizada'}
   validates :datetime, presence: true
   validates :duration, numericality: { only_integer: true, greater_than: 0, less_than: 24}
   validates :client, uniqueness: { scope: :service}
   belongs_to :client, class_name: :User
   belongs_to :service
-
 
   validate :service_owner_can_not_be_the_client
 
@@ -27,6 +26,13 @@ class Transaction < ApplicationRecord
     datetime.strftime("%d/%m/%Y")
   end
 
+  def self.check_datetime
+    all.each do |transaction|
+      if transaction.accepted? && transaction.datetime > DateTime.now
+        find(transaction.id).done!
+      end
+    end
+  end
   private
 
   def service_owner_can_not_be_the_client

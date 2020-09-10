@@ -88,5 +88,11 @@ RSpec.describe Transaction, type: :model do
       transaction.canceled!
       expect(transaction).to be_canceled
     end
+
+    it 'status changes from accepted to done when datetime is less than now' do
+      transaction.accepted!
+      travel_to DateTime.new(2020, 10, 10, 18, 0) # 6 hours after datetime
+      expect(transaction).to be_done
+    end
   end
 end
