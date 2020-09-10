@@ -1,6 +1,6 @@
 class Transaction < ApplicationRecord
   after_commit :broadcast
-  enum status: {negotiating: 'Negociación', accepted: 'Aceptada'}
+  enum status: {negotiating: 'Negociación', accepted: 'Aceptada', canceled: 'Cancelada'}
   validates :datetime, presence: true
   validates :duration, numericality: { only_integer: true, greater_than: 0, less_than: 24}
   validates :client, uniqueness: { scope: :service}
