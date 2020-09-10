@@ -10,7 +10,12 @@ class Transaction < ApplicationRecord
   validate :service_owner_can_not_be_the_client
 
   def done?
-    done! if accepted?
+    done! if accepted? && datetime < DateTime.now
+    super
+  end
+
+  def canceled?
+    canceled! if negotiating? && datetime < DateTime.now
     super
   end
 
