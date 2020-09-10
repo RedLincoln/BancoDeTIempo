@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Transaction Messages', type: :system, js: true do
+RSpec.describe 'Transaction Messages', type: :system do
   let(:owner){create(:user)}
   let(:client) {create(:user)}
   let(:service) { create(:service, user: owner)}
@@ -15,14 +15,13 @@ RSpec.describe 'Transaction Messages', type: :system, js: true do
     visit user_account_path
 
     find("#service-#{transaction.id}-petition .messages").click
-    find("#new-message").click
 
     fill_in('message', with: 'This is a message')
     find("#send-message").click
 
-    visit transaction_messages_path
+    visit transaction_messages_path(transaction.id)
 
-    expect(page).to have_selector(".message_list .message .content", text: 'This is a message')
+    expect(page).to have_selector(".message-list .message .content", text: 'This is a message')
   end
 
 end
