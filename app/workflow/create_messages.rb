@@ -13,7 +13,8 @@ class CreateMessages
   end
 
   def create
-    @success = build.save
+    @success = User.exists?(id: author.id)
+    build.save if @success
   end
 
   def success?
