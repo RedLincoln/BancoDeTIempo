@@ -78,5 +78,10 @@ RSpec.describe Transaction, type: :model do
     it 'default status is negotiating' do
       expect(transaction).to be_negotiating
     end
+
+    it 'can change from negotiating to accepted' do
+      transaction.accepted!
+      expect(transaction).to be_accepted
+    end
   end
 end
