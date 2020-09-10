@@ -9,6 +9,11 @@ class Transaction < ApplicationRecord
 
   validate :service_owner_can_not_be_the_client
 
+  def done?
+    done! if accepted?
+    super
+  end
+
   def as_json(*)
     {
         service: service
