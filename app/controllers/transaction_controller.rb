@@ -22,10 +22,6 @@ class TransactionController < ApplicationController
 
   end
 
-  def messages
-    @new_message = Message.new
-  end
-
   private
 
   def transaction_params

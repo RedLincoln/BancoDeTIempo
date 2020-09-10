@@ -1,0 +1,3 @@
+class CreateMessages
+
+end

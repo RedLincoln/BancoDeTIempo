@@ -20,7 +20,7 @@ RSpec.describe 'Transaction Messages', type: :system, js: true do
     fill_in('message', with: 'This is a message')
     find("#send-message").click
 
-    visit current_path
+    visit transaction_messages_path
 
     expect(page).to have_selector(".message_list .message .content", text: 'This is a message')
   end

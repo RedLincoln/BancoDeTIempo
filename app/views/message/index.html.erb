@@ -1,0 +1,9 @@
+<%= form_with url: create_transaction_message_path do |f| %>
+  <div class="field form-group">
+    <%= f.label :message, 'Mensaje' %><br />
+    <%= f.text_area :name, autofocus: true, class: 'form-control resize-disable' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Enviar Mensaje", class: 'btn btn-primary' %>
+  </div>
+<% end %>
