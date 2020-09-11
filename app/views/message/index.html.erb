@@ -1,17 +1,29 @@
-<%= form_with url: create_transaction_message_path do |f| %>
-  <div class="field form-group">
-    <%= f.label :message, 'Mensaje' %><br />
-    <%= f.text_area :message, autofocus: true, class: 'form-control resize-disable' %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Enviar Mensaje", class: 'btn btn-primary', id: 'send-message' %>
-  </div>
-<% end %>
-
-<div class="message-list">
-  <% @messages.each do |message| %>
-    <div class="message">
-      <p class="content"><%= message.message %></p>
+<div class="container">
+  <%= form_with url: create_transaction_message_path, class: 'mt-7 mb-5' do |f| %>
+    <div class="field form-group">
+      <%= f.label :message, 'Mensaje' %><br />
+      <%= f.text_area :message, autofocus: true, class: 'form-control resize-disable' %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Enviar Mensaje", class: 'btn btn-primary', id: 'send-message' %>
     </div>
   <% end %>
+
+  <div class="message-list mt-7">
+    <% @messages.each do |message| %>
+      <div class="message border rounded">
+        <div class="d-flex justify-content-between container  border-bottom pb-1">
+          <span class="font-weight-bold">
+            <%= message.author.name %>
+          </span>
+          <span class="text-muted">
+            <%= message.created_at.strftime "%-d/%m/%y %l:%M %p" %>
+          </span>
+        </div>
+        <div class="container pt-2">
+          <p class="content font-size-large"><%= message.message %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
