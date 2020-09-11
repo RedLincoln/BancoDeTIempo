@@ -38,6 +38,6 @@ RSpec.describe 'Transaction Messages', type: :system do
     expect(page).to have_selector(".message-list .message .content", text: message.message)
 
     sign_in owner
-    expect(page).to have_selector("#notification-counter", text: '0')
+    expect(page).to have_selector("#notifications-counter", text: '0')
   end
 end

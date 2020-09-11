@@ -7,12 +7,13 @@
     </div>
     <div>
     <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
-      <div v-for="(notification, index) in notifications" @click="updateNotification(index)"
-           class="notification dropdown-item position-relative">
+      <a v-for="(notification, index) in notifications" @click="updateNotification(index)"
+           class="notification dropdown-item position-relative"
+           :href="notification.link !== undefined ? notification.link : false" >
         <span v-if="!notification.seen" class="seen position-absolute text-primary font-weight-bold">.</span>
         <p>{{ notification.message }}<span class="target font-weight-bold">{{ notification.target }}</span></p>
         <p class="text-muted">{{ notification.time_ago }}</p>
-      </div>
+      </a>
     </div>
     </div>
   </div>
