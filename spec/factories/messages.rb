@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :message do
     message { "MyText" }
-    transaction { nil }
+    service_petition { nil }
     author { nil }
   end
 end

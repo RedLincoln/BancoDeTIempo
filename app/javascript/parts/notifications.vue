@@ -1,7 +1,7 @@
 <template>
   <div id="notifications" class="dropdown">
     <div>
-      <button type="button" class="toggle-button border rounded-circle mr-2" id="notification-list"
+      <button type="button" class="toggle-button border rounded-circle mr-2"
       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="toggleDropdown">!</button>
       <span id="notifications-counter" class="position-absolute text-white">{{ counter }}</span>
     </div>
