@@ -32,9 +32,9 @@ RSpec.describe 'Transaction Messages', type: :system do
     visit root_path
 
     find("#notifications .toggle-button").click
-    find("#notifications-list notification").click
+    find("#notifications-list .notification").click
 
-    expect(current_page).to eq(transaction_message_path(transaction.id))
+    expect(current_path).to eq(transaction_messages_path(transaction.id))
     expect(page).to have_selector(".message-list .message .content", text: message.message)
 
     sign_in owner
