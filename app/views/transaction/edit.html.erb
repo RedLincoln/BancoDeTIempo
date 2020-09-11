@@ -4,7 +4,7 @@
       service_id: @service.id,
       transaction: @transaction,
       method: 'patch',
-      action: update_service_petition_path(@transaction.id)
+      action: update_service_petition_path(@transaction.id, format: :js)
   }.to_json
 %>
 

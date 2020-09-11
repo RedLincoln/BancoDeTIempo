@@ -3,7 +3,7 @@
       edit: false,
       service_id: @service.id,
       method: 'post',
-      action: new_service_petition_path(@transaction.id)
+      action: transactions_path(format: :js)
   }.to_json
 %>
 

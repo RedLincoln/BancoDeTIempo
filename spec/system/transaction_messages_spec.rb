@@ -42,26 +42,29 @@ RSpec.describe 'Transaction Messages', type: :system do
     expect(page).to have_selector("#notifications-counter", text: '0')
   end
 
-  it 'client can edit the service petition' do
+  it 'client can edit the service petition', js: true do
+    Notification.destroy_all
     sign_in client
     visit user_account_path
 
     find("#service-#{transaction.id}-petition .edit").click
 
-    expect(current_path).to eq(new_service_petition_path)
+    expect(current_path).to eq(edit_service_petition_path(transaction.id))
 
-    fill_in('addition_information', with: 'Additional information')
+    fill_in('addition-information', with: 'Additional information')
     find(".send-petition").click
 
+    sign_in owner
     visit user_account_path
-
+    expect(page).to_not have_selector("#service-#{transaction.id}-petition .edit")
     expect(page).to have_selector("#transaction-list #service-#{service.id}-petition .additional-information",
-                                  with: 'Additional information')
+                                  text: 'Additional information')
+
 
     find("#notifications .toggle-button").click
     find("#notifications-list .notification").click
 
     regex = Regexp.new(Regexp.escape('Additional information'), Regexp::IGNORECASE)
-    find(".message-list .transaction-edit").text.should match(regex)
+    expect(page).to have_selector(".message-list .transaction-edit")
   end
 end

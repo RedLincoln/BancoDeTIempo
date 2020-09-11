@@ -123,7 +123,6 @@ export default {
   },
   watch: {
     initialValue() {
-      console.log("loading initial data");
       const initialDate = new Date(this.initialValue);
       this.activeDay = initialDate.getDate();
       this.activeHour = initialDate.getHours();

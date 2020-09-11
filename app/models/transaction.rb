@@ -1,5 +1,8 @@
 class Transaction < ApplicationRecord
-  after_commit :broadcast
+  include Rails.application.routes.url_helpers
+
+  after_create :broadcast_create
+  after_update :broadcast_update
   enum status: {negotiating: 'Negociación', accepted: 'Aceptada', canceled: 'Cancelada', done: 'Realizada'}
   validates :datetime, presence: true
   validates :duration, numericality: { only_integer: true, greater_than: 0, less_than: 24}
@@ -44,6 +47,7 @@ class Transaction < ApplicationRecord
       end
     end
   end
+
   private
 
   def service_owner_can_not_be_the_client
@@ -53,9 +57,22 @@ class Transaction < ApplicationRecord
     end
   end
 
-  def broadcast
-    notification = service.user.notifications.build(message: 'Se have pedido el servicio ', target: service.name)
+  def broadcast_create
+    notification = service.user.notifications.build(
+        message: 'Se have pedido el servicio ',
+        target: service.name,
+        link: transaction_messages_path(id))
     notification.save
+    broadcast notification
+  end
+
+  def broadcast_update
+    Message.create(service_petition: self, author: client,
+                   message_type: :petition_edit, message: 'Se ha editado el pedido')
+  end
+
+
+  def broadcast(notification)
     ActionCable.server.broadcast "notifications_#{service.user.id}", notification.to_json
   end
 end

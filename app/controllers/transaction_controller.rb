@@ -1,9 +1,21 @@
 class TransactionController < ApplicationController
   before_action :authenticate_user!
+  before_action :get_transaction, only: [:edit, :update]
 
   def edit
-    @transaction = Transaction.find(params[:id])
     @service = @transaction.service
+  end
+
+  def update
+    if @transaction.update(transaction_params)
+      respond_to do |format|
+        format.js { render json: { message: 'Petición actualizada'} }
+      end
+    else
+      respond_to do |format|
+        format.js { render json: {message: 'Error al actualizar la petición', errors: @transaction.errors}, status: :bad_request }
+      end
+    end
   end
 
   def new
@@ -38,5 +50,9 @@ class TransactionController < ApplicationController
         service_id: params[:transaction][:service_id],
         client: current_user
     }
+  end
+
+  def get_transaction
+    @transaction = Transaction.find(params[:id])
   end
 end

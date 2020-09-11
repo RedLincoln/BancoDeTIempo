@@ -14,19 +14,25 @@
   <div class="message-list mt-7">
     <h2>Historial de Mensajes</h2>
     <% @messages.each do |message| %>
-      <div class="message border rounded">
-        <div class="d-flex justify-content-between container  border-bottom pb-1">
-          <span class="font-weight-bold">
-            <%= message.author == current_user ? 'Yo' : message.author.name%>
-          </span>
-          <span class="text-muted">
-            <%= message.created_at.strftime "%-d/%m/%y %l:%M %p" %>
-          </span>
+      <% if message.text? %>
+        <div class="message border rounded">
+          <div class="d-flex justify-content-between container  border-bottom pb-1">
+            <span class="font-weight-bold">
+              <%= message.author == current_user ? 'Yo' : message.author.name%>
+            </span>
+            <span class="text-muted">
+              <%= message.created_at.strftime "%-d/%m/%y %l:%M %p" %>
+            </span>
+          </div>
+          <div class="container pt-2">
+            <p class="content font-size-large"><%= message.message %></p>
+          </div>
         </div>
-        <div class="container pt-2">
+      <% elsif message.petition_edit? %>
+        <div class="transaction-edit">
           <p class="content font-size-large"><%= message.message %></p>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>
