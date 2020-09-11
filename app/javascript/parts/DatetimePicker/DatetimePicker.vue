@@ -119,15 +119,17 @@ export default {
     const date = new Date(Date.now());
     this.today.date = new Date(date.getFullYear(), date.getMonth(), 1);
     this.today.now = date;
-    if (this.initialValue <= 0) {
-      this.configDate(date);
-    } else {
+    this.configDate(date);
+  },
+  watch: {
+    initialValue() {
+      console.log("loading initial data");
       const initialDate = new Date(this.initialValue);
       this.activeDay = initialDate.getDate();
       this.activeHour = initialDate.getHours();
       this.activeMinutes = initialDate.getMinutes();
       this.configDate(initialDate);
-    }
+    },
   },
   computed: {
     computeTime() {

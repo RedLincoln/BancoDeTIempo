@@ -67,7 +67,7 @@ RSpec.describe Transaction, type: :model do
           addition_information: transaction.addition_information,
           duration: transaction.duration,
           service: transaction.service,
-          datetime: transaction.datetime.to_i
+          datetime: transaction.datetime.to_i * 1000
       }.to_json
 
       expect(transaction.to_json).to eql(expected)

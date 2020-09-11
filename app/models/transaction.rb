@@ -22,7 +22,7 @@ class Transaction < ApplicationRecord
   def as_json(*)
     super(only: [:addition_information, :duration]).tap do |hash|
       hash[:service] = service
-      hash[:datetime] = datetime.to_i
+      hash[:datetime] = datetime.to_i * 1000
     end
   end
 
