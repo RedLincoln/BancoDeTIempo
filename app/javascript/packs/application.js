@@ -19,6 +19,7 @@
 import Vue from 'vue'
 import ActionCable from 'actioncable'
 
+
 Vue.prototype.$cable = ActionCable.createConsumer('/cable')
 Vue.prototype.$updateNotificationPath = (id) => {
     return Routes.update_notification_path(id, { format: 'json' })

@@ -1,6 +1,6 @@
 
 <template>
-  <div id="service_filter" class="border rounded p-3 mb-3">
+  <div id="service-filter" class="border rounded p-3 mb-3">
     <form :action="$servicesPath" method="GET">
       <div class="d-flex align-items-center">
         <button

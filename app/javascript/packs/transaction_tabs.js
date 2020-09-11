@@ -5,8 +5,6 @@
 import Vue from 'vue'
 import TransactionsTab from '@/transaction_tabs.vue'
 import { isView } from "vueonrails";
-import TurbolinksAdapter from 'vue-turbolinks'
-Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
   if (!isView("account#index")) return;

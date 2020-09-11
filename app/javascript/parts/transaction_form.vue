@@ -3,7 +3,7 @@
 <!-- Generate another component part like this by running command `rails generate vue something` -->
 
 <template>
-  <div class="transaction-form dropdown">
+  <div class="service-transaction-form transaction-form dropdown">
     <ul v-if="haveErrors" class="errors">
       <li v-for="(error, index) in errors" :key="index" :class="`error_${name}`">{{ error }}</li>
     </ul>

@@ -3,7 +3,7 @@
 <!-- Generate a Single File Component part by running command `rails generate vue something` -->
 
 <template>
-  <ul class="transactions-tabs nav nav-tabs font-size-x-large mb-2">
+  <ul id="transactions-tabs" class="transactions-tabs nav nav-tabs font-size-x-large mb-2">
     <li class="nav-item">
       <a :href="$userAccountPath" class="all-tab nav-link" :class="allActive">Todas</a>
     </li>

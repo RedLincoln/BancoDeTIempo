@@ -1,5 +1,5 @@
 <template>
-  <div class="service-search position-relative mr-3" v-click-outside="hideVisualizer">
+  <div id="service-searcher" class="service-search position-relative mr-3" v-click-outside="hideVisualizer">
     <Searcher
       id="search-bar"
       placeholder="Buscar..."

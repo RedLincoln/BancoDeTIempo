@@ -110,7 +110,7 @@ RSpec.describe 'Service', type: :system do
       find(".filter-dropdown").click
       fill_in('filter_category', with: category.name)
 
-      find('#service_filter .apply_filters').click
+      find('#service-filter .apply_filters').click
 
       expect(page).to have_selector("#service_#{service_result1.id}")
       expect(page).to have_selector("#service_#{service_result2.id}")
@@ -121,7 +121,7 @@ RSpec.describe 'Service', type: :system do
       find(".filter-dropdown").click
       fill_in('filter_supcategory', with: match_supcategory.supcategory)
 
-      find('#service_filter .apply_filters').click
+      find('#service-filter .apply_filters').click
 
       expect(page).to_not have_selector("#service_#{service_result1.id}")
       expect(page).to_not have_selector("#service_#{service_result2.id}")

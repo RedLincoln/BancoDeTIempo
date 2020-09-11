@@ -4,7 +4,7 @@
 
 import Vue from 'vue/dist/vue.esm'
 import App from '@/session_actions.vue'
-import {turbolinksAdapterMixin} from 'vue-turbolinks'
+import { turbolinksAdapterMixin } from 'vue-turbolinks'
 
 document.addEventListener('turbolinks:load', () => {
   const element = document.getElementById('session_actions');

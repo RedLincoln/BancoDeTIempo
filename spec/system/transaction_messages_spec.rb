@@ -5,6 +5,7 @@ RSpec.describe 'Transaction Messages', type: :system do
   let(:client) {create(:user)}
   let(:service) { create(:service, user: owner)}
   let(:transaction){create(:transaction, service: service,
+                           datetime: 10.days.since,
                            client: client, addition_information: "")}
   let(:message) { create(:message, message: 'Notification Message',
                          service_petition: transaction, author: owner) }

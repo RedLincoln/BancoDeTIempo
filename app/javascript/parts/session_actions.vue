@@ -50,7 +50,6 @@ export default {
       axios
         .delete(this.$signOutPath, { headers: axiosConf.getDefaultHeader() })
         .then((response) => {
-          this.isLoggedReactive = false;
           Turbolinks.visit("/");
         })
         .catch((err) => console.log(err));
