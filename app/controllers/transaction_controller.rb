@@ -9,7 +9,7 @@ class TransactionController < ApplicationController
   def update
     if @transaction.update(transaction_params)
       respond_to do |format|
-        format.js { render json: { message: 'Petición actualizada'} }
+        format.js { render json: {notice: 'Petición actualizada'}.to_json }
       end
     else
       respond_to do |format|

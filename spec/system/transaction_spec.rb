@@ -29,6 +29,7 @@ RSpec.describe 'Service Transactions', type: :system do
         end
 
         visit user_account_path
+        find("#transaction-list #service-#{service.id}-petition", wait: 5)
 
         within "#transaction-list #service-#{service.id}-petition" do
           expect(page).to have_selector('.service-name', text: service.name)
