@@ -29,6 +29,10 @@ Vue.prototype.$sendServicePetition = (serviceId) => {
     return Routes.new_service_petition_path(serviceId)
 }
 
+Vue.prototype.$acceptPetitionPath = (petitionId) => {
+    return Routes.accept_service_petition_path(petitionId, { format: 'js'})
+}
+
 Vue.prototype.$servicesPath = Routes.services_path()
 Vue.prototype.$userNotificationsPath = Routes.user_notifications_path({ format: 'json' })
 Vue.prototype.$loginPath = Routes.new_user_session_path()
@@ -50,3 +54,4 @@ import './session_actions'
 import './transaction_form'
 import './service_filter'
 import './transaction_tabs'
+import './accept_petition'

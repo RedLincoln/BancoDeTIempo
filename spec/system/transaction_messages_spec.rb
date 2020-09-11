@@ -87,7 +87,7 @@ RSpec.describe 'Transaction Messages', type: :system, js: true do
     expect(Transaction.find(transaction.id)).to be_accepted
 
     sign_in client
-    expect(page).to have_selector("#notifications-counter", text: "1")
+    expect(page).to have_selector("#notifications-counter", text: "2")
 
     visit user_account_path
 

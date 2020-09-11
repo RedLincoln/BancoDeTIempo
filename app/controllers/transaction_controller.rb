@@ -1,6 +1,6 @@
 class TransactionController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_transaction, only: [:edit, :update]
+  before_action :get_transaction, only: [:edit, :update, :accept]
 
   def edit
     @service = @transaction.service
@@ -36,7 +36,16 @@ class TransactionController < ApplicationController
         format.js { render json: {message: 'Error al realizar la petición', errors: @workflow.transaction.errors}, status: :bad_request }
       end
     end
+  end
 
+
+  def accept
+    @transaction.accepted!
+    if @transaction.accepted?
+      respond_to do |format|
+        format.js
+      end
+    end
   end
 
   private
