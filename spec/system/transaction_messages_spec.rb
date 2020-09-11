@@ -4,7 +4,8 @@ RSpec.describe 'Transaction Messages', type: :system do
   let(:owner){create(:user)}
   let(:client) {create(:user)}
   let(:service) { create(:service, user: owner)}
-  let(:transaction){create(:transaction, service: service, client: client)}
+  let(:transaction){create(:transaction, service: service,
+                           client: client, addition_information: "")}
   let(:message) { create(:message, message: 'Notification Message',
                          service_petition: transaction, author: owner) }
 
@@ -39,5 +40,28 @@ RSpec.describe 'Transaction Messages', type: :system do
 
     sign_in owner
     expect(page).to have_selector("#notifications-counter", text: '0')
+  end
+
+  it 'client can edit the service petition' do
+    sign_in client
+    visit user_account_path
+
+    find("#service-#{transaction.id}-petition .edit").click
+
+    expect(current_path).to eq(new_service_petition_path)
+
+    fill_in('addition_information', with: 'Additional information')
+    find(".send-petition").click
+
+    visit user_account_path
+
+    expect(page).to have_selector("#transaction-list #service-#{service.id}-petition .additional-information",
+                                  with: 'Additional information')
+
+    find("#notifications .toggle-button").click
+    find("#notifications-list .notification").click
+
+    regex = Regexp.new(Regexp.escape('Additional information'), Regexp::IGNORECASE)
+    find(".message-list .transaction-edit").text.should match(regex)
   end
 end

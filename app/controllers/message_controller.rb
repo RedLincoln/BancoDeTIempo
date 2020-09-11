@@ -2,7 +2,7 @@ class MessageController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @messages = Message.where(service_petition: Transaction.find(params[:id]))
+    @messages = Message.where(service_petition: Transaction.find(params[:id])).order(created_at: :desc)
   end
 
   def create

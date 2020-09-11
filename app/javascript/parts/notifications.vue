@@ -52,12 +52,9 @@ export default {
                 user_id: this.user_id
               },
               {
-                connected: function () {
-                  console.log(`connected to notifications_${vm.user_id}`)
-                },
                 received: function (data) {
                   vm.counter++
-                  vm.notifications.push(JSON.parse(data))
+                  vm.notifications.splice(0, 0, JSON.parse(data))
                 }
               }
       )
