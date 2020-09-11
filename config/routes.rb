@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'petition/:id/edit', :to => 'transaction#edit', :as => 'edit_service_petition'
   patch 'petition/:id', :to => 'transaction#update', :as => 'update_service_petition'
   post 'petition/:id/accept', :to => 'transaction#accept', :as => 'accept_service_petition'
+  post 'petition/:id/cancel', :to => 'transaction#cancel', :as => 'cancel_service_petition'
 
   # Transaction Messages
   get 'transactions/:id/messages', :to => 'message#index', :as => 'transaction_messages'

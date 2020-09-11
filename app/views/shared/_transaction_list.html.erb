@@ -51,6 +51,8 @@
             <span class="accept-petition
               " data-props="<%= {petition_id: transaction.id, accepted: transaction.accepted?}.to_json %>"></span>
           <% end %>
+          <span class="cancel-petition
+              " data-props="<%= {petition_id: transaction.id, canceled: transaction.canceled?}.to_json %>"></span>
         </td>
       </tr>
     <% end %>

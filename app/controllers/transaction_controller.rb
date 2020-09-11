@@ -1,6 +1,6 @@
 class TransactionController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_transaction, only: [:edit, :update, :accept]
+  before_action :get_transaction, only: [:edit, :update, :accept, :cancel]
 
   def edit
     @service = @transaction.service
@@ -42,6 +42,15 @@ class TransactionController < ApplicationController
   def accept
     @transaction.accepted!
     if @transaction.accepted?
+      respond_to do |format|
+        format.js
+      end
+    end
+  end
+
+  def cancel
+    @transaction.canceled!
+    if @transaction.canceled?
       respond_to do |format|
         format.js
       end

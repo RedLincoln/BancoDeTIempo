@@ -66,6 +66,20 @@ class Transaction < ApplicationRecord
     end
   end
 
+  def send_status_change_notification
+    new_status = read_attribute_before_type_cast(:status)
+    notification_owner = service.user.notifications.create(
+        message: "El estado ha cambiado a #{new_status} ",
+        target: service.name,
+        link: transaction_messages_path(id))
+    notification_client = client.notifications.create(
+        message: "El estado ha cambiado a #{new_status} ",
+        target: service.name,
+        link: transaction_messages_path(id))
+    broadcast notification_owner
+    broadcast notification_client
+  end
+
   def broadcast_create
     notification = service.user.notifications.build(
         message: 'Se have pedido el servicio ',
@@ -77,10 +91,13 @@ class Transaction < ApplicationRecord
 
   def broadcast_update
     fields_changed = diff_active_record(@oldTransaction ,self)
-    return if (fields_changed.include? "status")
-    Message.create(service_petition: self, author: client,
-                   message_type: :petition_edit, message: 'Se ha editado el pedido'
-    )
+    if (fields_changed.include? "status")
+      send_status_change_notification
+    else
+      Message.create(service_petition: self, author: client,
+                     message_type: :petition_edit, message: 'Se ha editado el pedido'
+      )
+    end
   end
 
 
