@@ -1,6 +1,11 @@
 class TransactionController < ApplicationController
   before_action :authenticate_user!
 
+  def edit
+    @transaction = Transaction.find(params[:id])
+    @service = @transaction.service
+  end
+
   def new
     @service = Service.find(params[:id])
     @transaction = Transaction.new

@@ -9,8 +9,8 @@
     </ul>
     <form
       class="service-petition border-top mt-2 pt-5"
-      :action="$createTransactionPath"
-      method="post"
+      :action="action"
+      :method="method"
       @submit.prevent="sendPetition"
     >
       <input name="utf8" type="hidden" value="✓" />
@@ -34,9 +34,7 @@
             id="transaction-duration"
             class="form-control"
           />
-          <span class="duration-time-range text-muted">
-            {{ rangeDuration }}
-          </span>
+          <span class="duration-time-range text-muted">{{ rangeDuration }}</span>
         </div>
       </div>
       <div class="field form-group">
@@ -47,6 +45,7 @@
           name="transaction[addition_information]"
           id="addition-information"
           placeholder="Añade información extra"
+          v-model="additionInformation"
           rows="3"
           cols="40"
         ></textarea>
@@ -71,6 +70,19 @@ export default {
       type: Number,
       required: true,
     },
+    method: {
+      type: String,
+      required: true,
+    },
+    action: {
+      type: String,
+      required: true,
+    },
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+    transaction: Object,
   },
   components: {
     DatetimePicker,
@@ -81,6 +93,7 @@ export default {
       timeRangeInSeconds: -1,
       duration: 0,
       rangeDuration: "Selecciona una hora para ver el rango",
+      additionInformation: "",
     };
   },
   watch: {
@@ -92,6 +105,13 @@ export default {
     timeRangeInSeconds() {
       this.setDurationRange();
     },
+  },
+  mounted() {
+    if (this.edit) {
+      this.duration = this.transaction.duration;
+      this.additionInformation = this.transaction.addition_information;
+      this.datetime = this.transaction.datetime;
+    }
   },
   computed: {
     haveErrors() {
@@ -130,22 +150,25 @@ export default {
         this.duration = 0;
       }
     },
-    validateForm(newErrors){
+    validateForm(newErrors) {
       this.errors = [];
-      Object.values(newErrors).forEach(errors => {
-        errors.forEach(error => this.errors.push(error))
+      Object.values(newErrors).forEach((errors) => {
+        errors.forEach((error) => this.errors.push(error));
       });
     },
     sendPetition: async function (e) {
       try {
-        await axios.post(
-          this.$createTransactionPath,
-          formParams.getPostParams(e.target.elements)
-        );
+        await axios({
+          method: this.method,
+          url: this.action,
+          data: formParams.getPostParams(e.target.elements),
+        });
         Turbolinks.visit(this.$servicesPath);
       } catch (e) {
-        railsFlash.alert(e.response.data.message);
-        this.validateForm(e.response.data.errors)
+        if (e.status && e.status >= 400) {
+          railsFlash.alert(e.response.data.message);
+          this.validateForm(e.response.data.errors);
+        }
       }
     },
   },

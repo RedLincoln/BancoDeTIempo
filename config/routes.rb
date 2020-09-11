@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   # Transaction
   post 'transactions', :to => 'transaction#create', :as => 'transactions'
   get 'service/:id/petition', :to => 'transaction#new', :as => 'new_service_petition'
+  get 'petition/:id/edit', :to => 'transaction#edit', :as => 'edit_service_petition'
+  patch 'petition/:id', :to => 'transaction#update', :as => 'update_service_petition'
+
   # Transaction Messages
   get 'transactions/:id/messages', :to => 'message#index', :as => 'transaction_messages'
   post 'transaction/:id/messages', :to => 'message#create', :as => 'create_transaction_message'

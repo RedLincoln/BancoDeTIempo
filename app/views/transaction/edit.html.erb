@@ -1,14 +1,16 @@
 <%
   props = {
-      edit: false,
+      edit: true,
       service_id: @service.id,
-      method: 'post',
-      action: new_service_petition_path(@transaction.id)
+      transaction: @transaction,
+      method: 'patch',
+      action: update_service_petition_path(@transaction.id)
   }.to_json
 %>
 
+
 <div class="mt-7 container">
-  <h2 class="mb-5 border-bottom d-inline-block border-dark">Pedir servicio</h2>
+  <h2 class="mb-5 border-bottom d-inline-block border-dark">Editar servicio</h2>
   <%= render 'shared/services', services: [@service], showActions: false %>
 
   <span id="service-transaction-form" data-service-data="<%= props %>"></span>

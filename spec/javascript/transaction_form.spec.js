@@ -9,20 +9,38 @@ describe("transaction_form.vue", () => {
   describe("", () => {
     let wrapper;
     let spy;
+    const date = "2020/07/07 10:00";
+
+    const editPropsData = {
+      service_id: 1,
+      edit: true,
+      transaction: {
+        addition_information: "addition_information",
+        duration: 4,
+        datetime: new Date(2020, 7, 7, 10, 0).getTime(),
+      },
+      method: "patch",
+      action: "http://localhost/transactions.js",
+    };
+
     const propsData = {
       service_id: 1,
+      edit: false,
+      method: "post",
+      action: "http://localhost/transactions.js",
     };
 
     const rejectResponse = {
+      data: {
         message: "Errors",
         errors: {
           datetime: "Datetime cant be empty",
           duration: "Duration must be a integer",
+        },
       },
     };
 
     const mocks = {
-      $createTransactionPath: "/transactions.js",
       $getCSRFToken: () => "",
     };
 
@@ -37,20 +55,51 @@ describe("transaction_form.vue", () => {
 
     it("expect send petition behaviour", () => {
       axios.post.mockResolvedValue("");
-      wrapper.find(".transaction-datetime").setValue("2020/07/07 10:00");
+      wrapper.find(".transaction-datetime").setValue(date);
       wrapper.find("form.service-petition").trigger("submit");
 
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(mocks.$createTransactionPath, {
-        "": "",
-        authenticity_token: "",
-        transaction: {
-          addition_information: "",
-          datetime: new Date(2020, 7, 7, 10, 0).getTime(),
-          duration: "0",
-          service_id: propsData.service_id.toString(),
+      expect(axios).toHaveBeenCalledWith({
+        url: propsData.action,
+        method: propsData.method,
+        data: {
+          "": "",
+          authenticity_token: "",
+          transaction: {
+            addition_information: "",
+            datetime: new Date(2020, 7, 7, 10, 0).getTime(),
+            duration: "0",
+            service_id: propsData.service_id.toString(),
+          },
+          utf8: "✓",
         },
-        utf8: "✓",
+      });
+    });
+
+    it("can be used as edit form", async () => {
+      axios.patch.mockResolvedValue("");
+      wrapper = mount(TransactionForm, {
+        propsData: editPropsData,
+        mocks,
+      });
+
+      await wrapper.vm.$nextTick();
+      wrapper.find("form.service-petition").trigger("submit");
+
+      expect(axios).toHaveBeenCalledWith({
+        url: editPropsData.action,
+        method: editPropsData.method,
+        data: {
+          "": "",
+          authenticity_token: "",
+          transaction: {
+            addition_information:
+              editPropsData.transaction.addition_information,
+            datetime: editPropsData.transaction.datetime,
+            duration: editPropsData.transaction.duration.toString,
+            service_id: propsData.service_id.toString(),
+          },
+          utf8: "✓",
+        },
       });
     });
 

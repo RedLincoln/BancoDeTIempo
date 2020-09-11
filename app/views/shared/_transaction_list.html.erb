@@ -44,6 +44,7 @@
         <td class="pt-4 pb-4 additional-information"><%= transaction.addition_information %></td>
         <td>
           <%= link_to 'Mensajes', transaction_messages_path(transaction.id), role: 'button', class: 'messages btn btn-orange' %>
+          <%= link_to 'Editar', edit_service_petition_path(transaction.id), role: 'button', class: 'messages btn btn-primary' %>
         </td>
       </tr>
     <% end %>
