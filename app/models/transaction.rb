@@ -3,6 +3,7 @@ class Transaction < ApplicationRecord
 
   after_create :broadcast_create
   after_update :broadcast_update
+  before_update :clone_record
   enum status: {negotiating: 'Negociación', accepted: 'Aceptada', canceled: 'Cancelada', done: 'Realizada'}
   validates :datetime, presence: true
   validates :duration, numericality: { only_integer: true, greater_than: 0, less_than: 24}
@@ -50,6 +51,14 @@ class Transaction < ApplicationRecord
 
   private
 
+  def diff_active_record(record_a, record_b)
+    (record_a.attributes.to_a - record_b.attributes.to_a).map(&:first)
+  end
+
+  def clone_record
+    @oldTransaction = Transaction.find(id).clone
+  end
+
   def service_owner_can_not_be_the_client
     nil_checker = service.nil? || client.nil?
     if nil_checker || service.user == client
@@ -67,8 +76,11 @@ class Transaction < ApplicationRecord
   end
 
   def broadcast_update
+    fields_changed = diff_active_record(@oldTransaction ,self)
+    return if (fields_changed.include? "status")
     Message.create(service_petition: self, author: client,
-                   message_type: :petition_edit, message: 'Se ha editado el pedido')
+                   message_type: :petition_edit, message: 'Se ha editado el pedido'
+    )
   end
 
 

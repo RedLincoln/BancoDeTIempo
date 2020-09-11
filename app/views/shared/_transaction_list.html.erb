@@ -47,8 +47,10 @@
           <% if (current_user.eql? transaction.client) && (transaction.negotiating?)%>
             <%= link_to 'Editar', edit_service_petition_path(transaction.id), role: 'button', class: 'edit btn btn-primary' %>
           <% end %>
-          <span class="accept-petition
-            " data-props="<%= {petition_id: transaction.id, accepted: transaction.accepted?}.to_json %>"></span>
+          <% if (current_user.eql? transaction.service.user) %>
+            <span class="accept-petition
+              " data-props="<%= {petition_id: transaction.id, accepted: transaction.accepted?}.to_json %>"></span>
+          <% end %>
         </td>
       </tr>
     <% end %>

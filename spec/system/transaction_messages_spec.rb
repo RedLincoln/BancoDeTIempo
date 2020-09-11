@@ -93,4 +93,19 @@ RSpec.describe 'Transaction Messages', type: :system, js: true do
 
     expect(page).to_not have_selector("#service-#{transaction.id}-petition .edit")
   end
+
+  it 'transactions can be canceled' do
+    Notification.destroy_all
+    transaction
+    sign_in owner
+    visit user_account_path
+
+    find("#service-#{transaction.id}-petition .cancel").click
+    expect(page).to have_selector("#service-#{transaction.id}-petition .cancelled", wait: 5)
+
+    expect(Transaction.find(transaction.id)).to be_canceled
+
+    sign_in client
+    expect(page).to have_selector("#notifications-counter", text: "1")
+  end
 end

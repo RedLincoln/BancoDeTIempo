@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_121339) do
+ActiveRecord::Schema.define(version: 2020_09_11_211904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_09_11_121339) do
     t.datetime "updated_at", null: false
     t.bigint "service_petition_id"
     t.string "message_type", default: "text"
+    t.jsonb "changes_made", default: "{}", null: false
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["service_petition_id"], name: "index_messages_on_service_petition_id"
   end
