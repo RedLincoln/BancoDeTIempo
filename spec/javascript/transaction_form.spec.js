@@ -95,7 +95,7 @@ describe("transaction_form.vue", () => {
             addition_information:
               editPropsData.transaction.addition_information,
             datetime: editPropsData.transaction.datetime,
-            duration: editPropsData.transaction.duration.toString,
+            duration: editPropsData.transaction.duration.toString(),
             service_id: propsData.service_id.toString(),
           },
           utf8: "✓",

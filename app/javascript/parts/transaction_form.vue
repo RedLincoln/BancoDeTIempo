@@ -17,7 +17,7 @@
       <input type="hidden" name="authenticity_token" :value="$getCSRFToken()" />
       <input type="hidden" name="transaction[service_id]" :value="service_id" />
       <div class="field">
-        <DatetimePicker @selected-time="updateTimeRangeInSeconds"></DatetimePicker>
+        <DatetimePicker @selected-time="updateTimeRangeInSeconds" :initialValue="datetime"></DatetimePicker>
       </div>
       <div class="field form-group">
         <label for="transaction-duration">Duración:</label>
@@ -94,6 +94,7 @@ export default {
       duration: 0,
       rangeDuration: "Selecciona una hora para ver el rango",
       additionInformation: "",
+      datetime: 0,
     };
   },
   watch: {

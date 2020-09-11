@@ -63,7 +63,14 @@ RSpec.describe Transaction, type: :model do
     let(:transaction) { build_stubbed(:transaction) }
 
     it 'to_json' do
-      expect(transaction.to_json).to eql({service: transaction.service}.to_json)
+      expected = {
+          addition_information: transaction.addition_information,
+          duration: transaction.duration,
+          service: transaction.service,
+          datetime: transaction.datetime.to_i
+      }.to_json
+
+      expect(transaction.to_json).to eql(expected)
     end
   end
 

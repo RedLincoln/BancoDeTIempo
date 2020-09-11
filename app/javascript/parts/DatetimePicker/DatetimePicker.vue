@@ -8,25 +8,18 @@
       class="transaction-datetime"
     />
     <div class="form-group">
-      <label for="transaction-datetime"> Elige fecha y hora: </label>
-      <div
-        class="form-control position-relative"
-        @click="togglePicker"
-        id="transaction-datetime"
-      >
-        <div class="position-absolute text-primary small top-0">
-          Selecciona fecha y hora
-        </div>
-        <div class="datetime-input position-absolute bottom-0" ref="input">
-          {{ computeDate }} {{ computeTime }}
-        </div>
+      <label for="transaction-datetime">Elige fecha y hora:</label>
+      <div class="form-control position-relative" @click="togglePicker" id="transaction-datetime">
+        <div class="position-absolute text-primary small top-0">Selecciona fecha y hora</div>
+        <div
+          class="datetime-input position-absolute bottom-0"
+          ref="input"
+        >{{ computeDate }} {{ computeTime }}</div>
       </div>
     </div>
     <div v-if="drop" class="date-picker d-flex border rounded p-2">
       <div class="w-75">
-        <div
-          class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2"
-        >
+        <div class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2">
           <div class="previous-month" @click="loadPreviousMonth">Anterior</div>
           <p class="mb-0">
             <span class="month">{{ month }}</span>
@@ -51,22 +44,14 @@
               <tr :key="weekIndex">
                 <template v-for="(day, index) in week">
                   <td :key="index" v-if="isOffsetDay(day)">{{ day }}</td>
-                  <td
-                    :key="index"
-                    v-else-if="isBeforeToday(day)"
-                    class="day text-muted"
-                  >
-                    {{ day }}
-                  </td>
+                  <td :key="index" v-else-if="isBeforeToday(day)" class="day text-muted">{{ day }}</td>
                   <td
                     :key="index"
                     v-else
                     class="day hover-primary"
                     @click="setDate(day)"
                     :class="{ active: activeDay === day }"
-                  >
-                    {{ day }}
-                  </td>
+                  >{{ day }}</td>
                 </template>
               </tr>
             </template>
@@ -74,9 +59,7 @@
         </table>
       </div>
       <div class="time-picker w-25 ml-3">
-        <div
-          class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2"
-        >
+        <div class="d-flex justify-content-between bg-primary align-items-center mt-1 p-2">
           <span>Horas</span>
           <span>Minutos</span>
         </div>
@@ -99,9 +82,7 @@
               class="time"
               @click="selectMinutes(minutes)"
               :class="{ active: activeMinutes === minutes }"
-            >
-              {{ minutes }}
-            </li>
+            >{{ minutes }}</li>
           </ul>
         </div>
       </div>
@@ -113,7 +94,13 @@
 import date_utils from "../../date_utils";
 
 export default {
-  data: function() {
+  props: {
+    initialValue: {
+      type: Number,
+      default: 0,
+    },
+  },
+  data: function () {
     return {
       hourRange: [...Array(24).keys()],
       minutesRange: [...Array(60).keys()],
@@ -132,7 +119,15 @@ export default {
     const date = new Date(Date.now());
     this.today.date = new Date(date.getFullYear(), date.getMonth(), 1);
     this.today.now = date;
-    this.configDate(date);
+    if (this.initialValue <= 0) {
+      this.configDate(date);
+    } else {
+      const initialDate = new Date(this.initialValue);
+      this.activeDay = initialDate.getDate();
+      this.activeHour = initialDate.getHours();
+      this.activeMinutes = initialDate.getMinutes();
+      this.configDate(initialDate);
+    }
   },
   computed: {
     computeTime() {
@@ -187,7 +182,7 @@ export default {
       );
       this.createDaysRange(daysOfTheMonth);
     },
-    createDaysRange: function(totalDays) {
+    createDaysRange: function (totalDays) {
       this.daysRange = [];
       let offset = date_utils.getOffsetWeekDayOfMonth(
         new Date(this.year, this.monthIndex, 1)
@@ -207,7 +202,7 @@ export default {
         this.daysRange.push(week);
       }
     },
-    togglePicker: function() {
+    togglePicker: function () {
       this.drop = !this.drop;
     },
     selectHour(hour) {
@@ -218,7 +213,7 @@ export default {
       this.activeMinutes = minutes;
       this.emitSelectedTime();
     },
-    setDate: function(day) {
+    setDate: function (day) {
       this.activeDay = day;
     },
     isBeforeToday(day) {

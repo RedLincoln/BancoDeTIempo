@@ -20,9 +20,10 @@ class Transaction < ApplicationRecord
   end
 
   def as_json(*)
-    {
-        service: service
-    }
+    super(only: [:addition_information, :duration]).tap do |hash|
+      hash[:service] = service
+      hash[:datetime] = datetime.to_i
+    end
   end
 
   def duration_range
