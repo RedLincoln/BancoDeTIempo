@@ -29,8 +29,8 @@
           </div>
         </div>
       <% elsif message.petition_edit? %>
-        <div class="transaction-edit">
-          <p class="content font-size-large"><%= message.message %></p>
+        <div class="transaction-edit text-center mt-2 mb-2">
+          <span class="content font-size-large border rounded-pill text-primary"><%= message.message %></span>
         </div>
       <% end %>
     <% end %>

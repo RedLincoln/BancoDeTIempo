@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :name, presence: true
 
   def transactions
-    transactions_client + transactions_owner
+    transactions_client.order(created_at: :desc) + transactions_owner.order(created_at: :desc)
   end
 
   def have_transaction?(service)
