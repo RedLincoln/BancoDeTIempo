@@ -113,5 +113,12 @@ RSpec.describe Transaction, type: :model do
       transaction.done!
       expect(transaction).to be_canceled
     end
+
+    it 'once done cant be canceled' do
+      transaction.done!
+      transaction.canceled!
+      expect(transaction).to be_done
+    end
+
   end
 end
