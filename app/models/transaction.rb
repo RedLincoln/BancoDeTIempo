@@ -20,7 +20,7 @@ class Transaction < ApplicationRecord
   end
 
   def negotiating!
-    return if canceled?
+    return if canceled? || done?
     super
   end
 
