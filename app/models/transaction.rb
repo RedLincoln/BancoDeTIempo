@@ -14,6 +14,11 @@ class Transaction < ApplicationRecord
 
   validate :service_owner_can_not_be_the_client
 
+  def accepted!
+    return if canceled?
+    super
+  end
+
   def as_json(*)
     super(only: [:addition_information, :duration]).tap do |hash|
       hash[:service] = service
