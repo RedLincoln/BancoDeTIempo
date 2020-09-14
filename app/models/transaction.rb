@@ -19,6 +19,11 @@ class Transaction < ApplicationRecord
     super
   end
 
+  def negotiating!
+    return if canceled?
+    super
+  end
+
   def as_json(*)
     super(only: [:addition_information, :duration]).tap do |hash|
       hash[:service] = service
