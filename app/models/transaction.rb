@@ -5,7 +5,7 @@ class Transaction < ApplicationRecord
   after_update :broadcast_update
   before_update :clone_record
 
-  enum status: {negotiating: 'Negociación', accepted: 'Aceptada', canceled: 'Cancelada', done: 'Realizada'}
+  enum status: {negotiating: 'Negociación', accepted: 'Aceptada', canceled: 'Cancelada', done: 'Realizada', valued: 'Valorado'}
   validates :datetime, presence: true
   validates :duration, numericality: { only_integer: true, greater_than: 0, less_than: 24}
   validates :client, uniqueness: { scope: :service}
