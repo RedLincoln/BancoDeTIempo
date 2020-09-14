@@ -4,6 +4,7 @@ class Transaction < ApplicationRecord
   after_create :broadcast_create
   after_update :broadcast_update
   before_update :clone_record
+
   enum status: {negotiating: 'Negociación', accepted: 'Aceptada', canceled: 'Cancelada', done: 'Realizada'}
   validates :datetime, presence: true
   validates :duration, numericality: { only_integer: true, greater_than: 0, less_than: 24}
@@ -12,16 +13,6 @@ class Transaction < ApplicationRecord
   belongs_to :service
 
   validate :service_owner_can_not_be_the_client
-
-  def done?
-    done! if accepted? && datetime < DateTime.now
-    super
-  end
-
-  def canceled?
-    canceled! if negotiating? && datetime < DateTime.now
-    super
-  end
 
   def as_json(*)
     super(only: [:addition_information, :duration]).tap do |hash|
@@ -39,14 +30,6 @@ class Transaction < ApplicationRecord
 
   def date_format
     datetime.strftime("%d/%m/%Y")
-  end
-
-  def self.check_datetime
-    all.each do |transaction|
-      if transaction.accepted? && transaction.datetime > DateTime.now
-        find(transaction.id).done!
-      end
-    end
   end
 
   private

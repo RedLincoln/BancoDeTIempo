@@ -96,17 +96,10 @@ RSpec.describe Transaction, type: :model do
       expect(transaction).to be_canceled
     end
 
-    it 'status changes from accepted to done when datetime is less than now' do
+    it 'once canceled can not be changed to accepted' do
+      transaction.canceled!
       transaction.accepted!
-      travel_to DateTime.new(2020, 10, 10, 18, 0) # 6 hours after datetime
-      expect(transaction).to be_done
-    end
-
-    it 'status changes from negotiating to canceled when datetime is less than now' do
-      transaction.negotiating!
-      travel_to DateTime.new(2020, 10, 10, 18, 0) # 6 hours after datetime
       expect(transaction).to be_canceled
     end
-
   end
 end
