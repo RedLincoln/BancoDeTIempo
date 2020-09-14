@@ -127,5 +127,11 @@ RSpec.describe Transaction, type: :model do
       expect(transaction).to be_done
     end
 
+    it 'once done cant change to negotiating' do
+      transaction.done!
+      transaction.negotiating!
+      expect(transaction).to be_done
+    end
+
   end
 end
