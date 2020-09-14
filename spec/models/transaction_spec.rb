@@ -138,5 +138,17 @@ RSpec.describe Transaction, type: :model do
       transaction.valued!
       expect(transaction).to be_valued
     end
+
+    it 'status cant change once is valued' do
+      transaction.valued!
+      transaction.done!
+      expect(transaction).to be_valued
+      transaction.accepted!
+      expect(transaction).to be_valued
+      transaction.negotiating!
+      expect(transaction).to be_valued
+      transaction.canceled!
+      expect(transaction).to be_valued
+    end
   end
 end
