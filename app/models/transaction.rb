@@ -15,7 +15,7 @@ class Transaction < ApplicationRecord
   validate :service_owner_can_not_be_the_client
 
   def accepted!
-    return if canceled?
+    return if canceled? || done?
     super
   end
 
