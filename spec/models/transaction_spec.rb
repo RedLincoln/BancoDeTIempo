@@ -133,5 +133,10 @@ RSpec.describe Transaction, type: :model do
       expect(transaction).to be_done
     end
 
+    it 'can change from done to valued' do
+      transaction.done!
+      transaction.valued!
+      expect(transaction).to be_valued
+    end
   end
 end
