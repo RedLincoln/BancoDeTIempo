@@ -120,5 +120,12 @@ RSpec.describe Transaction, type: :model do
       expect(transaction).to be_done
     end
 
+
+    it 'once done cant be accepted' do
+      transaction.done!
+      transaction.accepted!
+      expect(transaction).to be_done
+    end
+
   end
 end
