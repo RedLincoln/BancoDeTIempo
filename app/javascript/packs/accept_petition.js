@@ -12,6 +12,7 @@ document.addEventListener('turbolinks:load', () => {
   const elements = document.getElementsByClassName('accept-petition')
   for (let i = 0; i < elements.length; i++){
     const el = elements.item(i)
+    console.log(el)
     const props = JSON.parse(el.dataset.props)
     new Vue({
       el,

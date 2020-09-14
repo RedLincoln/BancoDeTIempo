@@ -3,7 +3,11 @@
     <%= image_tag 'logo.png', height: '100px'%>
   <% end %>
   <div>
-    <h1><strong>Balance: </strong><%= current_user.balance %> horas</h1>
+    <h1><strong>Balance: </strong><span class="<% if current_user.balance < 0 %>
+                            text-danger
+                         <% else %>
+                            text-success
+                         <% end %>"><%= current_user.balance %> horas</span></h1>
   </div>
 </div>
 
@@ -27,7 +31,13 @@
         <td class="pt-4 pb-4 transaction-status"><%= transaction.read_attribute_before_type_cast(:status) %></td>
         <td class="pt-4 pb-4 service-name"><%= transaction.service.name %></td>
         <td class="pt-4 pb-4">
-          <strong><%= transaction.duration %> horas</strong>
+
+          <strong class="<% if current_user.eql? transaction.client %>
+                            text-danger
+                         <% else %>
+                            text-success
+                         <% end %>">
+            <%= transaction.duration %> horas</strong>
           <span class="date-and-duration">
             <%= "#{transaction.date_format} #{transaction.duration_range}" %>
           </span>
@@ -47,7 +57,7 @@
           <% if (current_user.eql? transaction.client) && (transaction.negotiating?)%>
             <%= link_to 'Editar', edit_service_petition_path(transaction.id), role: 'button', class: 'edit btn btn-primary' %>
           <% end %>
-          <% if (current_user.eql? transaction.service.user) %>
+          <% if (current_user.eql? transaction.service.user) && !transaction.canceled? %>
             <span class="accept-petition
               " data-props="<%= {petition_id: transaction.id, accepted: transaction.accepted?}.to_json %>"></span>
           <% end %>

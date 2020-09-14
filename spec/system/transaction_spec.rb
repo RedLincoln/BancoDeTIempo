@@ -40,6 +40,28 @@ RSpec.describe 'Service Transactions', type: :system do
           expect(page).to have_selector('.service-owner', text: offering_user.name)
         end
       end
+
+      it 'owner can ask for time transfer for accepted petitions' do
+        sign_in offering_user
+        transaction_client.accepted!
+
+        visit user_account_path
+
+        find("#service-#{transaction_client.service.id}-petition .done").click
+
+        fill_in 'transaction_duration', with: 4
+        fill_in 'client_valued' , with: 3
+        fill_in 'valued_text', with: 'Decent client'
+        find("done-form .submit-button").click
+
+        sign_in request_user
+
+        find("#notifications .toggle-button").click
+        find("#notifications-list .notification").click
+
+        expect(page).to have_selector("transaction_duration", text: 4)
+        expect(page).to have_selector("pay-petition")
+      end
     end
   end
 

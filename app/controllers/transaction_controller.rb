@@ -45,6 +45,10 @@ class TransactionController < ApplicationController
       respond_to do |format|
         format.js
       end
+    else
+      respond_to do |format|
+        format.js { render status: :bad_request }
+      end
     end
   end
 
@@ -53,6 +57,10 @@ class TransactionController < ApplicationController
     if @transaction.canceled?
       respond_to do |format|
         format.js
+      end
+    else
+      respond_to do |format|
+        format.js { render status: :bad_request }
       end
     end
   end
