@@ -65,6 +65,10 @@ class TransactionController < ApplicationController
     end
   end
 
+  def done
+
+  end
+
   private
 
   def transaction_params

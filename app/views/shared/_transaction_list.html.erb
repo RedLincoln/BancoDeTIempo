@@ -63,6 +63,9 @@
           <% end %>
           <span class="cancel-petition
               " data-props="<%= {petition_id: transaction.id, canceled: transaction.canceled?}.to_json %>"></span>
+          <% if (current_user.eql? transaction.service.user) && transaction.accepted? %>
+            <%= button_to 'Realizar', done_service_petition_path(transaction.id), class: 'done btn btn-primary' %>
+          <% end %>
         </td>
       </tr>
     <% end %>
