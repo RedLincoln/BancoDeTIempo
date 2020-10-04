@@ -24,6 +24,6 @@ describe("Login.vue", () => {
     expect(wrapper.find('[data-testid="login-form"]').exists()).toBe(true);
     expect(wrapper.find('[data-testid="email-field"]').exists()).toBe(true);
     expect(wrapper.find('[data-testid="password-field"]').exists()).toBe(true);
-    expect(wrapper.find('[data-testid="sumit-btn"]').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="submit-btn"]').exists()).toBe(true);
   });
 });
