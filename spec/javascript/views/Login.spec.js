@@ -20,14 +20,25 @@ describe("Login.vue", () => {
   let actions;
   let store;
 
+  const $router = {
+    push: jest.fn(),
+  };
+
   beforeEach(() => {
     localVue.use(Vuex);
 
     actions = {
-      logIn: jest.fn(),
+      logIn: jest.fn(() => {
+        return Promise.resolve();
+      }),
     };
     store = new Vuex.Store({
-      actions,
+      modules: {
+        session: {
+          namespaced: true,
+          actions,
+        },
+      },
     });
 
     vuetify = new Vuetify();
@@ -35,6 +46,9 @@ describe("Login.vue", () => {
       localVue,
       vuetify,
       store,
+      mocks: {
+        $router,
+      },
     });
   });
 
@@ -62,6 +76,12 @@ describe("Login.vue", () => {
     await wrapper.find('[data-testid="submit-btn"]').trigger("click");
 
     expect(actions.logIn).toHaveBeenCalledTimes(1);
-    expect(actions.logIn).toHaveBeenCalledWith(userInfo);
+    expect(actions.logIn).toHaveBeenCalledWith(
+      expect.objectContaining({}),
+      expect.objectContaining(userInfo)
+    );
+
+    await wrapper.vm.$nextTick();
+    expect($router.push).toHaveBeenCalledWith({ name: "home" });
   });
 });
