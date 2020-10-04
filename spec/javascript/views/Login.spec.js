@@ -103,4 +103,15 @@ describe("Login.vue", () => {
       errorMessage
     );
   });
+
+  describe("field validation", () => {
+    it("email is required", async () => {
+      await wrapper.find('[data-testid="email-field"]').trigger("focus");
+      await wrapper.find('[data-testid="email-field"]').trigger("blur");
+
+      expect(
+        wrapper.find('[data-testid="email-field"].error--text').exists()
+      ).toBe(true);
+    });
+  });
 });
