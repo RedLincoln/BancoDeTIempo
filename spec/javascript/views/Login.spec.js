@@ -24,13 +24,16 @@ describe("Login.vue", () => {
     push: jest.fn(),
   };
 
+  const userInfo = {
+    email: "michael@example.com",
+    password: "password",
+  };
+
   beforeEach(() => {
     localVue.use(Vuex);
 
     actions = {
-      logIn: jest.fn(() => {
-        return Promise.resolve();
-      }),
+      logIn: jest.fn(),
     };
     store = new Vuex.Store({
       modules: {
@@ -64,11 +67,7 @@ describe("Login.vue", () => {
   });
 
   it("successfuly logIn", async () => {
-    const userInfo = {
-      email: "michael@example.com",
-      password: "password",
-    };
-
+    actions.logIn.mockResolvedValue();
     await wrapper.find('[data-testid="email-field"]').setValue(userInfo.email);
     await wrapper
       .find('[data-testid="password-field"]')
@@ -83,5 +82,24 @@ describe("Login.vue", () => {
 
     await wrapper.vm.$nextTick();
     expect($router.push).toHaveBeenCalledWith({ name: "home" });
+  });
+
+  it("bad logIn", async () => {
+    const errorMessage = "Credentials problem";
+    actions.logIn.mockRejectedValue({
+      message: errorMessage,
+    });
+
+    await wrapper.find('[data-testid="email-field"]').setValue(userInfo.email);
+    await wrapper
+      .find('[data-testid="password-field"]')
+      .setValue(userInfo.password);
+    await wrapper.find('[data-testid="submit-btn"]').trigger("click");
+
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.find('[data-testid="error-message"]').text()).toBe(
+      errorMessage
+    );
   });
 });
