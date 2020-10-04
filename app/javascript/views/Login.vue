@@ -1,5 +1,15 @@
 <template>
   <div>
+    <v-alert
+      data-testid="error-message"
+      v-show="errorMessage.length > 0"
+      border="right"
+      colored-border
+      type="error"
+      elevation="2"
+    >
+      {{ errorMessage }}
+    </v-alert>
     <v-form data-testid="login-form">
       <v-text-field v-model="email" data-testid="email-field"> </v-text-field>
       <v-text-field
@@ -17,6 +27,7 @@ export default {
     return {
       email: "",
       password: "",
+      errorMessage: "",
     };
   },
   methods: {
@@ -28,6 +39,9 @@ export default {
         })
         .then((number) => {
           this.$router.push({ name: "home" });
+        })
+        .catch(({ message }) => {
+          this.errorMessage = message;
         });
     },
   },

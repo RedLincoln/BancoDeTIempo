@@ -97,6 +97,7 @@ describe("Login.vue", () => {
     await wrapper.find('[data-testid="submit-btn"]').trigger("click");
 
     await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
 
     expect(wrapper.find('[data-testid="error-message"]').text()).toBe(
       errorMessage

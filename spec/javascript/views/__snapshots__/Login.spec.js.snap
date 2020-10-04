@@ -2,11 +2,19 @@
 
 exports[`Login.vue renders properly 1`] = `
 <div>
+  <div role="alert" class="v-alert v-sheet theme--light elevation-2 v-alert--border v-alert--border-right" data-testid="error-message" style="display: none;">
+    <div class="v-alert__wrapper"><i aria-hidden="true" class="v-icon notranslate v-alert__icon mdi mdi-alert theme--light error--text"></i>
+      <div class="v-alert__content">
+
+      </div>
+      <div class="v-alert__border v-alert__border--right error v-alert__border--has-color"></div>
+    </div>
+  </div>
   <form novalidate="novalidate" data-testid="login-form" class="v-form">
     <div class="v-input theme--light v-text-field">
       <div class="v-input__control">
         <div class="v-input__slot">
-          <div class="v-text-field__slot"><input data-testid="email-field" id="input-5" type="text"></div>
+          <div class="v-text-field__slot"><input data-testid="email-field" id="input-7" type="text"></div>
         </div>
         <div class="v-text-field__details">
           <div class="v-messages theme--light">
@@ -18,7 +26,7 @@ exports[`Login.vue renders properly 1`] = `
     <div class="v-input theme--light v-text-field">
       <div class="v-input__control">
         <div class="v-input__slot">
-          <div class="v-text-field__slot"><input data-testid="password-field" id="input-8" type="text"></div>
+          <div class="v-text-field__slot"><input data-testid="password-field" id="input-10" type="text"></div>
         </div>
         <div class="v-text-field__details">
           <div class="v-messages theme--light">
