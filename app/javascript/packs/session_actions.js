@@ -4,9 +4,9 @@
 
 import Vue from 'vue/dist/vue.esm'
 import App from '@/session_actions.vue'
-import { turbolinksAdapterMixin } from 'vue-turbolinks'
 
-document.addEventListener('turbolinks:load', () => {
+
+document.addEventListener('DOMContentLoaded', () => {
   const element = document.getElementById('session_actions');
   const props = JSON.parse(element.getAttribute('data'));
 
