@@ -2,6 +2,15 @@ import Vuetify from "vuetify";
 
 import { createLocalVue, mount } from "@vue/test-utils";
 import Login from "../../../app/javascript/views/Login.vue";
+import actions from "../../../app/javascript/store/modules/session";
+
+const { logIn } = actions;
+
+describe("Vuex have needed actions", () => {
+  it("logIn", () => {
+    expect(logIn).not.toBeUndefined();
+  });
+});
 
 describe("Login.vue", () => {
   const localVue = createLocalVue();
