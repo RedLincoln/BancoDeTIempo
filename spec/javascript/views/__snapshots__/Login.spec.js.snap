@@ -6,7 +6,7 @@ exports[`Login.vue renders properly 1`] = `
     <div class="v-input theme--light v-text-field">
       <div class="v-input__control">
         <div class="v-input__slot">
-          <div class="v-text-field__slot"><input data-testid="email-field" id="input-3" type="text"></div>
+          <div class="v-text-field__slot"><input data-testid="email-field" id="input-5" type="text"></div>
         </div>
         <div class="v-text-field__details">
           <div class="v-messages theme--light">
@@ -18,7 +18,7 @@ exports[`Login.vue renders properly 1`] = `
     <div class="v-input theme--light v-text-field">
       <div class="v-input__control">
         <div class="v-input__slot">
-          <div class="v-text-field__slot"><input data-testid="password-field" id="input-6" type="text"></div>
+          <div class="v-text-field__slot"><input data-testid="password-field" id="input-8" type="text"></div>
         </div>
         <div class="v-text-field__details">
           <div class="v-messages theme--light">
