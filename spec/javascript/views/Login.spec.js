@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import { createLocalVue, mount } from "@vue/test-utils";
 import Login from "../../../app/javascript/views/Login.vue";
+import Logo from "../../../app/javascript/components/Logo.vue";
 import { actions } from "../../../app/javascript/store/modules/session";
 
 const { logIn } = actions;
@@ -15,14 +16,13 @@ describe("Vuex have needed actions", () => {
 
 describe("Login.vue", () => {
   const localVue = createLocalVue();
+  localVue.component("Logo", Logo);
   let vuetify;
   let wrapper;
   let actions;
   let store;
 
-  const $router = {
-    push: jest.fn(),
-  };
+  let $router;
 
   const userInfo = {
     email: "michael@example.com",
@@ -30,6 +30,12 @@ describe("Login.vue", () => {
   };
 
   beforeEach(() => {
+    jest.resetAllMocks();
+
+    $router = {
+      push: jest.fn(),
+    };
+
     localVue.use(Vuex);
 
     actions = {
@@ -102,16 +108,5 @@ describe("Login.vue", () => {
     expect(wrapper.find('[data-testid="error-message"]').text()).toBe(
       errorMessage
     );
-  });
-
-  describe("field validation", () => {
-    it("email is required", async () => {
-      await wrapper.find('[data-testid="email-field"]').trigger("focus");
-      await wrapper.find('[data-testid="email-field"]').trigger("blur");
-
-      expect(
-        wrapper.find('[data-testid="email-field"].error--text').exists()
-      ).toBe(true);
-    });
   });
 });

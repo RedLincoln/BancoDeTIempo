@@ -20,6 +20,9 @@ import store from "../store/store";
 
 import router from "../router/router";
 import App from "../App.vue";
+import Logo from "../components/Logo.vue";
+
+Vue.component("Logo", Logo);
 
 document.addEventListener("DOMContentLoaded", () => {
   new Vue({
