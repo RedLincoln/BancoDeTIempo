@@ -27,5 +27,9 @@ describe("Form Rules", () => {
     it("must contain characters before the dot in doamin", () => {
       expect(typeof rules.email("michael@.com")).toBe("string");
     });
+
+    it("must return true on valid email", () => {
+      expect(rules.email("michail@example.com")).toBeTruthy();
+    });
   });
 });
