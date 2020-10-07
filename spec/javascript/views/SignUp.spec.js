@@ -24,7 +24,7 @@ describe("SignUp.vue", () => {
     localVue.use(Vuex);
 
     actions = {
-      SignUp: jest.fn(),
+      signUp: jest.fn(),
     };
     store = new Vuex.Store({
       modules: {
@@ -57,7 +57,7 @@ describe("SignUp.vue", () => {
   });
 
   it("successful sign_up", async () => {
-    actions.SignUp.mockResolvedValue();
+    actions.signUp.mockResolvedValue();
     await wrapper.find('[data-testid="name-field"]').setValue(data.name);
     await wrapper
       .find('[data-testid="information-field"]')
@@ -68,9 +68,9 @@ describe("SignUp.vue", () => {
 
     await wrapper.find('[data-testid="submit-button"]').trigger("click");
 
-    expect(actions.logIn).toHaveBeenCalledWith(
+    expect(actions.signUp).toHaveBeenCalledWith(
       expect.objectContaining({}),
-      expect.objectContaining(data)
+      expect.objectContaining({ ...data, ...{ avatar: "" } })
     );
   });
 });

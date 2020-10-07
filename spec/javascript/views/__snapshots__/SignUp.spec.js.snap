@@ -6,7 +6,7 @@ exports[`SignUp.vue renders properly 1`] = `
     <div class="v-input theme--light v-text-field">
       <div class="v-input__control">
         <div class="v-input__slot">
-          <div class="v-text-field__slot"><input data-testid="name-field" id="input-3" type="text"></div>
+          <div class="v-text-field__slot"><input data-testid="name-field" id="input-5" type="text"></div>
         </div>
         <div class="v-text-field__details">
           <div class="v-messages theme--light">
@@ -18,7 +18,7 @@ exports[`SignUp.vue renders properly 1`] = `
     <div class="v-input theme--light v-text-field">
       <div class="v-input__control">
         <div class="v-input__slot">
-          <div class="v-text-field__slot"><input data-testid="email-field" id="input-6" type="text"></div>
+          <div class="v-text-field__slot"><input data-testid="email-field" id="input-8" type="text"></div>
         </div>
         <div class="v-text-field__details">
           <div class="v-messages theme--light">
@@ -34,7 +34,7 @@ exports[`SignUp.vue renders properly 1`] = `
       <div class="v-input__control">
         <div class="v-input__slot">
           <div class="v-text-field__slot">
-            <div class="v-file-input__text"></div><input data-testid="avatar-field" id="input-9" type="file">
+            <div class="v-file-input__text"></div><input data-testid="avatar-field" id="input-11" type="file">
           </div>
           <div class="v-input__append-inner">
             <div class="v-input__icon v-input__icon--clear"><button disabled="disabled" type="button" aria-label="clear icon" class="v-icon notranslate v-icon--disabled v-icon--link mdi mdi-close theme--light"></button></div>
@@ -50,7 +50,7 @@ exports[`SignUp.vue renders properly 1`] = `
     <div class="v-input v-textarea theme--light v-text-field">
       <div class="v-input__control">
         <div class="v-input__slot">
-          <div class="v-text-field__slot"><textarea data-testid="information-field" id="input-14" rows="5"></textarea></div>
+          <div class="v-text-field__slot"><textarea data-testid="information-field" id="input-16" rows="5"></textarea></div>
         </div>
         <div class="v-text-field__details">
           <div class="v-messages theme--light">
@@ -58,7 +58,7 @@ exports[`SignUp.vue renders properly 1`] = `
           </div>
         </div>
       </div>
-    </div>
+    </div> <button type="button" class="v-btn v-btn--contained theme--light v-size--default" data-testid="submit-button"><span class="v-btn__content">Registrarse</span></button>
   </form>
 </div>
 `;
