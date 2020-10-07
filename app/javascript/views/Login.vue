@@ -16,7 +16,7 @@
         </v-alert>
         <v-form data-testid="login-form">
           <v-text-field
-            :rules="[rules.required]"
+            :rules="[rules.required, rules.email]"
             v-model="email"
             data-testid="email-field"
             label="Email"
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { rules } from "../utils";
+
 export default {
   data() {
     return {
@@ -50,9 +52,7 @@ export default {
       password: "",
       showPassword: false,
       errorMessage: "",
-      rules: {
-        required: (value) => !!value || "Campo obligatorio",
-      },
+      rules: rules,
     };
   },
   methods: {
