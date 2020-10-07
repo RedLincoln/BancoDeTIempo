@@ -10,4 +10,10 @@ describe("Form Rules", () => {
       expect(rules.required("not empty")).toBeTruthy();
     });
   });
+
+  describe("email", () => {
+    it("must contain @", () => {
+      expect(typeof rules.email("michael.example.com")).toBe("string");
+    });
+  });
 });
