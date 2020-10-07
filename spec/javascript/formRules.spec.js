@@ -15,5 +15,9 @@ describe("Form Rules", () => {
     it("must contain @", () => {
       expect(typeof rules.email("michael.example.com")).toBe("string");
     });
+
+    it("@ cant be at the beginning", () => {
+      expect(typeof rules.email("@michael.example.com")).toBe("string");
+    });
   });
 });
