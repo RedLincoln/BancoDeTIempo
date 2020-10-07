@@ -89,6 +89,7 @@ describe("SignUp.vue", () => {
 
     await wrapper.find('[data-testid="submit-button"]').trigger("click");
 
+    await wrapper.vm.$nextTick();
     expect(wrapper.find('[data-testid="error-message"]').text()).toBe(
       errorMessage
     );
