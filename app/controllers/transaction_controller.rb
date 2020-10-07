@@ -1,5 +1,4 @@
 class TransactionController < ApplicationController
-  before_action :authenticate_user!
   before_action :get_transaction, only: [:edit, :update, :accept, :cancel]
 
   def edit

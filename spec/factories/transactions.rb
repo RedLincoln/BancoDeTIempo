@@ -1,5 +1,3 @@
-require 'faker'
-
 FactoryBot.define do
   factory :transaction do
     datetime { DateTime.now }

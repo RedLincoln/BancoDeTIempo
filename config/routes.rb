@@ -38,9 +38,12 @@ Rails.application.routes.draw do
   get '/login', :to => 'home#index', :as => 'login'
 
   root :to => 'home#index'
-  devise_for :users, controllers: {
-      sessions: 'users/sessions'
-  }
+
+  #registration
+  post '/api/sign_up', :to => 'api/registration#create', :as => 'create_account'
+
+  # session
+  post '/api/session', :to => 'api/session#create', :as => 'create_session'
 
   mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

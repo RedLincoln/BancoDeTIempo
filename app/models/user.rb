@@ -1,14 +1,12 @@
 class User < ApplicationRecord
+  has_secure_password
   has_many :services
   has_many :transactions_owner, through: :services, source: :transactions
   has_many :transactions_client, foreign_key: 'client_id', class_name: 'Transaction'
   has_many :notifications
   enum role: {standard: 'standard', admin: 'admin'}
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
 
+  validates :email, presence: true, uniqueness: true
   validates :name, presence: true
 
   def transactions

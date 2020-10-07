@@ -1,5 +1,4 @@
 class ServicesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :destroy, :edit]
   before_action :set_service, only: [:update, :edit, :destroy, :update]
 
   def index
