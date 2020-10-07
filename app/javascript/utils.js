@@ -1,1 +1,3 @@
-export const rules = {};
+export const rules = {
+  required: (value) => !!value || "Campo obligatorio",
+};
