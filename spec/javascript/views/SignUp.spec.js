@@ -73,4 +73,24 @@ describe("SignUp.vue", () => {
       expect.objectContaining({ ...data, ...{ avatar: "" } })
     );
   });
+
+  it("bad sign_up", async () => {
+    const errorMessage = "Error";
+    actions.signUp.mockRejectedValue({
+      message: errorMessage,
+    });
+    await wrapper.find('[data-testid="name-field"]').setValue(data.name);
+    await wrapper
+      .find('[data-testid="information-field"]')
+      .setValue(data.information);
+    await wrapper.find('[data-testid="email-field"]').setValue(data.email);
+
+    await wrapper.vm.$nextTick();
+
+    await wrapper.find('[data-testid="submit-button"]').trigger("click");
+
+    expect(wrapper.find('[data-testid="error-message"]').text()).toBe(
+      errorMessage
+    );
+  });
 });
