@@ -19,5 +19,9 @@ describe("Form Rules", () => {
     it("@ cant be at the beginning", () => {
       expect(typeof rules.email("@michael.example.com")).toBe("string");
     });
+
+    it("must contain a domain of atleast length 2", () => {
+      expect(typeof rules.email("michael@example.c")).toBe("string");
+    });
   });
 });
