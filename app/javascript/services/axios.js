@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const instance = axios.create({
+export const axiosInstance = axios.create({
   "Content-Type": "application/json",
 });
 
-instance.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
     config.headers["X-CSRF-TOKEN"] = document
       .querySelector('meta[name="csrf-token"]')
@@ -15,7 +15,3 @@ instance.interceptors.request.use(
     return Promise.reject(error.response);
   }
 );
-
-export default {
-  axios: instance,
-};

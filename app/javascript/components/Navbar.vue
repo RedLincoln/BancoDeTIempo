@@ -9,14 +9,7 @@
 </template>
 
 <script>
-import logo from "images/logo.png";
-
 export default {
-  data() {
-    return {
-      logo,
-    };
-  },
   methods: {
     login() {
       this.$router.push({ name: "login" });

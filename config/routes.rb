@@ -35,10 +35,12 @@ Rails.application.routes.draw do
   get '/404' => 'home#index'
 
 
-  get '/login' => 'home#index'
+  get '/login', :to => 'home#index', :as => 'login'
 
   root :to => 'home#index'
-  devise_for :users
+  devise_for :users, controllers: {
+      sessions: 'users/sessions'
+  }
 
   mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
