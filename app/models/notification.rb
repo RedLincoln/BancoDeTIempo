@@ -1,7 +1,7 @@
 class Notification < ApplicationRecord
   validates :message, :target, presence: true
 
-  belongs_to :user
+  belongs_to :user, optional: true
 
   def as_json(*)
     super(:only => [:message, :target, :seen, :link, :id]).tap do |hash|
