@@ -20,7 +20,7 @@ exports[`Login.vue renders properly 1`] = `
         <div class="v-input theme--light v-text-field">
           <div class="v-input__control">
             <div class="v-input__slot">
-              <div class="v-text-field__slot"><label for="input-10" class="v-label theme--light" style="left: 0px; position: absolute;">Email</label><input data-testid="email-field" id="input-10" type="text"></div>
+              <div class="v-text-field__slot"><label for="input-11" class="v-label theme--light" style="left: 0px; position: absolute;">Email</label><input data-testid="email-field" id="input-11" type="text"></div>
             </div>
             <div class="v-text-field__details">
               <div class="v-messages theme--light">
@@ -32,7 +32,7 @@ exports[`Login.vue renders properly 1`] = `
         <div class="v-input theme--light v-text-field">
           <div class="v-input__control">
             <div class="v-input__slot">
-              <div class="v-text-field__slot"><label for="input-13" class="v-label theme--light" style="left: 0px; position: absolute;">Contraseña</label><input data-testid="password-field" id="input-13" type="password"></div>
+              <div class="v-text-field__slot"><label for="input-14" class="v-label theme--light" style="left: 0px; position: absolute;">Contraseña</label><input data-testid="password-field" id="input-14" type="password"></div>
               <div class="v-input__append-inner">
                 <div class="v-input__icon v-input__icon--append"><button type="button" aria-label="append icon" class="v-icon notranslate v-icon--link mdi mdi-eye-off theme--light"></button></div>
               </div>

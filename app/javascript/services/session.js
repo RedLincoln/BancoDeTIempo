@@ -9,6 +9,8 @@ export default {
         console.log(err);
       });
   },
-  register() {},
+  register(formData) {
+    return axios.post("/api/sign_up.json", formData);
+  },
   logOut() {},
 };

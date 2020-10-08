@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_one_attached :avatar
   has_many :services
   has_many :transactions_owner, through: :services, source: :transactions
   has_many :transactions_client, foreign_key: 'client_id', class_name: 'Transaction'

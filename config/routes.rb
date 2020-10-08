@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get '/404' => 'home#index'
 
 
+  get '/sign_up', :to => 'home#index', :as => 'sign_up'
   get '/login', :to => 'home#index', :as => 'login'
 
   root :to => 'home#index'

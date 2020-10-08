@@ -3,11 +3,14 @@ import Vuex from "vuex";
 
 import SignUp from "../../../app/javascript/views/SingUp.vue";
 import Logo from "../../../app/javascript/components/Logo.vue";
+import Alert from "../../../app/javascript/components/Alert.vue";
+
 import { createLocalVue, mount } from "@vue/test-utils";
 
 describe("SignUp.vue", () => {
   const localVue = createLocalVue();
   localVue.component("Logo", Logo);
+  localVue.component("Alert", Alert);
   let vuetify;
   let wrapper;
   let actions;

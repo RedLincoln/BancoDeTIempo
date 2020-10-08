@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import { createLocalVue, mount } from "@vue/test-utils";
 import Login from "../../../app/javascript/views/Login.vue";
 import Logo from "../../../app/javascript/components/Logo.vue";
+import Alert from "../../../app/javascript/components/Alert.vue";
 import { actions } from "../../../app/javascript/store/modules/session";
 
 const { logIn } = actions;
@@ -17,6 +18,7 @@ describe("Vuex have needed actions", () => {
 describe("Login.vue", () => {
   const localVue = createLocalVue();
   localVue.component("Logo", Logo);
+  localVue.component("Alert", Alert);
   let vuetify;
   let wrapper;
   let actions;

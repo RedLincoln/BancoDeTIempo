@@ -4,16 +4,9 @@
       <v-card class="mx-auto px-4">
         <Logo maxWidth="100%" dark />
         <v-card-title>Iniciar Sesión</v-card-title>
-        <v-alert
-          data-testid="error-message"
-          v-show="errorMessage.length > 0"
-          border="right"
-          colored-border
-          type="error"
-          elevation="2"
-        >
+        <Alert v-show="errorMessage.length > 0">
           {{ errorMessage }}
-        </v-alert>
+        </Alert>
         <v-form data-testid="login-form">
           <v-text-field
             :rules="[rules.required, rules.email]"
