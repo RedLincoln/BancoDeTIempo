@@ -13,10 +13,7 @@ RSpec.describe 'Register', type: :system do
     expect(page). to have_selector('.notice')
     expect(current_path).to eq(root_path)
     expect(page). to have_selector('.notice')
-    mail = ActionMailer::Base.deliveries.last
-
-    expect(mail[:to].to_s).to eq(email)
-
+    
     user = User.find_by(email: email)
 
     expect(user).to_not be_confirmed

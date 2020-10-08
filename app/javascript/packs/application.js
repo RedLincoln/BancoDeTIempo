@@ -22,9 +22,11 @@ import router from "../router/router";
 import App from "../App.vue";
 import Logo from "../components/Logo.vue";
 import Alert from "../components/Alert.vue";
+import Notice from "../components/Notice.vue";
 
 Vue.component("Logo", Logo);
 Vue.component("Alert", Alert);
+Vue.component("Notice", Notice);
 
 document.addEventListener("DOMContentLoaded", () => {
   new Vue({

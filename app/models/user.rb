@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  after_create :send_registration_mail
   has_one_attached :avatar
   has_many :services
   has_many :transactions_owner, through: :services, source: :transactions
@@ -35,6 +36,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def send_registration_mail
+    UserMailer.register_confirmation(self).deliver
+  end
 
   def have_transaction_helper(service, transactions)
     transactions.any? do |transaction|

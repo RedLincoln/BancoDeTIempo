@@ -33,6 +33,10 @@ RSpec.describe User, type: :model do
     it 'role is standard' do
       expect(user).to be_standard
     end
+
+    it 'confirmed is false' do
+      expect(user).to_not be_confirmed
+    end
   end
 
   describe 'methods:' do

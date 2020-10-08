@@ -106,6 +106,11 @@ export default {
           avatar: this.avatar,
         })
         .then(() => {
+          this.$store.dispatch("flash/addFlash", {
+            type: "notice",
+            message:
+              "Usuario creado satisfactoriamente. Se le ha enviado un correo con indicaciones.",
+          });
           this.$router.push({ name: "home" });
         })
         .catch(({ message }) => {

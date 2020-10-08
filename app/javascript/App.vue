@@ -16,8 +16,5 @@ export default {
   components: {
     Navbar,
   },
-  created() {
-    console.log(window.location.pathname);
-  },
 };
 </script>

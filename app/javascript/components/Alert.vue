@@ -5,6 +5,7 @@
     colored-border
     type="error"
     elevation="2"
+    class="alert"
   >
     <slot></slot>
   </v-alert>
