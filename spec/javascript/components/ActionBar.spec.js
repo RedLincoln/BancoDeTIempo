@@ -49,7 +49,7 @@ describe("Navbar.vue", () => {
   it("have a user navigation link for admins", () => {
     loggedAdmin();
     expect(
-      wrapper.find('[date-testid="admin-users-tab"]').exists()
+      wrapper.find('[data-testid="admin-users-tab"]').exists()
     ).toBeTruthy();
   });
 });
