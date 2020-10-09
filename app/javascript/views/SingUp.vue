@@ -113,8 +113,9 @@ export default {
           });
           this.$router.push({ name: "home" });
         })
-        .catch(({ message }) => {
-          this.errorMessage = message;
+        .catch((error) => {
+          console.log(error);
+          this.errorMessage = error.response.data.message;
         });
     },
   },

@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :notifications
   enum role: {standard: 'standard', admin: 'admin'}
 
-  validates :email, presence: true, uniqueness: true
-  validates :name, presence: true
+  validates :email, presence: { message: "El campo email es obligatorio"}, uniqueness: { message: "El usuario ya existe"}
+  validates :name, presence: { message: "El campo name es obligatorio"}
 
   def transactions
     transactions_client.order(created_at: :desc) + transactions_owner.order(created_at: :desc)
