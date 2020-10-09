@@ -10,9 +10,6 @@ const store = new Vuex.Store({
     session,
     flash,
   },
-  state: {
-    isLogged: false,
-  },
   mutations: {
     logout() {
       state.isLogged = false;
