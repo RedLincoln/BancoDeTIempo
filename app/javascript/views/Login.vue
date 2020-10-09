@@ -55,7 +55,12 @@ export default {
           email: this.email,
           password: this.password,
         })
-        .then((number) => {
+        .then((user_name) => {
+          this.$store.dispatch("flash/addFlash", {
+            type: "notice",
+            message: `Bienvenido ${user_name}`,
+          });
+
           this.$router.push({ name: "home" });
         })
         .catch(({ message }) => {

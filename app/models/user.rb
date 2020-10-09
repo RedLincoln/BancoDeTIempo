@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates :email, presence: { message: "El campo email es obligatorio"}, uniqueness: { message: "El usuario ya existe"}
   validates :name, presence: { message: "El campo name es obligatorio"}
 
+
   def transactions
     transactions_client.order(created_at: :desc) + transactions_owner.order(created_at: :desc)
   end
