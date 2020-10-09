@@ -33,15 +33,11 @@ import { mapState } from "vuex";
 import defaultAvatar from "images/default-avatar.jpg";
 
 export default {
-  data() {
-    return {
-      avatarUrl: null,
-    };
-  },
-  computed: mapState("session", ["loggedIn", "avatar"]),
-  created() {
-    console.log(this.loggedIn);
-    this.avatarUrl = !!this.avatar ? this.avatar : defaultAvatar;
+  computed: {
+    avatarUrl() {
+      return !!this.avatar ? this.avatar : defaultAvatar;
+    },
+    ...mapState("session", ["loggedIn", "avatar"]),
   },
 };
 </script>

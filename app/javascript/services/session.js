@@ -6,9 +6,10 @@ export default {
     return axios
       .post("/api/session.json", authData)
       .then((response) => {
-        const { user_name, token } = response.data;
-        setToken(token);
-        return user_name;
+        const userData = response.data;
+        setToken(userData.token);
+        delete userData.token;
+        return userData;
       })
       .catch((err) => {
         return err.response;

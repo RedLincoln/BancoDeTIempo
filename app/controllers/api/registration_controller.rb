@@ -9,7 +9,7 @@ class Api::RegistrationController < ApplicationController
           scope: 'admin',
           target: user_params[:name],
           link: root_path)
-      UserMailer.register_confirmation(@user).deliver
+      #UserMailer.register_confirmation(@user).deliver
       render json: { message: 'Se ha enviado una notificación a un administrador, este se comunicará con usted' }
     else
       errors = @user.errors.messages.map { |k, v| v }.join(', ')

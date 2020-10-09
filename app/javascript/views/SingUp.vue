@@ -98,13 +98,22 @@ export default {
     submit() {
       this.$refs.form.validate();
       if (!this.valid) return;
+
+      const params = {
+        name: this.name,
+        email: this.email,
+        information: this.information,
+        avatar: this.avatar,
+      };
+
+      let formData = new FormData();
+
+      Object.entries(params).forEach(([key, value]) =>
+        formData.append(key, value)
+      );
+
       this.$store
-        .dispatch("session/signUp", {
-          email: this.email,
-          name: this.name,
-          information: this.information,
-          avatar: this.avatar,
-        })
+        .dispatch("session/signUp", formData)
         .then(() => {
           this.$store.dispatch("flash/addFlash", {
             type: "notice",

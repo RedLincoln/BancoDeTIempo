@@ -6,7 +6,7 @@
         data-testid="admin-users-tab"
         :to="{ name: 'admin-users' }"
         text
-        >Manejar Usuarios</v-btn
+        >Gestionar Usuarios</v-btn
       >
     </template>
   </v-toolbar>
