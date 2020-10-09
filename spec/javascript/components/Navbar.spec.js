@@ -43,4 +43,10 @@ describe("Navbar.vue", () => {
   it("renders properly", () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it("Navbar Information when not logged in", () => {
+    expect(wrapper.find('[data-testid="login-btn"]').exists()).toBeTruthy();
+    expect(wrapper.find('[data-testid="sign_up-btn"]').exists()).toBeTruthy();
+    expect(wrapper.find(".avatar").exists()).toBeFalsy();
+  });
 });
