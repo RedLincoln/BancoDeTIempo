@@ -44,9 +44,16 @@ describe("Navbar.vue", () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it("Navbar Information when not logged in", () => {
+  it("information when not logged in", () => {
     expect(wrapper.find('[data-testid="login-btn"]').exists()).toBeTruthy();
     expect(wrapper.find('[data-testid="sign_up-btn"]').exists()).toBeTruthy();
     expect(wrapper.find(".avatar").exists()).toBeFalsy();
+  });
+
+  it("information when logged in", () => {
+    state.loggedIn = true;
+    expect(wrapper.find('[data-testid="login-btn"]').exists()).toBeFalsy();
+    expect(wrapper.find('[data-testid="sign_up-btn"]').exists()).toBeFalsy();
+    expect(wrapper.find(".avatar").exists()).toBeTruthy();
   });
 });
