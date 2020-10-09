@@ -26,14 +26,22 @@ describe("Navbar.vue", () => {
   let vuetify;
   let wrapper;
 
-  const loggedAdmin = () => {
+  const setWrapperStore = (store) => {
     vuetify = new Vuetify();
     wrapper = mount(ActionBar, {
       localVue,
       vuetify,
-      store: getStoreByLogged({ loggedIn: true, role: "admin" }),
+      store,
       stubs: ["router-link"],
     });
+  };
+
+  const loggedAdmin = () => {
+    setWrapperStore(getStoreByLogged({ loggedIn: true, role: "admin" }));
+  };
+
+  const loggedRegularUser = () => {
+    setWrapperStore(getStoreByLogged({ loggedIn: true, role: "standard" }));
   };
 
   beforeEach(() => {
@@ -51,5 +59,12 @@ describe("Navbar.vue", () => {
     expect(
       wrapper.find('[data-testid="admin-users-tab"]').exists()
     ).toBeTruthy();
+  });
+
+  it("admin user navigation is hiden for standard users", () => {
+    loggedRegularUser();
+    expect(
+      wrapper.find('[data-testid="admin-users-tab"]').exists()
+    ).toBeFalsy();
   });
 });
