@@ -26,12 +26,7 @@ describe("Navbar.vue", () => {
   let vuetify;
   let wrapper;
 
-  beforeEach(() => {
-    jest.resetAllMocks();
-    localVue.use(Vuex);
-  });
-
-  it("renders properly", () => {
+  const loggedAdmin = () => {
     vuetify = new Vuetify();
     wrapper = mount(ActionBar, {
       localVue,
@@ -39,6 +34,22 @@ describe("Navbar.vue", () => {
       store: getStoreByLogged({ loggedIn: true, role: "admin" }),
       stubs: ["router-link"],
     });
+  };
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+    localVue.use(Vuex);
+  });
+
+  it("renders properly", () => {
+    loggedAdmin();
     expect(wrapper.html()).toMatchSnapshot();
+  });
+
+  it("have a user navigation link for admins", () => {
+    loggedAdmin();
+    expect(
+      wrapper.find('[date-testid="admin-users-tab"]').exists()
+    ).toBeTruthy();
   });
 });
