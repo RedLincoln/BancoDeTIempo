@@ -2,16 +2,16 @@
   <v-container>
     <v-row>
       <v-col cols="3">
-        <v-img :src="avatar" max-width="100%"> </v-img>
+        <v-img :src="user.avatar" max-width="100%"> </v-img>
       </v-col>
       <v-col cols="9">
         <v-card>
           <v-card-title>
-            {{ name }}
+            {{ user.name }}
           </v-card-title>
 
           <v-card-text class="headline font-weight-bold">
-            {{ information }}
+            {{ user.information }}
           </v-card-text>
         </v-card>
       </v-col>
@@ -24,7 +24,30 @@
       <v-tab-item>
         <v-data-table
           :headers="headers"
-          :items="services"
+          :items="servicesOffering"
+          :items-per-page="5"
+          class="elevation-1"
+          :search="search"
+        >
+          <template v-slot:top>
+            <v-text-field v-model="search" label="Buscar Servicio" class="mx-4">
+            </v-text-field>
+          </template>
+          <template v-slot:item.category="{ item }">
+            <router-link
+              :to="{
+                name: 'services',
+                query: { category: item.category.name },
+              }"
+              >{{ item.category.name }}</router-link
+            >
+          </template>
+        </v-data-table>
+      </v-tab-item>
+      <v-tab-item>
+        <v-data-table
+          :headers="headers"
+          :items="servicesDemanding"
           :items-per-page="5"
           class="elevation-1"
           :search="search"
@@ -35,7 +58,6 @@
           </template>
         </v-data-table>
       </v-tab-item>
-      <v-tab-item></v-tab-item>
     </v-tabs-items>
   </v-container>
 </template>
@@ -47,7 +69,16 @@ import defaultAvatar from "images/default-avatar.jpg";
 const { getUser } = UserService;
 
 export default {
-  props: ["id"],
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+    services: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       tab: null,
@@ -62,19 +93,19 @@ export default {
         { text: "Categoría", value: "category" },
         { text: "Descripción", value: "description" },
       ],
-      avatar: "",
-      name: "",
-      information: "",
-      services: [],
     };
   },
-  created() {
-    getUser(this.id).then((user) => {
-      this.avatar = !!user.avatar ? user.avatar : defaultAvatar;
-      this.name = user.name;
-      this.information = user.information;
-      this.services = user.services;
-    });
+  computed: {
+    servicesDemanding() {
+      return this.services.filter(
+        (service) => service.service_type === "demand"
+      );
+    },
+    servicesOffering() {
+      return this.services.filter(
+        (service) => service.service_type === "offer"
+      );
+    },
   },
 };
 </script>

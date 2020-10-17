@@ -1,14 +1,42 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="services"
-    :items-per-page="15"
+    :items="filteredServices"
+    :items-per-page="itemsPerPage"
+    :page.sync="page"
+    hide-default-footer
     class="elevation-1"
     :search="search"
+    @page-count="pageCount = $event"
   >
     <template v-slot:top>
-      <v-text-field v-model="search" label="Buscar Servicio" class="mx-4">
-      </v-text-field>
+      <v-row justify="center">
+        <v-col cols="8" md="6">
+          <v-text-field
+            prepend-inner-icon="mdi-magnify"
+            v-model="search"
+            placeholder="Buscar Servicio"
+            filled
+            rounded
+          ></v-text-field>
+          <v-btn text @click="tools = !tools"
+            ><v-icon>mdi-tools</v-icon>Herramientas</v-btn
+          >
+          <v-scroll-y-transition>
+            <v-sheet v-if="tools">
+              <v-text-field
+                v-model="categoryFilter"
+                placeholder="Filtrar Categoría"
+                solo
+                clearable
+                @keyup="filterByCategory"
+                @click:clear="filterByCategory"
+              ></v-text-field>
+            </v-sheet>
+          </v-scroll-y-transition>
+        </v-col>
+      </v-row>
+      <v-pagination v-model="page" :length="pageCount"></v-pagination>
     </template>
     <template v-slot:item.name="{ item }">
       <router-link
@@ -26,6 +54,9 @@
       </router-link>
       <span v-else>{{ item.owner.name }}</span>
     </template>
+    <template v-slot:item.category="{ item }">
+      {{ item.category }}
+    </template>
   </v-data-table>
 </template>
 
@@ -41,6 +72,14 @@ export default {
   },
   data() {
     return {
+      categoryFilter: "",
+      lastCategoryFilter: "",
+      filteredServices: this.services,
+      tools: false,
+      categoryFilter: "",
+      page: 1,
+      itemsPerPage: 10,
+      pageCount: 0,
       search: "",
       headers: [
         {
@@ -49,13 +88,37 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Usuario que lo ofrece", align: "start", value: "owner" },
+        { text: "Propietario", align: "start", value: "owner" },
         { text: "Categoría", value: "category" },
         { text: "Descripción", value: "description" },
       ],
     };
   },
-  computed: mapState("session", ["loggedIn"]),
+  computed: {
+    ...mapState("session", ["loggedIn"]),
+  },
+  created() {
+    this.categoryFilter = !!this.$route.query.category
+      ? !!this.$route.query.category
+      : "";
+    this.filterByCategoryInput(this.categoryFilter);
+  },
+  methods: {
+    filterByCategoryInput(input) {
+      const toFilter =
+        input.length > this.lastCategoryFilter.length
+          ? this.filteredServices
+          : this.services;
+      this.filteredServices = toFilter.filter((service) =>
+        service.category.toLowerCase().includes(input.toLowerCase())
+      );
+      this.lastCategoryFilter = input;
+    },
+    filterByCategory(event) {
+      const input = event.target.value;
+      this.filterByCategoryInput(input);
+    },
+  },
 };
 </script>
 

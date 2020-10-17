@@ -4,7 +4,16 @@ export default {
   getAll() {
     return axios.get("/api/services.json").then((response) => response.data);
   },
-
+  getOffers() {
+    return axios
+      .get("/api/services.json?service_type=offer")
+      .then((response) => response.data);
+  },
+  getDemand() {
+    return axios
+      .get("/api/services.json?service_type=demand")
+      .then((response) => response.data);
+  },
   getService(id) {
     return axios
       .get(`/api/services/${id}`)

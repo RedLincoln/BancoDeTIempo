@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_13_032440) do
+ActiveRecord::Schema.define(version: 2020_10_17_160750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2020_10_13_032440) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
+    t.string "service_type", default: "offer"
     t.index ["category_id"], name: "index_services_on_category_id"
     t.index ["user_id"], name: "index_services_on_user_id"
   end
@@ -134,6 +135,9 @@ ActiveRecord::Schema.define(version: 2020_10_13_032440) do
     t.text "information"
     t.boolean "confirmed", default: false
     t.boolean "blocked", default: false
+    t.string "telephone"
+    t.boolean "telephone_visible", default: true
+    t.boolean "email_visible", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -3,8 +3,11 @@
     <v-row justify="center" align="center">
       <v-col ms="6" cols="12">
         <v-card class="elevation-1">
-          <v-card-title>
+          <v-card-title v-if="offer">
             Crear Servicio
+          </v-card-title>
+          <v-card-title v-else>
+            Crear Demanda
           </v-card-title>
           <v-card-text>
             <Alert v-show="errorMessage.length > 0">
@@ -42,7 +45,14 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="primary" @click="submit">Crear Servicio</v-btn>
+            <v-btn color="primary" @click="submit">
+              <span v-if="offer">
+                Crear Servicio
+              </span>
+              <span v-else>
+                Crear Demanda
+              </span>
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -65,6 +75,10 @@ export default {
     tags: {
       type: Array,
       required: true,
+    },
+    offer: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {

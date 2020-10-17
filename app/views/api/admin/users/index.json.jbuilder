@@ -8,6 +8,7 @@ json.users do
     json.role user.role
     json.balance user.balance
     json.email user.email
+    json.information user.information
   end
 end
 

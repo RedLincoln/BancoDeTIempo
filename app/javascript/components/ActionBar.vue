@@ -4,6 +4,7 @@
       <template v-if="loggedIn && role === 'admin'">
         <v-tab>
           <v-btn
+            exact
             data-testid="admin-users-tab"
             :to="{ name: 'admin-users' }"
             text
@@ -15,10 +16,17 @@
         <v-btn :to="{ name: 'users' }" text>Miembros</v-btn>
       </v-tab>
       <v-tab>
-        <v-btn :to="{ name: 'services' }" text>Servicios Ofertados</v-btn>
+        <v-btn :to="{ name: 'services' }" text exact>Servicios Ofertados</v-btn>
       </v-tab>
       <v-tab>
-        <v-btn :to="{ name: 'petitions' }" text>Peticiones de servicios</v-btn>
+        <v-btn :to="{ name: 'services-demand' }" text exact
+          >Servicios Demandados</v-btn
+        >
+      </v-tab>
+      <v-tab>
+        <v-btn :to="{ name: 'petitions' }" text exact
+          >Peticiones de servicios</v-btn
+        >
       </v-tab>
     </v-tabs>
   </v-toolbar>

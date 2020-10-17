@@ -25,12 +25,17 @@ const store = new Vuex.Store({
     flash,
     users,
   },
+  state: {
+    loading: false,
+  },
   mutations: {
-    logout() {
-      state.isLogged = false;
+    SET_LOADING(state, loading) {
+      state.loading = loading;
     },
-    login() {
-      state.isLogged = true;
+  },
+  actions: {
+    setLoading({ commit }, loading) {
+      commit("SET_LOADING", loading);
     },
   },
 });

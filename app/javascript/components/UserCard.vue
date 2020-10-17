@@ -1,7 +1,7 @@
 <template>
   <router-link :to="{ name: 'user-profile', params: { id: id } }">
     <v-card :ripple="{ center: true }">
-      <div class="d-flex flex-no-wrap justify-space-between">
+      <div class="d-flex flex-no-wrap justify-start">
         <Avatar class="mx-3" :avatar="!!avatar ? avatar : undefined" />
         <div>
           <v-card-title class="headline" v-text="name"></v-card-title>
@@ -11,7 +11,7 @@
           <v-card-subtitle v-else>
             Usuario
           </v-card-subtitle>
-          <v-card-text v-text="information" height="3rem"></v-card-text>
+          <v-card-text class="tree-lines">{{ information }}</v-card-text>
           <v-card-actions>
             <v-icon
               v-for="filled in filledStars"
@@ -76,4 +76,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.tree-lines {
+  height: 3rem;
+  overflow-y: hidden;
+}
+</style>

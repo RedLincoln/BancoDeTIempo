@@ -1,8 +1,9 @@
 class Api::ServicesController < ApplicationController
 
   def index
-    @services = Service.find_by_category_name(params[:filter_category])
-                    .find_by_category_supcategory(params[:filter_supcategory])
+    @services = !!params[:service_type] ?
+                    Service.where(service_type: params[:service_type]) :
+                    Service.all
 
     if logged_in?
       @services = @services.services_not_made_by(@user)

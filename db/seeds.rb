@@ -80,6 +80,10 @@ Category.create!([{name: 'Conocimientos y habilidades de alrededor del mundo', s
                   {name: 'Conversación en diferentes idiomas', supcategory: 'Interculturalidad'}])
 
 
+Category.create!([{ name: 'Clases', supcategory: 'Clases'},
+                  { name: 'Coaching', supcategory: 'Clases'}])
+
+Category.create!({ name: 'Otros', supcategory: 'Otros' })
 
 
 user1 = User.create!({name: 'Esteban', email: 'kmaclure0@adobe.com', password: 'GI2CyM', information: '', confirmed: true })
@@ -102,6 +106,27 @@ user9 = User.create!({name: 'Victor', email: 'cplunket8@washingtonpost.com', pas
 user9.avatar.attach(io: File.open("#{Rails.root}/seed_data/hombre4.jpg"), filename: "hombre4.jpg")
 user10 = User.create!({name: 'Carlos', email: 'kharg9@dogondesign.com', password: 'Q7mTKEJh5N', information: '', confirmed: true})
 user10.avatar.attach(io: File.open("#{Rails.root}/seed_data/hombre5.jpg"), filename: "hombre5.jpg")
+user11 = User.create!({name: 'Yaiza', email: 'dmcteggart0@comsenz.com', password: 'T887wFR0TMe',
+                       information: 'Podéis contactar conmigo por teléfono, estoy disponible por las mañanas', telephone: '559-852-2782'})
+user11.avatar.attach(io: File.open("#{Rails.root}/seed_data/mujer7.jpg"), filename: "mujer7.jpg")
+
+user12 = User.create!({name: 'Siddartha Roa Arias', email: 'bdikes1@spiegel.de', password: 'CFL1wC',
+                      information: 'Profesional en Microbiología y Magister en Estudios y Gestión del Desarrollo con 11'\
+                                    'años de experiencia en el trabajo de campo con comunidades. Con habilidades en negociación, '\
+                                    'manejo de entorno einteracción con comunidades. Conocimiento y experiencia en elaboración de '\
+                                    'presupuestos y ejecución de estategías y planes de inversión social.',
+                      confirmed: true, telephone: '921-602-7778'})
+user12.avatar.attach(io: File.open("#{Rails.root}/seed_data/mujer8.jpg"), filename: "mujer8.jpg")
+
+user13 = User.create!({name: 'Claudine Abdelnur', email: 'gdummett2@google.es', password: 'MFpt1Ac8Z',
+                       information: 'Educadora, artista.', confirmed: true, telephone: '541-848-5928'})
+user13.avatar.attach(io: File.open("#{Rails.root}/seed_data/mujer9.jpg"), filename: "mujer9.jpg")
+
+user14 = User.create!({name: 'Marcos', email: 'ddeantoni3@ucoz.ru', password: 'hgPdVB', information: 'Profesor de inglés',
+                       confirmed: true, telephone: '888-986-7191'})
+
+user14.avatar.attach(io: File.open("#{Rails.root}/seed_data/hombre7.jpg"), filename: "hombre7.jpg")
+
 admin1 = User.create!({name: 'Jesus', email: 'mchartea@issuu.com', password: '8cSAvouS', information: '', role: 'admin', confirmed: true})
 admin1.avatar.attach(io: File.open("#{Rails.root}/seed_data/hombre6.jpg"), filename: "hombre6.jpg")
 admin2 = User.create!({name: 'Esther', email: 'bscobleb@bbb.org', password: 'f7m3cUlwD7', information: '', role: 'admin', confirmed: true})
@@ -126,6 +151,12 @@ conocimiento_y_habilidades_de_alrededor_del_mundo = Category.find_by!(name: 'Con
 musica_y_canto = Category.find_by!(name: 'Música y canto', supcategory: 'Enseñanza')
 artes_escenicas = Category.find_by!(name: 'Artes escénicas', supcategory: 'Enseñanza')
 elaboracion_cocina = Category.find_by!(name: 'Elaboración', supcategory: 'Cocina y Repostería')
+clases = Category.find_by!(name: 'Clases', supcategory: 'Clases')
+coaching = Category.find_by!(name: 'Coaching', supcategory: 'Clases')
+clases_de_idiomas = Category.find_by!(name: 'Clases y conversación', supcategory: 'Idioma')
+otros = Category.find_by!(name: 'Otros', supcategory: 'Otros')
+cuidado_de_personas = Category.find_by!(name: 'Atención y acompañamiento', supcategory: 'Atención a personas')
+ocio_juegos = Category.find_by!(name: 'Juegos y actividades recreativas', supcategory: 'Ocio y tiempo libre')
 
 Service.create!([{name: 'Clases Básicas de programación',
                   description: 'Clases de nivel principiante. Está destinada para personas que siempre han querido'\
@@ -198,6 +229,25 @@ Service.create!([{name: 'Reparación de bicicletas',
 Service.create!({name: 'Ayuda con tu Jardín',
                  description: 'Te puedo ayudar a crear y mantener un precioso jardín en tu casa.',
                  user: user8, category: jardines_asesoramiento})
+
+
+Service.create!([{ name: 'Pasear perros', description: 'Acompaño a los perros al parque', service_type: 'offer', user: user11, category: animales_de_compania},
+                 { name: 'Clases de piano', description: 'Me encantaría aprender piano, necesito clases', service_type: 'demand', user: user11, category: musica_y_canto}])
+
+
+Service.create!([{ name: 'Clases de banco de Tiempo', description: 'Aprender a usar el banco de tiempo', service_type: 'offer', user: user13, category: clases },
+                 { name: 'Ahumo de arroz', description: 'Si necesitas la excusa perfecta para salir a cenas...No lo dudes.', service_type: 'offer', user: user13, category: elaboracion_cocina },
+                 { name: 'Clases de música', description: 'Ofrezco cláses de música desde nivel inicial a avanzado', service_type: 'offer', user: user13, category: musica_y_canto },
+                 { name: 'Taller de autoestima', description: 'Mediante técnicas prácticas te enseño a amarte a ti mismo', service_type: 'offer', user: user13, category: coaching },
+                 { name: 'Clases de inglés', description: 'Busco clases de inglés para adultos, escritura y conversación nivel básico', service_type: 'demand', user: user13, category: clases_de_idiomas },
+                 { name: 'Comprar regalo', description: 'Persona con gusto e imaginación para comprar un nuevo regalo, envolverlo y entregarlo', service_type: 'demand', user: user13, category: otros },
+                 { name: 'Organización de fiesta', description: 'Organización de fiesta de cumpleaños', service_type: 'demand', user: user13, category: otros}])
+
+Service.create!([{ name: 'Cuidado de personas mayores', description: 'Tengo 5 años de experiencia en el cuidado de personas mayores', service_type: 'offer', user: user14, category: cuidado_de_personas },
+                 { name: 'Clases de inglés - B1, B2, C1', description: 'Preparo para exámenes oficiales B1, B2 y C1', service_type: 'offer', user: user14, category: clases_de_idiomas },
+                 { name: 'Jugar al padel', description: 'Me gustaría probar', service_type: 'demand', user: user13, category: ocio_juegos},
+                 { name: 'Busco clases particulares para mi hijo', description: ' Busco a una persona que dé clases particulares a mi hijo de 16 años',  service_type: 'demand', user: user14, category: clases}])
+
 
 clases_basicas_de_programacion = Service.find_by!(name: 'Clases Básicas de programación') #1 user2
 clases_de_matematicas = Service.find_by!(name: 'Clases de Matemáticas') #2 user2

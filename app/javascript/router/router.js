@@ -5,7 +5,8 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import SignUp from "../views/SingUp.vue";
 import AdminUserManage from "../views/AdminUserManage.vue";
-import Services from "../views/Services.vue";
+import ServicesOffer from "../views/ServicesOffer.vue";
+import ServiceDemand from "../views/ServicesDemand.vue";
 import UserProfile from "../views/UserProfile.vue";
 import Users from "../views/Users.vue";
 import ServiceProfile from "../views/ServiceProfile.vue";
@@ -18,7 +19,13 @@ import UserService from "../services/user";
 import PetitionService from "../services/petitions";
 
 const { getAll: getAllPetitions } = PetitionService;
-const { getAll, getService, getCategories, getTags } = ServiceService;
+const {
+  getOffers,
+  getDemand,
+  getService,
+  getCategories,
+  getTags,
+} = ServiceService;
 const { getUser } = UserService;
 
 Vue.use(VueRouter);
@@ -32,13 +39,54 @@ const routes = [
   {
     path: "/services",
     name: "services",
-    component: Services,
+    component: ServicesOffer,
     props: true,
     beforeEnter(to, from, next) {
-      getAll().then((services) => {
-        to.params.services = services;
+      store.dispatch("setLoading", true);
+      getOffers().then((data) => {
+        to.params.services = data.services;
+        store.dispatch("setLoading", false);
         next();
       });
+    },
+  },
+  {
+    path: "/demand",
+    name: "services-demand",
+    component: ServiceDemand,
+    props: true,
+    beforeEnter(to, from, next) {
+      store.dispatch("setLoading", true);
+      getDemand().then((data) => {
+        store.dispatch("setLoading", false);
+        to.params.services = data.services;
+        next();
+      });
+    },
+  },
+  {
+    path: "/demand/new",
+    name: "new-demand",
+    component: NewService,
+    props: true,
+    beforeEnter(to, from, next) {
+      store.dispatch("setLoading", true);
+      Promise.all([getCategories(), getTags()])
+        .then(([categories, tags]) => {
+          to.params.categories = categories;
+          to.params.tags = tags;
+          to.params.offer = false;
+          store.dispatch("setLoading", false);
+          next();
+        })
+        .catch((err) => {
+          store.dispatch("flash/addFlash", {
+            type: "alert",
+            message: "Error en el servidor",
+          });
+          store.dispatch("setLoading", false);
+          next({ name: "home" });
+        });
     },
   },
   {
@@ -47,9 +95,11 @@ const routes = [
     component: NewServicePetition,
     props: true,
     beforeEnter(to, from, next) {
+      store.dispatch("setLoading", true);
       if (!!to.query.id) {
         getService(to.query.id).then((service) => {
           to.params.service = service;
+          store.dispatch("setLoading", false);
           next();
         });
       } else {
@@ -57,6 +107,7 @@ const routes = [
           type: "alert",
           message: "Error en el servidor",
         });
+        store.dispatch("setLoading", false);
         next({ name: "home" });
       }
     },
@@ -67,10 +118,12 @@ const routes = [
     component: NewService,
     props: true,
     beforeEnter(to, from, next) {
+      store.dispatch("setLoading", true);
       Promise.all([getCategories(), getTags()])
         .then(([categories, tags]) => {
           to.params.categories = categories;
           to.params.tags = tags;
+          store.dispatch("setLoading", false);
           next();
         })
         .catch((err) => {
@@ -78,6 +131,7 @@ const routes = [
             type: "alert",
             message: "Error en el servidor",
           });
+          store.dispatch("setLoading", false);
           next({ name: "home" });
         });
     },
@@ -88,11 +142,13 @@ const routes = [
     component: ServiceProfile,
     props: true,
     beforeEnter(to, from, next) {
+      store.dispatch("setLoading", true);
       getService(to.params.id)
         .then((service) => {
           to.params.service = service;
           getUser(service.user_id).then((user) => {
             to.params.user = user;
+            store.dispatch("setLoading", false);
             next();
           });
         })
@@ -101,6 +157,7 @@ const routes = [
             type: "alert",
             message: "No se ha podido encontrar el servicio",
           });
+          store.dispatch("setLoading", false);
           next({ name: "home" });
         });
     },
@@ -111,12 +168,17 @@ const routes = [
     component: Petitions,
     props: true,
     beforeEnter(to, from, next) {
+      store.dispatch("setLoading", true);
       getAllPetitions()
         .then((data) => {
           to.params.petitions = data.petitions;
+          store.dispatch("setLoading", false);
           next();
         })
-        .catch(() => next());
+        .catch(() => {
+          store.dispatch("setLoading", false);
+          next();
+        });
     },
   },
   {
@@ -134,6 +196,24 @@ const routes = [
     name: "user-profile",
     component: UserProfile,
     props: true,
+    beforeEnter(to, from, next) {
+      store.dispatch("setLoading", true);
+      getUser(to.params.id)
+        .then((data) => {
+          to.params.user = data.user;
+          to.params.services = data.services;
+          store.dispatch("setLoading", false);
+          next();
+        })
+        .catch((err) => {
+          store.dispatch("flash/addFlash", {
+            type: "alert",
+            message: "Acceso denegado",
+          });
+          store.dispatch("setLoading", false);
+          next({ name: "home " });
+        });
+    },
   },
   {
     path: "/users",

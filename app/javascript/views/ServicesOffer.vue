@@ -10,38 +10,27 @@
       Crear Servicio</v-btn
     >
 
-    <ServicesCard
-      v-if="$vuetify.breakpoint.name === 'xs'"
-      :services="services.services"
-    />
-
-    <ServicesTable v-else :services="services.services" />
+    <ServicesTable :services="services" />
   </div>
 </template>
 
 <script>
-import ServiceService from "../services/services";
 import { mapState } from "vuex";
-import ServicesCard from "../components/ServicesCard";
 import ServicesTable from "../components/ServicesTable";
-
-const { getAll } = ServiceService;
 
 export default {
   props: {
     services: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
   components: {
-    ServicesCard,
     ServicesTable,
   },
-  data() {
-    return {};
+  computed: {
+    ...mapState("session", ["loggedIn"]),
   },
-  computed: mapState("session", ["loggedIn"]),
 };
 </script>
 

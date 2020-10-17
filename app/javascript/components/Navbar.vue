@@ -31,6 +31,14 @@
       </v-chip>
       <UserMenu />
     </template>
+
+    <v-progress-linear
+      :active="loading"
+      :indeterminate="loading"
+      absolute
+      top
+      color="green darken-1 accent-4"
+    ></v-progress-linear>
   </v-app-bar>
 </template>
 
@@ -54,6 +62,7 @@ export default {
         : `-${this.user_balance} horas`;
     },
     ...mapState("session", ["loggedIn", "user_balance"]),
+    ...mapState(["loading"]),
   },
 };
 </script>
