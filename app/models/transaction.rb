@@ -84,6 +84,11 @@ class Transaction < ApplicationRecord
   end
 
   def broadcast_create
+    chat_room = ChatRoom.new(name: service.name)
+    chat_room.users << service.user
+    chat_room.users << client
+    chat_room.save
+
     notification = service.user.notifications.build(
         message: 'Se have pedido el servicio ',
         target: service.name,

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   end
 
   def auth_header
-    request.header['Authorization']
+    request.headers['Authorization']
   end
 
   def decoded_token
@@ -30,9 +30,9 @@ class ApplicationController < ActionController::Base
     !!logged_in_user
   end
 
-  def authorized
-    render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
+  def login_guard
+    if !logged_in?
+      render json: { message: 'Acceso denegado' }, status: :unprocessable_entity
+    end
   end
-
-
 end

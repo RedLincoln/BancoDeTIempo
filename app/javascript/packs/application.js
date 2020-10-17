@@ -17,16 +17,28 @@
 import Vue from "vue";
 import vuetify from "../plugins/vuetify";
 import store from "../store/store";
+import ActionCableVue from "actioncable-vue";
 
 import router from "../router/router";
 import App from "../App.vue";
 import Logo from "../components/Logo.vue";
 import Alert from "../components/Alert.vue";
 import Notice from "../components/Notice.vue";
+import Avatar from "../components/Avatar.vue";
 
 Vue.component("Logo", Logo);
 Vue.component("Alert", Alert);
 Vue.component("Notice", Notice);
+Vue.component("Avatar", Avatar);
+
+Vue.use(ActionCableVue, {
+  debug: true,
+  debugLevel: "error",
+  connectionUrl: "ws://localhost:3000/cable",
+  connectImmediately: true,
+});
+
+store.dispatch("session/logInWithToken");
 
 document.addEventListener("DOMContentLoaded", () => {
   new Vue({

@@ -7,7 +7,12 @@
         <Alert v-show="errorMessage.length > 0">
           {{ errorMessage }}
         </Alert>
-        <v-form data-testid="login-form">
+        <v-form
+          data-testid="login-form"
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
           <v-text-field
             :rules="[rules.required, rules.email]"
             v-model="email"
@@ -41,6 +46,7 @@ import { rules } from "../utils";
 export default {
   data() {
     return {
+      valid: true,
       email: "",
       password: "",
       showPassword: false,
@@ -50,6 +56,9 @@ export default {
   },
   methods: {
     logIn() {
+      this.$refs.form.validate();
+      if (!this.valid) return;
+
       this.$store
         .dispatch("session/logIn", {
           email: this.email,
@@ -71,5 +80,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

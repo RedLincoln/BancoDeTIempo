@@ -1,6 +1,7 @@
 class Service < ApplicationRecord
   @@page_size = 10
   has_many :transactions
+  has_and_belongs_to_many :tags
 
   validates :name, :description, presence: true
   validates :name, uniqueness: { scope: :user_id}
@@ -8,6 +9,14 @@ class Service < ApplicationRecord
   belongs_to :user
   belongs_to :category
 
+  def as_json(*)
+    super(only: [:name, :description, :id]).tap do |hash|
+      hash[:owner] = user.name
+      hash[:user_id] = user.id
+
+      hash[:category] = category.name
+    end
+  end
 
   def self.search_by_name(search_string = '')
     return all if search_string == '' || search_string.nil?

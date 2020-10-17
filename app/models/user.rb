@@ -1,5 +1,9 @@
 class User < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   has_secure_password
+  has_many :chat_room_users
+  has_many :chat_rooms, through: :chat_room_users
   has_one_attached :avatar
   has_many :services
   has_many :transactions_owner, through: :services, source: :transactions
@@ -10,6 +14,14 @@ class User < ApplicationRecord
   validates :email, presence: { message: "El campo email es obligatorio"}, uniqueness: { message: "El usuario ya existe"}
   validates :name, presence: { message: "El campo name es obligatorio"}
 
+  def as_json(*)
+    super(only: [:name, :confirmed, :email, :blocked, :role, :information, :id, :balance]).tap do |hash|
+      hash[:avatar] = avatar.attached? ?
+                          rails_blob_path(avatar, disposition: "attachment", only_path: true) :
+                          nil
+      hash[:services] = services
+    end
+  end
 
   def transactions
     transactions_client.order(created_at: :desc) + transactions_owner.order(created_at: :desc)

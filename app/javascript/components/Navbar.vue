@@ -3,6 +3,7 @@
     <router-link :to="{ name: 'home' }">
       <Logo />
     </router-link>
+
     <v-spacer></v-spacer>
 
     <template v-if="!loggedIn">
@@ -21,23 +22,38 @@
       >
     </template>
     <template v-else>
-      <v-avatar class="avatar">
-        <img :src="avatarUrl" alt="avatar" />
-      </v-avatar>
+      <Notifications class="mr-3" />
+      <v-chip class="mr-3" :color="balanceColor" text-color="white">
+        <v-icon left>
+          mdi-cash-multiple
+        </v-icon>
+        {{ balance }}
+      </v-chip>
+      <UserMenu />
     </template>
   </v-app-bar>
 </template>
 
 <script>
+import Notifications from "./Notifications";
+import UserMenu from "./UserMenu";
 import { mapState } from "vuex";
-import defaultAvatar from "images/default-avatar.jpg";
 
 export default {
+  components: {
+    Notifications,
+    UserMenu,
+  },
   computed: {
-    avatarUrl() {
-      return !!this.avatar ? this.avatar : defaultAvatar;
+    balanceColor() {
+      return this.user_balance > 0 ? "green" : "red";
     },
-    ...mapState("session", ["loggedIn", "avatar"]),
+    balance() {
+      return this.user_balance >= 0
+        ? `${this.user_balance} horas`
+        : `-${this.user_balance} horas`;
+    },
+    ...mapState("session", ["loggedIn", "user_balance"]),
   },
 };
 </script>

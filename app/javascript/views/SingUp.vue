@@ -123,7 +123,6 @@ export default {
           this.$router.push({ name: "home" });
         })
         .catch((error) => {
-          console.log(error);
           this.errorMessage = error.response.data.message;
         });
     },
@@ -131,5 +130,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -945,6 +945,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@rails/actioncable@^6.0.2":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.0.3.tgz#722b4b639936129307ddbab3a390f6bcacf3e7bc"
+
 "@rails/webpacker@5.1.1":
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/@rails/webpacker/-/webpacker-5.1.1.tgz#3c937aa719e46341f037a3f37349ef58085950df"
@@ -999,6 +1003,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-6.0.1.tgz#293674fccb3262ac782c7aadfdeca86b10c75c40"
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@types/actioncable@^5.2.3":
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/@types/actioncable/-/actioncable-5.2.3.tgz#215689835399a1be6e7271a2a9d8c8d476c0fd6a"
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.9"
@@ -1304,9 +1312,12 @@ acorn@^7.1.1:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.0.tgz#e1ad486e6c54501634c6c397c5c121daa383607c"
 
-actioncable@^5.2.4-3:
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/actioncable/-/actioncable-5.2.4.tgz#744f555f16d87413044f81074a9cc4d2cf416502"
+actioncable-vue@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/actioncable-vue/-/actioncable-vue-2.3.2.tgz#cffc11169494df27fc12362175bad945a920b9cb"
+  dependencies:
+    "@rails/actioncable" "^6.0.2"
+    "@types/actioncable" "^5.2.3"
 
 aggregate-error@^3.0.0:
   version "3.1.0"
