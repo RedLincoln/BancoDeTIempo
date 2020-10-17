@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import * as session from "./modules/session";
 import * as flash from "./modules/flash";
+import * as users from "./modules/users";
 import createPersistedState from "vuex-persistedstate";
 import Cookies from "js-cookie";
 
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
   modules: {
     session,
     flash,
+    users,
   },
   mutations: {
     logout() {

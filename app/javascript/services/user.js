@@ -2,14 +2,16 @@ import { axiosInstance as axios } from "./axios";
 
 export default {
   getUser(user_id) {
-    return axios.get(`/api/users/${user_id}`).then((response) => {
-      return response.data.user;
+    return axios.get(`/api/users/${user_id}.json`).then((response) => {
+      return response.data;
     });
   },
-  getUsers() {
-    return axios.get("/api/admin/users.json").then((response) => {
-      return response.data.users;
-    });
+  getUsers({ limit, offset }) {
+    return axios
+      .get(`/api/admin/users.json?limit=${limit}&offset=${offset}`)
+      .then((response) => {
+        return response.data;
+      });
   },
 
   getUserNotifications() {

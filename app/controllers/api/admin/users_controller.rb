@@ -2,7 +2,7 @@ class Api::Admin::UsersController < ApplicationController
   before_action :authorize_admin, only: [:confirm, :delete]
 
   def index
-    render json: { users: User.all }
+    @users = User.limit(params[:limit]).offset(params[:offset])
   end
 
   def confirm

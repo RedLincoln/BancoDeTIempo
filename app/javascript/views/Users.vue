@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <v-pagination v-model="page" :length="paginationLength"></v-pagination>
     <v-row>
       <v-col cols="6" v-for="(user, index) in users" :key="index">
         <UserCard
@@ -16,10 +17,8 @@
 </template>
 
 <script>
-import UsersService from "../services/user";
+import { mapState, mapActions } from "vuex";
 import UserCard from "../components/UserCard";
-
-const { getUsers } = UsersService;
 
 export default {
   components: {
@@ -27,15 +26,27 @@ export default {
   },
   data() {
     return {
-      users: [],
+      page: 1,
     };
   },
+  watch: {
+    page(val) {
+      this.fetchUsers(val);
+    },
+  },
+  computed: {
+    paginationLength() {
+      return Math.ceil(this.total / this.perPage);
+    },
+    ...mapState("users", ["users", "total", "perPage"]),
+  },
   created() {
-    getUsers()
-      .then((users) => {
-        this.users = users;
-      })
-      .catch((err) => console.log(err));
+    this.fetchUsers(this.page);
+  },
+  methods: {
+    fetchUsers(page) {
+      this.$store.dispatch("users/fetch", page - 1);
+    },
   },
 };
 </script>
