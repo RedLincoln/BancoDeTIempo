@@ -11,7 +11,14 @@
         right
         bottom
       >
-        <v-icon>mdi-message</v-icon>
+        <v-badge
+          :content="formatedChatNotificationsCount"
+          :value="chatNotificationsCount"
+          color="green"
+          overlap
+        >
+          <v-icon>mdi-message</v-icon>
+        </v-badge>
       </v-btn>
     </template>
     <v-card width="400px" height="550px" class="d-flex flex-column">
@@ -99,6 +106,16 @@ export default {
     };
   },
   computed: {
+    chatNotificationsCount() {
+      return this.chats.reduce(
+        (acc, chat) => acc + chat.message_not_read_count,
+        0
+      );
+    },
+    formatedChatNotificationsCount() {
+      const count = this.chatNotificationsCount;
+      return count >= 100 ? "99+" : count;
+    },
     titleText() {
       return !this.showChatList && this.index > -1
         ? this.chats[this.index].name
