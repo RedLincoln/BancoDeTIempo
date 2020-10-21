@@ -1,6 +1,6 @@
 json.user do
   json.(@user, :id, :name, :confirmed,
-      :blocked, :role, :balance, :email, :telephone_visible, :email_visible, :telephone)
+      :blocked, :role, :balance, :email, :telephone_visible, :email_visible, :telephone, :information)
   json.avatar @user.avatar.nil? ? nil : url_for(@user.avatar)
   json.created_at @user.created_at.to_i
 end

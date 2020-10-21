@@ -46,12 +46,26 @@
               >
                 <v-list-item-content>
                   <v-list-item-title>{{ chat.name }}</v-list-item-title>
-                  <v-list-item-subtitle>{{
-                    participants(chat)
-                  }}</v-list-item-subtitle>
+                  <v-list-item-subtitle v-if="!chat.last_chat_room_message"
+                    >{{ participants(chat) }}
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle v-else>
+                    {{ formatMessage(chat.last_chat_room_message) }}
+                  </v-list-item-subtitle>
                 </v-list-item-content>
-                <v-icon :class="{ 'show-btns': hover }" color="transparent"
+                <v-icon
+                  v-show="chat.message_not_read_count == 0"
+                  :class="{ 'show-btns': hover }"
+                  color="transparent"
                   >mdi-arrow-right</v-icon
+                >
+                <v-btn
+                  fab
+                  v-show="chat.message_not_read_count > 0"
+                  color="green"
+                  dark
+                  small
+                  >{{ chat.message_not_read_count }}</v-btn
                 >
               </v-list-item>
             </v-hover>
@@ -69,7 +83,7 @@ import { mapState } from "vuex";
 import chat from "../services/chat";
 import Chat from "./Chat";
 
-const { getChats } = ChatService;
+const { getChats, resetNotReadCount, getChat } = ChatService;
 
 export default {
   components: {
@@ -92,20 +106,40 @@ export default {
     },
     ...mapState("session", ["user_id", "loggedIn"]),
   },
-  watch: {
-    loggedIn(val) {
-      if (val) {
-        this.getChats();
-      } else {
-        this.chats = [];
-      }
+  channels: {
+    user_chat: {
+      received({ action, chat_room_id }) {
+        switch (action) {
+          case "new":
+            break;
+          case "update":
+            this.chats = this.chats.filter((chat) => chat.id !== chat_room_id);
+            getChat(chat_room_id).then((chat) => {
+              this.chats.unshift(chat);
+            });
+            break;
+          case "delete":
+            break;
+        }
+      },
     },
+  },
+  watch: {
     chats(val) {
       this.filteredChats = val;
     },
   },
   mounted() {
-    if (this.loggedIn) this.getChats();
+    if (this.loggedIn) {
+      this.$cable.subscribe(
+        {
+          channel: "UserChatChannel",
+          user_id: this.user_id,
+        },
+        "user_chat"
+      );
+      this.getChats();
+    }
   },
   methods: {
     search(event) {
@@ -126,7 +160,15 @@ export default {
     transitionToChat(index) {
       this.index = index;
       this.selectedChat = this.chats[index];
+      resetNotReadCount(this.selectedChat.id).then(() => {
+        this.selectedChat.message_not_read_count = 0;
+      });
       this.showChatList = false;
+    },
+    formatMessage(message) {
+      const author =
+        message.author.id === this.user_id ? "Yo" : message.author.name;
+      return `${author}: ${message.message}`;
     },
   },
 };

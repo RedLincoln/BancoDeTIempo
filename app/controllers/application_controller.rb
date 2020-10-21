@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
 
   def login_guard
     if !logged_in?
-      render json: { message: 'Acceso denegado' }, status: :unprocessable_entity
+      render json: { message: 'Acceso denegado' }, status: :unauthorized
     end
   end
 end

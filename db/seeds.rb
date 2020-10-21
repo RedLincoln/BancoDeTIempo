@@ -111,7 +111,7 @@ user11 = User.create!({name: 'Yaiza', email: 'dmcteggart0@comsenz.com', password
 user11.avatar.attach(io: File.open("#{Rails.root}/seed_data/mujer7.jpg"), filename: "mujer7.jpg")
 
 user12 = User.create!({name: 'Siddartha Roa Arias', email: 'bdikes1@spiegel.de', password: 'CFL1wC',
-                      information: 'Profesional en Microbiología y Magister en Estudios y Gestión del Desarrollo con 11'\
+                      information: 'Profesional en Microbiología y Magister en Estudios y Gestión del Desarrollo con 11 '\
                                     'años de experiencia en el trabajo de campo con comunidades. Con habilidades en negociación, '\
                                     'manejo de entorno einteracción con comunidades. Conocimiento y experiencia en elaboración de '\
                                     'presupuestos y ejecución de estategías y planes de inversión social.',

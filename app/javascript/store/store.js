@@ -11,7 +11,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      path: ["loggedIn", "role", "user_id", "user_name", "avatar"],
+      path: ["loggedIn"],
       storage: {
         getItem: (key) => Cookies.get(key),
         setItem: (key, value) =>

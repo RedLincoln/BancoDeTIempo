@@ -52,8 +52,10 @@ Rails.application.routes.draw do
 
   #chat_room
   get '/api/chat_rooms', :to => 'api/chat_room#index'
+  get '/api/chat_rooms/:id', :to => 'api/chat_room#show'
   post '/api/chat_rooms/message/:id', :to => 'api/chat_room#create_message'
   get '/api/chat_rooms/message/:id', :to => 'api/chat_room#get_messages'
+  post '/api/chat_room/:id/reset_read_count', :to => 'api/chat_room#reset_count'
 
   #categories
   get '/api/categories', :to => 'api/categories#index'

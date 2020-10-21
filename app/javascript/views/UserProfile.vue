@@ -9,9 +9,22 @@
           <v-card-title>
             {{ user.name }}
           </v-card-title>
+          <v-card-subtitle v-if="user.role === 'admin'"
+            >Administrador</v-card-subtitle
+          >
+          <v-card-subtitle v-else>
+            Usuario
+          </v-card-subtitle>
 
           <v-card-text class="headline font-weight-bold">
-            {{ user.information }}
+            <p v-if="isVisible(user.email_visible) && !!user.email">
+              Email: {{ user.email }}
+            </p>
+            <p v-if="isVisible(user.telephone_visible) && !!user.telephone">
+              Teléfono: {{ user.telephone }}
+            </p>
+            <p v-if="!!user.information">Información:</p>
+            <p>{{ user.information }}</p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -65,6 +78,7 @@
 <script>
 import UserService from "../services/user";
 import defaultAvatar from "images/default-avatar.jpg";
+import { mapState } from "vuex";
 
 const { getUser } = UserService;
 
@@ -105,6 +119,12 @@ export default {
       return this.services.filter(
         (service) => service.service_type === "offer"
       );
+    },
+    ...mapState("session", ["loggedIn", "user_id"]),
+  },
+  methods: {
+    isVisible(field_visible) {
+      return field_visible || (this.loggedIn && this.user.id === this.user_id);
     },
   },
 };
