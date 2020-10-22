@@ -17,6 +17,17 @@ class Api::TransactionController < ApplicationController
     end
   end
 
+  def update
+    login_guard
+    transaction = Transaction.find(params[:id])
+
+    if transaction.update(transaction_params)
+      render status: :ok
+    else
+      render status: :bad_request
+    end
+  end
+
   private
 
   def transaction_params

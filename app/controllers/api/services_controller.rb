@@ -11,26 +11,38 @@ class Api::ServicesController < ApplicationController
   end
 
   def show
-    render json: { service: Service.find(params[:id])}
+    @service = Service.find(params[:id])
   end
 
   def create
-    if !logged_in?
-      render json: { message: 'Acceso denegado' }, status: :unprocessable_entity
-    end
-
-    tags = params[:tags].map { |name| Tag.build_or_get_tag_by_name(name)}
-    category = Category.find_by(name: params[:category])
-
-    service = @user.services.build(name: params[:name], description: params[:description], category: category)
+    login_guard
+    service = @user.services.build(service_params)
 
     if service.save
-      tags.each do |tag|
-        service.tags << tag
-      end
-      render json: { message: 'Servicio creado satisfactoriamente' }
+      render json: { message: 'Servicio creado satisfactoriamente' }, status: :ok
     else
       render json: { message: 'Errores al crear servicio' }, status: :bad_request
     end
+  end
+
+  def update
+    login_guard
+
+    service = Service.find(params[:id])
+    if service.update(service_params)
+      render json: { message: 'Servicio actualizado' }, status: :ok
+    else
+      render json: { errors: service.errors }, status: :bad_request
+    end
+
+  end
+
+  private
+
+  def service_params
+    params.permit(:name, :description, :category, :tags).merge(
+        category: Category.find_by(name: params[:category]),
+        tags: params[:tags].map { |name| Tag.build_or_get_tag_by_name(name)}
+    )
   end
 end

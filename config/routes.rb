@@ -1,35 +1,5 @@
 Rails.application.routes.draw do
-  get 'notification/update'
-
-  get 'services/search', :to => 'services#search', :as => 'search_services'
-
-  #notificaitons
-  patch 'notifications/:id', :to => 'notifications#update', :as => 'update_notification'
-
-  # Transaction
-  post 'transactions', :to => 'transaction#create', :as => 'transactions'
-  get 'service/:id/petition', :to => 'transaction#new', :as => 'new_service_petition'
-  get 'petition/:id/edit', :to => 'transaction#edit', :as => 'edit_service_petition'
-  patch 'petition/:id', :to => 'transaction#update', :as => 'update_service_petition'
-  post 'petition/:id/accept', :to => 'transaction#accept', :as => 'accept_service_petition'
-  post 'petition/:id/cancel', :to => 'transaction#cancel', :as => 'cancel_service_petition'
-  post 'petition/:id/done', :to => 'transaction#done', :as => 'done_service_petition'
-
-  # Transaction Messages
-  get 'transactions/:id/messages', :to => 'message#index', :as => 'transaction_messages'
-  post 'transaction/:id/messages', :to => 'message#create', :as => 'create_transaction_message'
-
-  #Account
-  get 'profile/account', :to => 'account#index', :as => 'user_account'
-
-  get 'categories/new', :to => 'category#new', :as => 'new_category'
-  get 'categories', :to => 'category#index', :as => 'categories'
-  post 'categories', :to => 'category#create'
-
-  #user
-  get 'user/notifications', :to => 'user#notifications', :as => 'user_notifications'
-  get 'profile', :to => 'user#index', :as => 'user_index'
-  get 'profile/services', :to => 'user#services', :as => 'user_services'
+  
   get '/404' => 'home#index'
 
   get '/service/edit/:id', :to => 'home#index'
@@ -77,7 +47,7 @@ Rails.application.routes.draw do
   get '/api/services', :to => 'api/services#index'
   get '/api/services/:id', :to => 'api/services#show'
   post '/api/services', :to => 'api/services#create'
-
+  patch '/api/services/:id', :to => 'api/services#update'
 
   #registration
   post '/api/sign_up', :to => 'api/registration#create', :as => 'create_account'

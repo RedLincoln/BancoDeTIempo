@@ -26,7 +26,7 @@
                 v-model="service.selectedTags"
                 label="Etiquetas"
                 multiple
-                :items="tags"
+                :items="tags.map((tag) => tag.name)"
               >
               </v-combobox>
               <v-textarea
@@ -93,6 +93,7 @@ export default {
   created() {
     if (this.edit && !!this.inputService) {
       this.service = { ...this.service, ...this.inputService };
+      this.service.selectedTags = this.inputService.tags;
     }
   },
   methods: {
@@ -100,7 +101,14 @@ export default {
       this.$refs.form.validate();
       if (!this.valid) return;
 
-      this.$emit("form-submit", this.service);
+      const data = {
+        name: this.service.name,
+        category: this.service.category,
+        description: this.service.description,
+        tags: this.service.selectedTags,
+      };
+
+      this.$emit("form-submit", data);
     },
   },
 };

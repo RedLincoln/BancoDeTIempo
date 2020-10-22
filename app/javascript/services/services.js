@@ -16,10 +16,12 @@ export default {
   },
   getService(id) {
     return axios
-      .get(`/api/services/${id}`)
+      .get(`/api/services/${id}.json`)
       .then((response) => response.data.service);
   },
-
+  updateService({ id, params }) {
+    return axios.patch(`/api/services/${id}`, params);
+  },
   getCategories() {
     return axios
       .get("/api/categories")

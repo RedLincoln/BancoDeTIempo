@@ -16,8 +16,9 @@
 <script>
 import ServiceForm from "../components/ServiceForm";
 import ServiceService from "../services/services";
+import { notice } from "../utils";
 
-const { getService } = ServiceService;
+const { updateService } = ServiceService;
 
 export default {
   props: {
@@ -35,7 +36,18 @@ export default {
     };
   },
   methods: {
-    submit(formData) {},
+    submit(params) {
+      updateService({ id: this.service.id, params })
+        .then(() => {
+          notice("Servicio editado satisfactoriamente");
+          this.$router.push({ name: "home" });
+        })
+        .catch((err) => {
+          if (err.status) {
+            this.errorMessage = err.response.data.errors;
+          }
+        });
+    },
   },
 };
 </script>
