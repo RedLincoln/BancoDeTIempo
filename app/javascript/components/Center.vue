@@ -1,7 +1,7 @@
 <template>
   <v-container fluid fill-height>
     <v-row justify="center" align="center">
-      <v-col cols="6">
+      <v-col cols="12" md="6">
         <v-card class="mx-auto px-4">
           <Logo maxWidth="100%" dark />
           <slot name="title"></slot>

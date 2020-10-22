@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get 'profile/services', :to => 'user#services', :as => 'user_services'
   get '/404' => 'home#index'
 
+  get '/service/edit/:id', :to => 'home#index'
   get '/demand', :to => 'home#index'
   get '/demand/new', :to => 'home#index'
   get '/petitions', :to => 'home#index'

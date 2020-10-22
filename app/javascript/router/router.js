@@ -11,6 +11,7 @@ import UserProfile from "../views/UserProfile.vue";
 import Users from "../views/Users.vue";
 import ServiceProfile from "../views/ServiceProfile.vue";
 import NewService from "../views/NewService.vue";
+import EditService from "../views/EditService.vue";
 import NewServicePetition from "../views/NewServicePetition.vue";
 import Petitions from "../views/Petitions.vue";
 
@@ -19,16 +20,17 @@ import UserService from "../services/user";
 import PetitionService from "../services/petitions";
 
 const { getAll: getAllPetitions } = PetitionService;
-const {
-  getOffers,
-  getDemand,
-  getService,
-  getCategories,
-  getTags,
-} = ServiceService;
+const { getOffers, getDemand, getService } = ServiceService;
 const { getUser } = UserService;
 
 Vue.use(VueRouter);
+
+const fetchCategoriesAndTags = () => {
+  store.dispatch("setLoading", true);
+  store.dispatch("service/fetchTagsAndCategories").then(() => {
+    store.dispatch("setLoading", false);
+  });
+};
 
 const routes = [
   {
@@ -70,23 +72,9 @@ const routes = [
     component: NewService,
     props: true,
     beforeEnter(to, from, next) {
-      store.dispatch("setLoading", true);
-      Promise.all([getCategories(), getTags()])
-        .then(([categories, tags]) => {
-          to.params.categories = categories;
-          to.params.tags = tags;
-          to.params.offer = false;
-          store.dispatch("setLoading", false);
-          next();
-        })
-        .catch((err) => {
-          store.dispatch("flash/addFlash", {
-            type: "alert",
-            message: "Error en el servidor",
-          });
-          store.dispatch("setLoading", false);
-          next({ name: "home" });
-        });
+      fetchCategoriesAndTags();
+      to.params.offer = false;
+      next();
     },
   },
   {
@@ -113,27 +101,26 @@ const routes = [
     },
   },
   {
+    path: "/service/edit/:id",
+    name: "service-edit",
+    component: EditService,
+    props: true,
+    beforeEnter(to, from, next) {
+      fetchCategoriesAndTags();
+      getService(to.params.id).then((service) => {
+        to.params.service = service;
+        next();
+      });
+    },
+  },
+  {
     path: "/services/new",
     name: "new-service",
     component: NewService,
     props: true,
     beforeEnter(to, from, next) {
-      store.dispatch("setLoading", true);
-      Promise.all([getCategories(), getTags()])
-        .then(([categories, tags]) => {
-          to.params.categories = categories;
-          to.params.tags = tags;
-          store.dispatch("setLoading", false);
-          next();
-        })
-        .catch((err) => {
-          store.dispatch("flash/addFlash", {
-            type: "alert",
-            message: "Error en el servidor",
-          });
-          store.dispatch("setLoading", false);
-          next({ name: "home" });
-        });
+      fetchCategoriesAndTags();
+      next();
     },
   },
   {
@@ -196,23 +183,9 @@ const routes = [
     name: "user-profile",
     component: UserProfile,
     props: true,
-    beforeEnter(to, from, next) {
+    beforeEnter: (to, from, next) => {
       store.dispatch("setLoading", true);
-      getUser(to.params.id)
-        .then((data) => {
-          to.params.user = data.user;
-          to.params.services = data.services;
-          store.dispatch("setLoading", false);
-          next();
-        })
-        .catch((err) => {
-          store.dispatch("flash/addFlash", {
-            type: "alert",
-            message: "Acceso denegado",
-          });
-          store.dispatch("setLoading", false);
-          next({ name: "home " });
-        });
+      next();
     },
   },
   {

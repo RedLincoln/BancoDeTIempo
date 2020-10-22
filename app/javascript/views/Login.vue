@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="6">
+    <v-col cols="12" md="6">
       <v-card class="mx-auto px-4">
         <Logo maxWidth="100%" dark />
         <v-card-title>Iniciar Sesión</v-card-title>
