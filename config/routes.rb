@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get '/404' => 'home#index'
 
   get '/service/edit/:id', :to => 'home#index'
+  get '/service/petition/edit/:id', :to => 'home#index'
   get '/demand', :to => 'home#index'
   get '/demand/new', :to => 'home#index'
   get '/petitions', :to => 'home#index'
@@ -41,7 +42,11 @@ Rails.application.routes.draw do
 
   #service petitions
   post '/api/services/petition', :to => 'api/transaction#create'
+  post '/api/services/petition/:id/rate_client', :to => 'api/transaction#rate_client'
+  post '/api/services/petition/:id/rate_owner', :to => 'api/transaction#rate_owner'
+  patch '/api/services/petition/:id', :to => 'api/transaction#update'
   get '/api/services/petition', :to => 'api/transaction#index'
+  get '/api/services/petition/:id', :to => 'api/transaction#show'
 
   #services
   get '/api/services', :to => 'api/services#index'

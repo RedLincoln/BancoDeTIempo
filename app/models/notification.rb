@@ -1,4 +1,6 @@
 class Notification < ApplicationRecord
+  after_create :broadcast
+
   validates :message, :target, presence: true
 
   belongs_to :user, optional: true
@@ -31,5 +33,9 @@ class Notification < ApplicationRecord
     else
       "#{value} #{time_range}"
     end
+  end
+
+  def broadcast
+    ActionCable.server.broadcast "notifications_#{user.id}", self
   end
 end

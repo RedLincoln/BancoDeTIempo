@@ -12,4 +12,4 @@ json.users do
   end
 end
 
-json.total User.count
+json.total @total

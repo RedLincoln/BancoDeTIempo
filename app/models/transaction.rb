@@ -1,6 +1,4 @@
 class Transaction < ApplicationRecord
-  include Rails.application.routes.url_helpers
-
   after_create :broadcast_create
   after_update :broadcast_update
   before_update :clone_record
@@ -12,38 +10,15 @@ class Transaction < ApplicationRecord
   belongs_to :client, class_name: :User
   belongs_to :service
 
+  has_one :client_rate, foreign_key: 'client_rate_id', class_name: 'Rate'
+  has_one :owner_rate, foreign_key: 'owner_rate_id', class_name: 'Rate'
+
   validate :service_owner_can_not_be_the_client
 
-  def accepted!
-    return if canceled? || done? || valued?
-    super
-  end
-
-  def negotiating!
-    return if canceled? || done? || valued?
-    super
-  end
-
-  def done!
-    return if canceled? || valued?
-    super
-  end
-
-  def canceled!
-    return if done? || valued?
-    super
-  end
-
-  def as_json(*)
-    super(only: [:addition_information, :duration]).tap do |hash|
-      hash[:service] = service
-      hash[:datetime] = datetime.to_i * 1000
-    end
-  end
 
   def duration_range
     start = datetime.strftime("%H:%M")
-    finalDatetime = datetime + 2.hour
+    finalDatetime = datetime + duration.hour
     finish = finalDatetime.strftime("%H:%M")
     "#{start}-#{finish}"
   end
@@ -71,16 +46,12 @@ class Transaction < ApplicationRecord
 
   def send_status_change_notification
     new_status = read_attribute_before_type_cast(:status)
-    notification_owner = service.user.notifications.create(
+    service.user.notifications.create(
         message: "El estado ha cambiado a #{new_status} ",
-        target: service.name,
-        link: transaction_messages_path(id))
-    notification_client = client.notifications.create(
+        target: service.name)
+    client.notifications.create(
         message: "El estado ha cambiado a #{new_status} ",
-        target: service.name,
-        link: transaction_messages_path(id))
-    broadcast notification_owner
-    broadcast notification_client
+        target: service.name)
   end
 
   def broadcast_create
@@ -89,27 +60,15 @@ class Transaction < ApplicationRecord
     chat_room.users << client
     chat_room.save
 
-    notification = service.user.notifications.build(
-        message: 'Se have pedido el servicio ',
-        target: service.name,
-        link: transaction_messages_path(id))
-    notification.save
-    broadcast notification
+    service.user.notifications.create(
+        message: 'Se ha pedido el servicio ',
+        target: service.name)
   end
 
   def broadcast_update
     fields_changed = diff_active_record(@oldTransaction ,self)
     if (fields_changed.include? "status")
       send_status_change_notification
-    else
-      Message.create(service_petition: self, author: client,
-                     message_type: :petition_edit, message: 'Se ha editado el pedido'
-      )
     end
-  end
-
-
-  def broadcast(notification)
-    ActionCable.server.broadcast "notifications_#{service.user.id}", notification.to_json
   end
 end

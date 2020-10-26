@@ -35,16 +35,10 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <UserServiceTable
-          :services="servicesOffering"
-          :userIsLoggedIn="userIsLoggedIn"
-        />
+        <UserServiceTable :services="servicesOffering" />
       </v-tab-item>
       <v-tab-item>
-        <UserServiceTable
-          :services="servicesDemanding"
-          :userIsLoggedIn="userIsLoggedIn"
-        />
+        <UserServiceTable :services="servicesDemanding" />
       </v-tab-item>
     </v-tabs-items>
   </v-container>

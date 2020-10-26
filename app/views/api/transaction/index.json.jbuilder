@@ -7,10 +7,9 @@ json.petitions do
 
     json.additional_information transaction.additional_information
     json.status transaction.status
-    json.datetime transaction.datetime.to_i
     json.datetime "#{transaction.date_format} #{transaction.duration_range}"
     json.duration transaction.duration
-    json.is_client @user.have_transaction_as_client?(transaction)
+    json.id transaction.id
 
     json.owner do
       json.name transaction.service.user.name

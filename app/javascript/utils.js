@@ -12,3 +12,10 @@ export const notice = (message) => {
     message,
   });
 };
+
+export const alert = (message) => {
+  store.dispatch("flash/addFlash", {
+    type: "alert",
+    message,
+  });
+};

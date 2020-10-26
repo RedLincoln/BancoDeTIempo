@@ -2,22 +2,26 @@
   <div>
     <v-tabs v-model="tab" show-arrows>
       <v-tab>Todas</v-tab>
-      <v-tab>Negociación</v-tab>
-      <v-tab>Aceptada</v-tab>
-      <v-tab>Cancelada</v-tab>
-      <v-tab>Realizada</v-tab>
-      <v-tab>Valorada</v-tab>
+      <v-tab>Cliente</v-tab>
+      <v-tab>Propietario</v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <All :petitions="petitions" />
+        <PetitionsTable :inputPetitions="petitions" />
+      </v-tab-item>
+      <v-tab-item>
+        <PetitionsTable :inputPetitions="clientPetitions" />
+      </v-tab-item>
+      <v-tab-item>
+        <PetitionsTable :inputPetitions="ownerPetitions"></PetitionsTable>
       </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
 
 <script>
-import All from "../components/pettions/All";
+import PetitionsTable from "../components/PetitionsTable";
+import { mapState } from "vuex";
 
 export default {
   props: {
@@ -27,12 +31,26 @@ export default {
     },
   },
   components: {
-    All,
+    PetitionsTable,
   },
   data() {
     return {
       tab: null,
     };
+  },
+  computed: {
+    ownerPetitions() {
+      return this.petitions.filter((petition) => !this.isClient(petition));
+    },
+    clientPetitions() {
+      return this.petitions.filter((petition) => this.isClient(petition));
+    },
+    ...mapState("session", ["user_id"]),
+  },
+  methods: {
+    isClient(petition) {
+      return this.user_id === petition.client.id;
+    },
   },
 };
 </script>

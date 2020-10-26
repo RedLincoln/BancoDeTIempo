@@ -13,15 +13,16 @@ import ServiceProfile from "../views/ServiceProfile.vue";
 import NewService from "../views/NewService.vue";
 import EditService from "../views/EditService.vue";
 import NewServicePetition from "../views/NewServicePetition.vue";
+import EditServicePetition from "../views/EditServicePetition.vue";
 import Petitions from "../views/Petitions.vue";
 
 import ServiceService from "../services/services";
 import UserService from "../services/user";
 import PetitionService from "../services/petitions";
+import { alert } from "../utils";
 
-const { getAll: getAllPetitions } = PetitionService;
+const { getAll: getAllPetitions, getPetition } = PetitionService;
 const { getOffers, getDemand, getService } = ServiceService;
-const { getUser } = UserService;
 
 Vue.use(VueRouter);
 
@@ -75,6 +76,21 @@ const routes = [
       fetchCategoriesAndTags();
       to.params.offer = false;
       next();
+    },
+  },
+  {
+    path: "/service/petition/edit/:id",
+    name: "edit-service-petition",
+    component: EditServicePetition,
+    props: true,
+    beforeEnter(to, from, next) {
+      store.dispatch("setLoading", true);
+      getPetition(to.params.id).then((response) => {
+        to.params.service = response.data.service;
+        to.params.petition = response.data.petition;
+        store.dispatch("setLoading", false);
+        next();
+      });
     },
   },
   {
@@ -133,17 +149,11 @@ const routes = [
       getService(to.params.id)
         .then((service) => {
           to.params.service = service;
-          getUser(service.user_id).then((user) => {
-            to.params.user = user;
-            store.dispatch("setLoading", false);
-            next();
-          });
+          store.dispatch("setLoading", false);
+          next();
         })
         .catch((err) => {
-          store.dispatch("flash/addFlash", {
-            type: "alert",
-            message: "No se ha podido encontrar el servicio",
-          });
+          alert("No se ha podido encontrar el servicio");
           store.dispatch("setLoading", false);
           next({ name: "home" });
         });

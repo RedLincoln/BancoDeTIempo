@@ -11,12 +11,9 @@
       </v-text-field>
     </template>
     <template v-slot:item.name="{ item }">
-      {{ item.name }}
-      <router-link
-        v-if="userIsLoggedIn"
-        :to="{ name: 'service-edit', params: { id: item.id } }"
-        ><v-chip>Editar</v-chip></router-link
-      >
+      <router-link :to="{ name: 'service-profile', params: { id: item.id } }">
+        {{ item.name }}
+      </router-link>
     </template>
     <template v-slot:item.category="{ item }">
       <router-link
@@ -36,10 +33,6 @@ export default {
     services: {
       type: Array,
       required: true,
-    },
-    userIsLoggedIn: {
-      type: Boolean,
-      default: false,
     },
   },
   data() {

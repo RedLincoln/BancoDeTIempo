@@ -1,5 +1,30 @@
 <template>
   <v-container>
+    <BaseCenter>
+      <div>
+        <BaseSearchField
+          placeholder="Buscar Usuario"
+          v-model="search"
+          @search="fetchUsers"
+        />
+        <v-row>
+          <v-col>
+            <v-subheader>Filtrar por rol</v-subheader>
+          </v-col>
+          <v-col>
+            <v-select
+              :items="roles"
+              solo
+              label="Filtrar por rol"
+              v-model="selectedRole"
+              item-text="es"
+              item-value="value"
+              return-object
+            ></v-select>
+          </v-col>
+        </v-row>
+      </div>
+    </BaseCenter>
     <v-pagination v-model="page" :length="paginationLength"></v-pagination>
     <v-row>
       <v-col cols="6" v-for="(user, index) in users" :key="index">
@@ -26,12 +51,22 @@ export default {
   },
   data() {
     return {
+      selectedRole: { es: "Todos", value: "" },
+      roles: [
+        { es: "Todos", value: "" },
+        { es: "Usuario", value: "standard" },
+        { es: "Administrador", value: "admin" },
+      ],
+      search: "",
       page: 1,
     };
   },
   watch: {
     page(val) {
-      this.fetchUsers(val);
+      this.fetchUsers();
+    },
+    selectedRole(val) {
+      this.fetchUsers();
     },
   },
   computed: {
@@ -41,11 +76,15 @@ export default {
     ...mapState("users", ["users", "total", "perPage"]),
   },
   created() {
-    this.fetchUsers(this.page);
+    this.fetchUsers();
   },
   methods: {
-    fetchUsers(page) {
-      this.$store.dispatch("users/fetch", page - 1);
+    fetchUsers() {
+      this.$store.dispatch("users/fetch", {
+        page: this.page - 1,
+        search_string: this.search,
+        role: this.selectedRole.value,
+      });
     },
   },
 };

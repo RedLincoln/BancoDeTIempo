@@ -6,9 +6,14 @@ export default {
       return response.data;
     });
   },
-  getUsers({ limit, offset }) {
+  getUsers({ limit, offset, q, role }) {
+    const params = new URLSearchParams();
+    params.append("limit", limit);
+    params.append("offset", offset);
+    params.append("q", !!q ? q : "");
+    params.append("role", role);
     return axios
-      .get(`/api/admin/users.json?limit=${limit}&offset=${offset}`)
+      .get(`/api/admin/users.json?${params.toString()}`)
       .then((response) => {
         return response.data;
       });

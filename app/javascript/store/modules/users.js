@@ -18,10 +18,12 @@ export const mutations = {
 };
 
 export const actions = {
-  fetch({ commit, state }, page) {
+  fetch({ commit, state }, { page, search_string, role }) {
     getUsers({
       limit: state.perPage,
       offset: page * state.perPage,
+      q: search_string,
+      role,
     }).then((data) => {
       commit("SET_USERS", data);
     });

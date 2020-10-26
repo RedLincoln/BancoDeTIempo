@@ -99,7 +99,7 @@ export default {
   },
   created() {
     this.categoryFilter = !!this.$route.query.category
-      ? !!this.$route.query.category
+      ? this.$route.query.category
       : "";
     this.filterByCategoryInput(this.categoryFilter);
   },

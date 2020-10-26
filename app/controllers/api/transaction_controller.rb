@@ -5,6 +5,11 @@ class Api::TransactionController < ApplicationController
     @transactions = @user.transactions
   end
 
+  def show
+    login_guard
+    @transaction = Transaction.find(params[:id])
+  end
+
   def create
     login_guard
 
@@ -21,20 +26,57 @@ class Api::TransactionController < ApplicationController
     login_guard
     transaction = Transaction.find(params[:id])
 
-    if transaction.update(transaction_params)
-      render status: :ok
+    if transaction.update(transaction_update_params)
+      render json: { message: 'Petición actualizada' }, status: :ok
     else
-      render status: :bad_request
+      render json: { errors: transaction.errors }, status: :bad_request
+    end
+  end
+
+  def rate_client
+    login_guard
+    transaction = Transaction.find(params[:id])
+
+    rate = transaction.build_client_rate(rate_params)
+    if rate.save
+      transaction.update(status: 'done')
+      render json: { message: 'Valoración del cliente realizada' }, status: :ok
+    else
+      render json: { errors: rate.errors }, status: :bad_request
+    end
+  end
+
+  def rate_owner
+    login_guard
+    transaction = Transaction.find(params[:id])
+
+    rate = transaction.build_owner_rate(rate_params)
+    if rate.save
+      transaction.update(status: 'valued')
+      render json: { message: 'Valoración del propietario realizada' }, status: :ok
+    else
+      render json: { errors: rate.errors }, status: :bad_request
     end
   end
 
   private
 
   def transaction_params
-    params.permit(:datetime, :duration, :additional_information, :service_id).merge(
+    params.permit(:datetime, :duration, :additional_information, :service_id, :status).merge(
         {datetime: params[:datetime].is_a?(Numeric) ? Time.at(params[:datetime] / 1000) : "",
          client: @user}
     )
   end
 
+  def transaction_update_params
+    hash = {}
+    if params[:datetime]
+      hash[:datetime] = params[:datetime].is_a?(Numeric) ? Time.at(params[:datetime] / 1000) : ""
+    end
+    params.permit(:duration, :additional_information, :service_id, :status).merge(hash)
+  end
+
+  def rate_params
+    params.permit(:rating, :message)
+  end
 end

@@ -14,23 +14,21 @@
         </v-badge>
       </template>
       <v-list>
-        <router-link
-          :to="notification.link"
+        <v-list-item
           v-for="(notification, index) in notifications"
           :key="index"
+          @click="markAsSeen(index)"
         >
-          <v-list-item @click="markAsSeen(index)">
-            <v-list-item-content two-line>
-              <v-list-item-title
-                >{{ notification.message }}
-                {{ notification.target }}</v-list-item-title
-              >
-              <v-list-item-subtitle>{{
-                notification.time_ago
-              }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
+          <v-list-item-content two-line>
+            <v-list-item-title
+              >{{ notification.message }}
+              {{ notification.target }}</v-list-item-title
+            >
+            <v-list-item-subtitle>{{
+              notification.time_ago
+            }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-menu>
   </div>
@@ -57,7 +55,7 @@ export default {
   channels: {
     notifications: {
       received(notification) {
-        this.notifications.splice(0, 0, JSON.parse(notification));
+        this.notifications.splice(0, 0, notification);
       },
     },
   },
