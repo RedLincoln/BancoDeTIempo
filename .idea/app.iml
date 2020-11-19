@@ -55,7 +55,6 @@
     <orderEntry type="library" scope="PROVIDED" name="thread_safe (v0.3.6, RVM: ruby-2.5.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tilt (v2.0.10, RVM: ruby-2.5.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="uglifier (v4.2.0, RVM: ruby-2.5.3) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="vueonrails (v1.0.0.beta5, RVM: ruby-2.5.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="web-console (v3.7.0, RVM: ruby-2.5.3) [gem]" level="application" />
   </component>
   <component name="RModuleSettingsStorage">

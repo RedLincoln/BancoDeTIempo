@@ -1,8 +1,6 @@
 class UserController < ApplicationController
-  before_action :authenticate_user!
 
   def index
-    @transaction = Transaction.all
   end
 
   def services
@@ -11,7 +9,7 @@ class UserController < ApplicationController
 
   def notifications
     respond_to do |format|
-      format.json { render json: current_user.notifications.to_json}
+      format.json { render json: current_user.notifications.order(created_at: :desc).to_json}
     end
   end
 end

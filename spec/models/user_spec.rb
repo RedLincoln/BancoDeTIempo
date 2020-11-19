@@ -4,7 +4,8 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { should have_many(:services)}
-    it { should have_many(:transactions)}
+    it { should have_many(:transactions_client)}
+    it { should have_many(:transactions_owner).through(:services)}
     it { should have_many(:notifications)}
   end
 
@@ -32,6 +33,10 @@ RSpec.describe User, type: :model do
     it 'role is standard' do
       expect(user).to be_standard
     end
+
+    it 'confirmed is false' do
+      expect(user).to_not be_confirmed
+    end
   end
 
   describe 'methods:' do
@@ -44,6 +49,18 @@ RSpec.describe User, type: :model do
       transaction
 
       expect(client.have_transaction?(service)).to be(true)
+    end
+
+    it 'finds if a user have a transactions as a client' do
+      transaction
+
+      expect(client.have_transaction_as_client?(service)).to be(true)
+    end
+
+    it 'finds if a user have a transactions as a owner' do
+      transaction
+
+      expect(service.user.have_transaction_as_owner?(service)).to be(true)
     end
 
     describe 'notification finder' do

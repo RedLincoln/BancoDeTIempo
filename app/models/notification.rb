@@ -1,10 +1,12 @@
 class Notification < ApplicationRecord
+  after_create :broadcast
+
   validates :message, :target, presence: true
 
-  belongs_to :user
+  belongs_to :user, optional: true
 
   def as_json(*)
-    super(:only => [:message, :target, :seen, :id]).tap do |hash|
+    super(:only => [:message, :target, :seen, :link, :id]).tap do |hash|
       hash[:time_ago] = "hace #{created_ago}"
     end
   end
@@ -31,5 +33,9 @@ class Notification < ApplicationRecord
     else
       "#{value} #{time_range}"
     end
+  end
+
+  def broadcast
+    ActionCable.server.broadcast "notifications_#{user.id}", self
   end
 end

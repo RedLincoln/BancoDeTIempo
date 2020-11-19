@@ -1,0 +1,50 @@
+<%
+  showActions = false if showActions.nil? || current_user.nil?
+  showEditActions = false if showEditActions.nil? || current_user.nil?
+%>
+
+<table class="services-list table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Nombre de Servicio</th>
+        <th scope="col">Usuario que lo ofrece</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Descripción</th>
+        <% if showActions || showEditActions %>
+          <th scope="col"></th>
+        <% end %>
+    </tr>
+    </thead>
+    <tbody>
+    <% services.each do |service| %>
+    <tr id="service_<%= service.id %>" class="service_post">
+        <td class="service_name pt-4 pb-4"><%= service.name %></td>
+        <td class="pt-4 pb-4"><%= service.user.name %></td>
+        <td class="pt-4 pb-4"><%= service.category.name %></td>
+        <td class="service_description pt-4 pb-4"><%= service.description %></td>
+        <% if showActions %>
+          <td class="action-container pt-4 pb-4 vertical-align-middle">
+            <% if current_user.have_transaction_as_client? service %>
+              <div class="btn btn-success">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check2-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                  <path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"/>
+                </svg>
+              </div>
+            <% else %>
+              <%= link_to 'Pedir', new_service_petition_path(service.id), class: "make-service-petition btn btn-success" %>
+            <% end %>
+          </td>
+        <% end %>
+        <% if showEditActions %>
+          <td>
+            <div>
+              <%= link_to 'Editar', edit_service_path(service), class: 'edit_service btn btn-sm btn-primary mr-2' %>
+              <%= button_to 'Eliminar', service_path(service), class: 'delete_service btn btn-sm btn-danger', method: :delete, remote: true %>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+</table>

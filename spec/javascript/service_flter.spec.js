@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import axios from "axios";
 import Vue from "vue";
 import ServiceFilter from "../../app/javascript/parts/ServiceFilter/ServiceFilter";
@@ -13,6 +13,7 @@ describe("ServiceFilter.vue", () => {
       { name: "Asesoramiento", supcategory: "Atención a Personas" },
       { name: "Asesoramiento", supcategory: "Huertos y Jardines" },
       { name: "Programación", supcategory: "Informática" },
+      { name: "Clases", supcategory: "Informática" },
       { name: "Mudanza", supcategory: "Hogar" },
     ],
   };
@@ -32,41 +33,117 @@ describe("ServiceFilter.vue", () => {
     jest.useFakeTimers();
     spy = jest.spyOn(axios, "get");
     axios.get.mockResolvedValue(categoriesResponse);
-    wrapper = shallowMount(ServiceFilter, {
-      mocks: mocks,
-    });
   });
 
   describe("show and hide", () => {
-    it("category filter list initial state is hidden", async () => {
-      expect(wrapper.find(".categories_list").exists()).toBeFalsy();
+    beforeEach(() => {
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+      });
     });
 
-    it("show category filter on focus", async () => {
-      axios.get.mockResolvedValue({});
-
-      await wrapper.find("[name='filter_category']").trigger("focus");
-
-      expect(wrapper.find(".categories_list").exists()).toBeTruthy();
+    it("filters are initialy hidden", () => {
+      expect(wrapper.find(".dropdown-content").exists()).toBeFalsy();
     });
 
-    it("hide category filter on click of close bottom", async () => {
-      await wrapper.find("[name='filter_category']").trigger("focus");
+    it("click on filter toggle the filters input", async () => {
+      await wrapper.find(".filter-dropdown").trigger("click");
+      expect(wrapper.find(".dropdown-content").exists()).toBeTruthy();
+      await wrapper.find(".filter-dropdown").trigger("click");
+      expect(wrapper.find(".dropdown-content").exists()).toBeFalsy();
+    });
 
-      await wrapper.find(".close_filter").trigger("click");
+    describe("category filter", () => {
+      beforeEach(() => {
+        wrapper = mount(ServiceFilter, {
+          mocks: mocks,
+          data() {
+            return {
+              show: true,
+            };
+          },
+        });
+      });
+      it("category filter list initial state is hidden", async () => {
+        expect(wrapper.find(".content_list").exists()).toBeFalsy();
+      });
 
-      expect(wrapper.find(".categories_list").exists()).toBeFalsy();
+      it("show category filter on focus", async () => {
+        await wrapper.find("[name='filter_category']").trigger("focus");
+
+        expect(wrapper.find(".content_list").exists()).toBeTruthy();
+      });
     });
   });
 
-  describe("", () => {
-    it("fitler by category properly display Categories", async () => {
-      await wrapper.find('[name="filter_category"]').trigger("focus");
+  describe("SupCategory:", () => {
+    beforeEach(() => {
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
+      });
+    });
+
+    it("filter by supcategory properly display supcategories", async () => {
+      await wrapper.find('[name="filter_supcategory"]').trigger("focus");
+      await Vue.nextTick();
+
+      const expected = [
+        ...new Set(
+          categoriesResponse.data.map((category) => category.supcategory)
+        ),
+      ];
+      const received = wrapper
+        .find(".content_list")
+        .findAll("li")
+        .wrappers.map((el) => el.text());
+
+      expect(received).toEqual(expected);
+    });
+
+    it("can click on supcategories to filter", async () => {
+      const supCategoryIndex = 0;
+      await wrapper.find('[name="filter_supcategory"]').trigger("focus");
 
       await Vue.nextTick();
+
+      await wrapper
+        .find(".content_list")
+        .findAll("li")
+        .at(supCategoryIndex)
+        .trigger("click");
+
+      const expected = categoriesResponse.data[supCategoryIndex].supcategory;
+      const received = wrapper.find("[name='filter_supcategory']").element
+        .value;
+
+      expect(received).toEqual(expected);
+    });
+  });
+
+  describe("Category:", () => {
+    beforeEach(() => {
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
+      });
+    });
+
+    it("fitler by category properly display Categories", async () => {
+      await wrapper.find('[name="filter_category"]').trigger("focus");
+      await Vue.nextTick();
+
       const expected = categoriesResponse.data.map((category) => category.name);
       const received = wrapper
-        .find(".categories_list")
+        .find(".content_list")
         .findAll("li")
         .wrappers.map((el) => el.text());
 
@@ -81,7 +158,7 @@ describe("ServiceFilter.vue", () => {
       await Vue.nextTick();
 
       await wrapper
-        .find(".categories_list")
+        .find(".content_list")
         .findAll("li")
         .at(categoryIndex)
         .trigger("click");
@@ -104,11 +181,10 @@ describe("ServiceFilter.vue", () => {
 
       const expected = resultFilter.data.map((category) => category.name);
       const received = wrapper
-        .find(".categories_list")
+        .find(".content_list")
         .findAll("li")
         .wrappers.map((el) => el.text());
 
-      expect(setTimeout).toHaveBeenCalledTimes(2);
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(mocks.$getJsonCategoriesPath, {
         params: {
@@ -116,6 +192,69 @@ describe("ServiceFilter.vue", () => {
         },
       });
       expect(received).toEqual(expected);
+    });
+  });
+
+  describe("initial field value", () => {
+    const { location } = window;
+
+    beforeEach(() => {
+      delete window.location;
+    });
+
+    afterEach(() => {
+      window.location = location;
+    });
+
+    it("category must be the one in window.location.search", async () => {
+      window.location = {
+        search: "?filter_category=initial",
+      };
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
+      });
+      await Vue.nextTick()
+      expect(wrapper.find('[name="filter_category"]').element.value).toBe(
+        "initial"
+      );
+    });
+
+    it("supcategory must be the one in window.location.search", async () => {
+      window.location = {
+        search: "?filter_supcategory=initial",
+      };
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
+      });
+      await Vue.nextTick();
+      expect(wrapper.find('[name="filter_supcategory"]').element.value).toBe(
+        "initial"
+      );
+    });
+
+    it("if filter_category is not in search_string then category input is empty", () => {
+      window.location = {
+        search: "",
+      };
+      wrapper = mount(ServiceFilter, {
+        mocks: mocks,
+        data() {
+          return {
+            show: true,
+          };
+        },
+      });
+      expect(wrapper.find('[name="filter_category"]').element.value).toBe("");
     });
   });
 });

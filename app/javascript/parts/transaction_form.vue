@@ -3,74 +3,186 @@
 <!-- Generate another component part like this by running command `rails generate vue something` -->
 
 <template>
-  <div class="transaction-form dropdown">
-    <button type="button" v-if="!asked" class="open_petition button-action btn-sm btn btn-success dropdown-toggle"
-            @click="toggleShow">Pedir</button>
-
-    <form v-if="show" class="form border-top mt-2" :action="$createTransactionPath" method="post" @submit="sendPetition">
-      <input name="utf8" type="hidden" value="✓">
-      <input type="hidden" name="authenticity_token" :value="csrfToken">
-      <input type="hidden" name="transaction[service_id]" :value="service_id">
+  <div class="service-transaction-form transaction-form dropdown">
+    <ul v-if="haveErrors" class="errors">
+      <li v-for="(error, index) in errors" :key="index" :class="`error_${name}`">{{ error }}</li>
+    </ul>
+    <form
+      class="service-petition border-top mt-2 pt-5"
+      :action="action"
+      :method="method"
+      @submit.prevent="sendPetition"
+    >
+      <input name="utf8" type="hidden" value="✓" />
+      <input type="hidden" name="authenticity_token" :value="$getCSRFToken()" />
+      <input type="hidden" name="transaction[service_id]" :value="service_id" />
       <div class="field">
-        <DatetimePicker></DatetimePicker>
+        <DatetimePicker @selected-time="updateTimeRangeInSeconds" :initialValue="datetime"></DatetimePicker>
       </div>
-      <div class="field">
-        <label for="addition_information">Información aditional: </label><br>
-        <textarea name="transaction[addition_information]" id="addition_information"
-                  placeholder="Añade información extra" rows="3" cols="40"></textarea>
+      <div class="field form-group">
+        <label for="transaction-duration">Duración:</label>
+        <div>
+          <input
+            type="number"
+            min="0"
+            max="23"
+            placeholder="Número de horas"
+            :value="duration"
+            @input="validateInteger"
+            @keydown.delete="handleDurationDelete"
+            name="transaction[duration]"
+            id="transaction-duration"
+            class="form-control"
+          />
+          <span class="duration-time-range text-muted">{{ rangeDuration }}</span>
+        </div>
+      </div>
+      <div class="field form-group">
+        <label for="addition-information">Información aditional:</label>
+        <br />
+        <textarea
+          class="form-control"
+          name="transaction[addition_information]"
+          id="addition-information"
+          placeholder="Añade información extra"
+          v-model="additionInformation"
+          rows="3"
+          cols="40"
+        ></textarea>
       </div>
       <div class="actions">
-        <button class="send_petition btn btn-sm btn-primary">Enviar</button>
+        <button class="send-petition btn btn-primary">Enviar</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
-  import railsFlash from "../railsFlash";
-  import formParams from '../formHelper'
-  import DatetimePicker from "./DatetimePicker/DatetimePicker";
+import axios from "axios";
+import railsFlash from "../railsFlash";
+import formParams from "../formHelper";
+import DatetimePicker from "./DatetimePicker/DatetimePicker";
+import _ from "lodash/lang";
 
-  export default {
-    props: ['service_id', 'service_asked'],
-    components: {
-      DatetimePicker
+export default {
+  props: {
+    service_id: {
+      type: Number,
+      required: true,
     },
-    data: function() {
-      return {
-        show: false,
-        csrfToken: '',
-        asked: this.service_asked
-      };
+    method: {
+      type: String,
+      required: true,
     },
-    mounted() {
-      this.csrfToken = this.$getCSRFToken()
+    action: {
+      type: String,
+      required: true,
     },
-    methods: {
-      toggleShow: function () {
-        this.show = !this.show
-      },
-      sendPetition: function (e) {
-        e.preventDefault()
-        axios.post(e.target.action, formParams.getPostParams(e.target.elements))
-                .then(response => {
-                  railsFlash.notice(response.data.message)
-                  this.asked = true
-                  this.show = false
-                })
-                .catch(err => railsFlash.alert(err.data.message))
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+    transaction: Object,
+  },
+  components: {
+    DatetimePicker,
+  },
+  data: function () {
+    return {
+      errors: [],
+      timeRangeInSeconds: -1,
+      duration: 0,
+      rangeDuration: "Selecciona una hora para ver el rango",
+      additionInformation: "",
+      datetime: 0,
+    };
+  },
+  watch: {
+    duration() {
+      if (this.timeRangeInSeconds >= 0) {
+        this.setDurationRange();
       }
+    },
+    timeRangeInSeconds() {
+      this.setDurationRange();
+    },
+  },
+  mounted() {
+    if (this.edit) {
+      this.duration = this.transaction.duration;
+      this.additionInformation = this.transaction.addition_information;
+      this.datetime = this.transaction.datetime;
     }
-  };
+  },
+  computed: {
+    haveErrors() {
+      return !_.isEmpty(this.errors);
+    },
+  },
+  methods: {
+    formatMinutes(minutes) {
+      return minutes < 10 ? `0${minutes}` : minutes;
+    },
+    toHourAndMinutes(seconds) {
+      let minutes = seconds / 60;
+      const hours = Math.floor(minutes / 60);
+      minutes = minutes - hours * 60;
+      return `${hours % 24}:${this.formatMinutes(minutes)}`;
+    },
+    setDurationRange() {
+      const start = this.toHourAndMinutes(this.timeRangeInSeconds);
+      const end = this.toHourAndMinutes(
+        this.timeRangeInSeconds + this.duration * 60 * 60
+      );
+      this.rangeDuration = `${start} - ${end}`;
+    },
+    updateTimeRangeInSeconds(timeRangeInSeconds) {
+      this.timeRangeInSeconds = timeRangeInSeconds;
+    },
+    validateInteger(event) {
+      const value = parseFloat(event.target.value);
+      if (_.isInteger(value) && value <= 23) {
+        this.duration = value;
+      }
+      this.$forceUpdate();
+    },
+    handleDurationDelete() {
+      if (this.duration < 10) {
+        this.duration = 0;
+      }
+    },
+    validateForm(newErrors) {
+      this.errors = [];
+      Object.values(newErrors).forEach((errors) => {
+        errors.forEach((error) => this.errors.push(error));
+      });
+    },
+    sendPetition: async function (e) {
+      try {
+        await axios({
+          method: this.method,
+          url: this.action,
+          data: formParams.getPostParams(e.target.elements),
+        });
+        Turbolinks.visit(this.$servicesPath);
+      } catch (e) {
+        if (e.status && e.status >= 400) {
+          railsFlash.alert(e.response.data.message);
+          this.validateForm(e.response.data.errors);
+        }
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-  textarea {
-    resize:  none;
-  }
+textarea {
+  resize: none;
+}
 
-  input, textarea {
-    font-size: 1rem;
-  }
+input,
+textarea {
+  font-size: 1rem;
+}
 </style>

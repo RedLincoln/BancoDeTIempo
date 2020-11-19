@@ -5,7 +5,7 @@ class CreateTransactions < ActiveRecord::Migration[5.2]
       t.text :addition_information
       t.references :service
       t.references :client, foreign_key: false
-      t.string :status, default: 'pending'
+      t.string :status, default: 'Pendiente'
 
       t.timestamps
     end

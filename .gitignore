@@ -40,3 +40,5 @@ yarn-debug.log*
 
 #test
 spec/examples.txt
+
+.env

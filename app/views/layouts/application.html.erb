@@ -6,19 +6,15 @@
     <%= action_cable_meta_tag %>
     <%= csp_meta_tag %>
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-  <%= content_tag :body, class: specific_page_vue do %>
-    <%= render 'layouts/navbar' %>
+    <%= javascript_pack_tag 'application'%>
 
-    <div id="flash-messages" class="translate-animation">
-      <%= render 'shared/flash' %>
-    </div>
-    <div class="container mt-5">
+  </head>
+  <body>
+    <div id="app">
       <%= yield %>
     </div>
-  <% end %>
+  </body>
 </html>

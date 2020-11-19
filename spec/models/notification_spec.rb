@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Notification, type: :model do
 
   describe 'associations' do
-    it { should belong_to(:user)}
+    it { should belong_to(:user).optional}
   end
 
   describe 'validations' do
@@ -31,6 +31,7 @@ RSpec.describe Notification, type: :model do
           message: notification.message,
           target: notification.target,
           seen: notification.seen,
+          link: notification.link,
           time_ago: "hace #{notification.created_ago}"
       }.to_json
 

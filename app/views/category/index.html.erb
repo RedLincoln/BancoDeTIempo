@@ -1,11 +1,17 @@
-<h2>Categorías</h2>
-<% @supcategories.each do |supcategory, categories| %>
-  <p class="category_supcategory"><%= supcategory %></p>
-  <ul>
-    <% categories.each do |category| %>
-    <li id="category_<%= category.id %>">
-      <div class="category_name"><%= category.name %></div>
-    </li>
-    <% end %>
-  </ul>
-<% end %>
+<div class="container">
+  <h1>Categorías</h1>
+  <% @supcategories.each do |supcategory, categories| %>
+    <article class="mb-3 border rounded  pb-2">
+      <div class="bg-dark text-white pl-3 pr-3 pt-2">
+        <h4 class="category_supcategory mb-0 pb-2"><%= supcategory %></h4>
+      </div>
+      <ul class="row pt-3">
+        <% categories.each do |category| %>
+        <li id="category_<%= category.id %>" class="col-4 category_name font-size-large">
+          <%= category.name %>
+        </li>
+        <% end %>
+      </ul>
+    </article>
+  <% end %>
+</div>

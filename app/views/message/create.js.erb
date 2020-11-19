@@ -1,0 +1,9 @@
+flashMessage = document.getElementById('flash-messages')
+parent = flashMessage.parentNode
+parent.removeChild(flashMessage)
+parent.appendChild(flashMessage)
+flashMessage.innerHTML = "<%= j render 'shared/flash' %>"
+
+document.getElementById('message').value = ''
+
+

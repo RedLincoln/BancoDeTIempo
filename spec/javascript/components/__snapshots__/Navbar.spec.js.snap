@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar.vue renders properly 1`] = `
+<header class="v-sheet theme--dark v-toolbar v-app-bar v-app-bar--fixed deep-purple" style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;">
+  <div class="v-toolbar__content" style="height: 64px;">
+    <router-link-stub to="[object Object]">
+      <div class="v-image v-responsive theme--dark" style="max-width: 150px;">
+        <div class="v-responsive__content"></div>
+      </div>
+    </router-link-stub>
+    <div class="spacer"></div>
+    <router-link-stub class="mr-2 v-btn v-btn--contained v-btn--router theme--dark v-size--default primary" data-testid="login-btn"><span class="v-btn__content">Iniciar Sesión</span></router-link-stub>
+    <router-link-stub class="v-btn v-btn--contained v-btn--router theme--dark v-size--default secondary" data-testid="sign_up-btn"><span class="v-btn__content">Crear Cuenta</span></router-link-stub>
+  </div>
+</header>
+`;

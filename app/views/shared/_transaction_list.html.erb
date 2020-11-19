@@ -1,27 +1,73 @@
-<div id="transaction_list">
-  <% transactions.each do |transaction| %>
-    <div id="service_<%= transaction.service.id %>_petition" class="border-top border-bottom mt-4 pb-2 pt-2">
-      <div class="mb-1">
-        <span class="font-weight-bold">Nombre de servicio: </span>
-        <span class="service_name"><%= transaction.service.name %></span>
-      </div>
-      <div class="mb-1">
-        <span class="font-weight-bold">Descripción del servicio:</span><br>
-        <span class="service_description"><%= transaction.service.description %></span>
-      </div>
-      <div class="mb-1">
-        <span class="font-weight-bold">Nombre del usuario que ofrece el servicio: </span>
-        <span class="offeror_name"><%= transaction.service.user.name %></span>
-      </div>
-      <div class="mb-1">
-        <span class="font-weight-bold">Estado de petición: </span>
-        <span class="transaction_status"><%= transaction.status %></span>
-      </div>
-      <% unless transaction.datetime.empty? || transaction.addition_information.empty? %>
-        <h4>Información de la petición</h4>
-      <% end %>
-      <div class="time_petition"><%= transaction.datetime %></div>
-      <div class="additional_information"><%= transaction.addition_information %></div>
-    </div>
+<div class="container d-flex justify-content-around bg-dark text-white align-items-center mb-4">
+  <%= link_to root_path, class: 'navbar-brand' do %>
+    <%= image_tag 'logo.png', height: '100px'%>
   <% end %>
+  <div>
+    <h1><strong>Balance: </strong><span class="<% if current_user.balance < 0 %>
+                            text-danger
+                         <% else %>
+                            text-success
+                         <% end %>"><%= current_user.balance %> horas</span></h1>
+  </div>
 </div>
+
+<span id="transactions-tabs"></span>
+<table class="table" id="transaction-list">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Estado del servicio</th>
+      <th scope="col">Nombre de servicio</th>
+      <th scope="col">Fecha y hora</th>
+      <th scope="col">Realiza el servicio</th>
+      <th scope="col">Recibe el servicio</th>
+      <th scope="col">Descripción de servicio</th>
+      <th scope="col">Información adicional</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% transactions.each do |transaction| %>
+      <tr id="service-<%= transaction.service.id %>-petition">
+        <td class="pt-4 pb-4 transaction-status"><%= transaction.read_attribute_before_type_cast(:status) %></td>
+        <td class="pt-4 pb-4 service-name"><%= transaction.service.name %></td>
+        <td class="pt-4 pb-4">
+
+          <strong class="<% if current_user.eql? transaction.client %>
+                            text-danger
+                         <% else %>
+                            text-success
+                         <% end %>">
+            <%= transaction.duration %> horas</strong>
+          <span class="date-and-duration">
+            <%= "#{transaction.date_format} #{transaction.duration_range}" %>
+          </span>
+        </td>
+        <td
+          class="pt-4 pb-4 service-owner <%= (current_user.have_transaction_as_owner?(transaction.service)) ? 'mark-name' : '' %>">
+          <%= transaction.service.user.name %>
+        </td>
+        <td
+          class="pt-4 pb-4 service-client <%= (current_user.have_transaction_as_client?(transaction.service)) ? 'mark-name' : '' %>">
+          <%= transaction.client.name %>
+        </td>
+        <td class="pt-4 pb-4 service-description"><%= transaction.service.description %></td>
+        <td class="pt-4 pb-4 additional-information"><%= transaction.addition_information %></td>
+        <td>
+          <%= link_to 'Mensajes', transaction_messages_path(transaction.id), role: 'button', class: 'messages btn btn-orange' %>
+          <% if (current_user.eql? transaction.client) && (transaction.negotiating?)%>
+            <%= link_to 'Editar', edit_service_petition_path(transaction.id), role: 'button', class: 'edit btn btn-primary' %>
+          <% end %>
+          <% if (current_user.eql? transaction.service.user) && !transaction.canceled? %>
+            <span class="accept-petition
+              " data-props="<%= {petition_id: transaction.id, accepted: transaction.accepted?}.to_json %>"></span>
+          <% end %>
+          <span class="cancel-petition
+              " data-props="<%= {petition_id: transaction.id, canceled: transaction.canceled?}.to_json %>"></span>
+          <% if (current_user.eql? transaction.service.user) && transaction.accepted? %>
+            <%= button_to 'Realizar', done_service_petition_path(transaction.id), class: 'done btn btn-primary' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,6 +1,4 @@
 class CategoryController < ApplicationController
-  include AdminHelpers
-  before_action :authenticate_admin, only: [:new, :create]
 
   def index
     @supcategories = Category.grouped_by_supcategory

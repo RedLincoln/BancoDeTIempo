@@ -1,9 +1,12 @@
 class ServicesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_service, only: [:update, :edit, :destroy]
+  before_action :set_service, only: [:update, :edit, :destroy, :update]
 
   def index
-    @services = Service.find_by_category_name(params[:filter_category]).services_not_made_by(current_user)
+    @services = Service.find_by_category_name(params[:filter_category])
+                    .find_by_category_supcategory(params[:filter_supcategory])
+                    .services_not_made_by(current_user)
+    @pages = (1..@services.page_count).to_a
+    @services = @services.pagination(page: params[:page].to_i)
   end
 
   def new
@@ -43,6 +46,12 @@ class ServicesController < ApplicationController
         format.html { render new_service_path }
         format.js { flash.now[:alert] = 'Error al crear servicio' }
       end
+    end
+  end
+
+  def search
+    respond_to do |format|
+      format.json { render json: { services: Service.search_by_name(params[:search_string]).first(5) } }
     end
   end
 

@@ -1,18 +1,19 @@
 <template>
   <div id="notifications" class="dropdown">
     <div>
-      <button type="button" class="toggle-button border rounded-circle" id="notification-list"
+      <button type="button" class="toggle-button border rounded-circle mr-2"
       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="toggleDropdown">!</button>
-      <small id="notifications-counter" class="border rounded-circle position-absolute font-weight-bold">{{ counter }}</small>
+      <span id="notifications-counter" class="position-absolute text-white">{{ counter }}</span>
     </div>
     <div>
     <div v-if="drop" id="notifications-list" class="dropdown-content dropdown-menu dropdown-menu-right show">
-      <div v-for="(notification, index) in notifications" @click="updateNotification(index)"
-           class="notification dropdown-item position-relative">
+      <a v-for="(notification, index) in notifications" @click="updateNotification(index)"
+           class="notification dropdown-item position-relative"
+           :href="notification.link !== undefined ? notification.link : false" >
         <span v-if="!notification.seen" class="seen position-absolute text-primary font-weight-bold">.</span>
         <p>{{ notification.message }}<span class="target font-weight-bold">{{ notification.target }}</span></p>
         <p class="text-muted">{{ notification.time_ago }}</p>
-      </div>
+      </a>
     </div>
     </div>
   </div>
@@ -51,12 +52,9 @@ export default {
                 user_id: this.user_id
               },
               {
-                connected: function () {
-                  console.log(`connected to notifications_${vm.user_id}`)
-                },
                 received: function (data) {
                   vm.counter++
-                  vm.notifications.push(JSON.parse(data))
+                  vm.notifications.splice(0, 0, JSON.parse(data))
                 }
               }
       )

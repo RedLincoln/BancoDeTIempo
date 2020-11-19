@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar.vue renders properly 1`] = `
+<header class="v-sheet theme--light v-toolbar v-toolbar--flat" style="height: 64px;">
+  <div class="v-toolbar__content" style="height: 64px;">
+    <router-link-stub class="v-btn v-btn--flat v-btn--router v-btn--text theme--light v-size--default" data-testid="admin-users-tab"><span class="v-btn__content">Manejar Usuarios</span></router-link-stub>
+  </div>
+</header>
+`;

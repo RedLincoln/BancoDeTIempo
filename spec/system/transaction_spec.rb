@@ -1,53 +1,93 @@
 require 'rails_helper'
 
 RSpec.describe 'Service Transactions', type: :system do
-  let(:requestUser) { create(:user) }
-  let(:offeringUser) { create(:user) }
-  let(:service) { create(:service, user: offeringUser) }
-  let(:service2) { create(:service) }
-  let(:transaction) { create(:transaction, service: service, client: requestUser)}
+  let(:request_user) { create(:user) }
+  let(:offering_user) { create(:user) }
+  let(:service) { create(:service, user: offering_user) }
+  let(:service2) { create(:service, user: request_user) }
+  let(:transaction_client) { create(:transaction, service: service, client: request_user)}
+  let(:transaction_owner) { create(:transaction, service: service2)}
 
   describe 'transaction petition' do
 
-    before(:each) do
-      sign_in requestUser
-      service
-    end
-
-    it 'User can ask for services', :aggregate_failures, js: true do
-      visit services_path
-
-      within "#service_#{service.id}" do
-        find(".open_petition").click
-        find(".transaction-datetime", visible: false).execute_script("this.value = '07/07/2020, 12:00'")
-        fill_in('addition_information', with: 'Pintar casa')
-        find(".send_petition").click
+    describe '' do
+      before(:each) do
+        sign_in request_user
+        service
       end
 
-      find('#flash-messages .notice')
-      expect(page).to_not have_selector("#service_#{service.id} .open_petition")
-      visit user_index_path
+      it 'User can ask for services', :aggregate_failures, js: true do
+        visit services_path
 
-      within "#transaction_list #service_#{service.id}_petition" do
-        expect(page).to have_selector('.service_name', text: service.name)
-        expect(page).to have_selector('.service_description', text: service.description)
-        expect(page).to have_selector('.time_petition', text:'07/07/2020, 12:00')
-        expect(page).to have_selector('.additional_information', text: 'Pintar casa')
-        expect(page).to have_selector('.transaction_status')
-        expect(page).to have_selector('.offeror_name', text: offeringUser.name)
+        find(".make-service-petition").click
+
+        within "form.service-petition" do
+          find(".transaction-datetime", visible: false).execute_script("this.value = '2020/06/07 12:00'")
+          fill_in('addition-information', with: 'Pintar casa')
+          fill_in('transaction-duration', with: '2')
+          find(".send-petition").click
+        end
+
+        visit user_account_path
+        find("#transaction-list #service-#{service.id}-petition", wait: 5)
+
+        within "#transaction-list #service-#{service.id}-petition" do
+          expect(page).to have_selector('.service-name', text: service.name)
+          expect(page).to have_selector('.service-description', text: service.description)
+          expect(page).to have_selector('.date-and-duration', text:'07/07/2020 12:00-14:00')
+          expect(page).to have_selector('.additional-information', text: 'Pintar casa')
+          expect(page).to have_selector('.transaction-status')
+          expect(page).to have_selector('.service-owner', text: offering_user.name)
+        end
       end
-    end
 
-    it 'the ask button is always hided if a petition have already been made', js: true do
-      transaction
-      service2
-      sign_in requestUser
-      visit root_path
+      it 'owner can ask for time transfer for accepted petitions' do
+        sign_in offering_user
+        transaction_client.accepted!
 
-      visit services_path
-      expect(page).to_not have_selector("#service_#{service.id} .open_petition")
-      expect(page).to have_selector("#service_#{service2.id} .open_petition")
+        visit user_account_path
+
+        find("#service-#{transaction_client.service.id}-petition .done").click
+
+        fill_in 'transaction_duration', with: 4
+        fill_in 'client_valued' , with: 3
+        fill_in 'valued_text', with: 'Decent client'
+        find("done-form .submit-button").click
+
+        sign_in request_user
+
+        find("#notifications .toggle-button").click
+        find("#notifications-list .notification").click
+
+        expect(page).to have_selector("transaction_duration", text: 4)
+        expect(page).to have_selector("pay-petition")
+      end
     end
   end
 
+  describe 'user transactions views' do
+
+    before(:each) do
+      page.driver.browser.manage.window.resize_to(1920, 1080)
+      transaction_client
+      transaction_owner
+      sign_in request_user
+      visit user_account_path
+    end
+
+    it 'have multiple tabs to show transactions ownership', js: true do
+      expect(page).to have_selector("#transaction-list #service-#{transaction_client.service.id}-petition")
+      expect(page).to have_selector("#transaction-list #service-#{transaction_owner.service.id}-petition")
+
+      find('.offering-tab').click
+
+      expect(page).to_not have_selector("#transaction-list #service-#{transaction_client.service.id}-petition")
+      expect(page).to have_selector("#transaction-list #service-#{transaction_owner.service.id}-petition")
+
+      find('.petition-tab').click
+
+      expect(page).to have_selector("#transaction-list #service-#{transaction_client.service.id}-petition")
+      expect(page).to_not have_selector("#transaction-list #service-#{transaction_owner.service.id}-petition")
+    end
+  end
 end

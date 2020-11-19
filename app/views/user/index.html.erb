@@ -1,5 +1,5 @@
+<h2 class="font-weight-bold">Información del usuario</h2>
 <div class="border rounded p-3 mb-4">
-  <h2>Información del usuario</h2>
   <ul>
     <li>
       <span class="font-weight-bold">Nombre: </span><span id="user_name"> <%= current_user.name %> </span>
@@ -8,10 +8,5 @@
       <span class="font-weight-bold">Email: </span><span id="user_email"><%= current_user.email %></span>
     </li>
   </ul>
-</div>
-
-<div class="border rounded p-3 mb-4">
-  <h2>Petición de servicios</h2>
-  <%= render 'shared/transaction_list', transactions: @transaction %>
 </div>
 

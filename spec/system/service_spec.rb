@@ -93,26 +93,67 @@ RSpec.describe 'Service', type: :system do
   describe 'filter:' do
     let(:user) { create(:user) }
     let(:category) { create(:category) }
+    let(:match_supcategory) { create(:category, supcategory: 'Working supcategory') }
     let(:service_result1) { create(:service, category: category)}
     let(:service_result2) { create(:service, category: category)}
-    let(:service) { create(:service)}
+    let(:service_supcategory) { create(:service, category: match_supcategory)}
 
     before(:each) do
       sign_in user
       service_result1
       service_result2
-      service
+      service_supcategory
       visit services_path
     end
 
     it 'can filter by Category', js: true do
+      find(".filter-dropdown").click
       fill_in('filter_category', with: category.name)
 
-      find('#service_filter .apply_filters').click
+      find('#service-filter .apply_filters').click
 
       expect(page).to have_selector("#service_#{service_result1.id}")
       expect(page).to have_selector("#service_#{service_result2.id}")
-      expect(page).to_not have_selector("#service_#{service.id}")
+      expect(page).to_not have_selector("#service_#{service_supcategory.id}")
+    end
+
+    it 'can filter by supCategory', js: true do
+      find(".filter-dropdown").click
+      fill_in('filter_supcategory', with: match_supcategory.supcategory)
+
+      find('#service-filter .apply_filters').click
+
+      expect(page).to_not have_selector("#service_#{service_result1.id}")
+      expect(page).to_not have_selector("#service_#{service_result2.id}")
+      expect(page).to have_selector("#service_#{service_supcategory.id}")
+    end
+  end
+
+  describe 'pagination' do
+    let(:service1) { create(:service) }
+    let(:service2) { create(:service) }
+    let(:service3) { create(:service) }
+    let(:service4) { create(:service) }
+    let(:service5) { create(:service) }
+    let(:service_in_second_page) { create(:service) }
+
+    before(:each) do
+      service1
+      service2
+      service3
+      service4
+      service5
+      service_in_second_page
+      Service.set_default_page_size(5)
+    end
+
+    it 'can navigate to second page' do
+      sign_in user
+      visit services_path
+
+      expect(page).to_not have_selector("#service_#{service_in_second_page.id}")
+      page.find('.service_pagination a', text: '2').click
+      expect(page).to have_selector("#service_#{service_in_second_page.id}")
     end
   end
 

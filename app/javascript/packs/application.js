@@ -7,7 +7,6 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
@@ -15,28 +14,73 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+import Vue from "vue";
+import vuetify from "../plugins/vuetify";
+import store from "../store/store";
+import ActionCableVue from "actioncable-vue";
+import upperFirst from "lodash/upperFirst";
+import camelCase from "lodash/camelCase";
 
-import Vue from 'vue'
-import ActionCable from 'actioncable'
+import router from "../router/router";
+import App from "../App.vue";
+import Logo from "../components/Logo.vue";
+import Alert from "../components/Alert.vue";
+import Notice from "../components/Notice.vue";
+import Avatar from "../components/Avatar.vue";
 
-Vue.prototype.$cable = ActionCable.createConsumer('/cable')
-Vue.prototype.$updateNotificationPath = (id) => {
-    return Routes.update_notification_path(id, { format: 'json' })
-}
+Vue.component("Logo", Logo);
+Vue.component("Alert", Alert);
+Vue.component("Notice", Notice);
+Vue.component("Avatar", Avatar);
 
-Vue.prototype.$servicesPath = Routes.services_path()
-Vue.prototype.$userNotificationsPath = Routes.user_notifications_path({ format: 'json' })
-Vue.prototype.$loginPath = Routes.new_user_session_path()
-Vue.prototype.$signUpPath = Routes.new_user_registration_path()
-Vue.prototype.$signOutPath = Routes.destroy_user_session_path({ format: 'json'})
-Vue.prototype.$userServicesPath = Routes.user_services_path()
-Vue.prototype.$createTransactionPath = Routes.transactions_path({ format: 'js'})
-Vue.prototype.$userProfilePath = Routes.user_index_path()
-Vue.prototype.$getJsonCategoriesPath = Routes.categories_path({ format: 'json' })
-Vue.prototype.$getCSRFToken = () => {
-    return document.querySelector("meta[name=csrf-token]").getAttribute('content')
-}
+Vue.use(ActionCableVue, {
+  debug: true,
+  debugLevel: "error",
+  connectionUrl: "ws://localhost:3000/cable",
+  connectImmediately: true,
+});
 
-import './session_actions'
-import './transaction_form'
-import './service_filter'
+const requireComponent = require.context(
+  // The relative path of the components folder
+  "../components/Base",
+  // Whether or not to look in subfolders
+  false,
+  // The regular expression used to match base component filenames
+  /Base[A-Z]\w+\.(vue|js)$/
+);
+
+requireComponent.keys().forEach((fileName) => {
+  // Get component config
+  const componentConfig = requireComponent(fileName);
+
+  // Get PascalCase name of component
+  const componentName = upperFirst(
+    camelCase(
+      // Gets the file name regardless of folder depth
+      fileName
+        .split("/")
+        .pop()
+        .replace(/\.\w+$/, "")
+    )
+  );
+
+  // Register component globally
+  Vue.component(
+    componentName,
+    // Look for the component options on `.default`, which will
+    // exist if the component was exported with `export default`,
+    // otherwise fall back to module's root.
+    componentConfig.default || componentConfig
+  );
+});
+
+store.dispatch("session/logInWithToken");
+
+document.addEventListener("DOMContentLoaded", () => {
+  new Vue({
+    router,
+    store,
+    vuetify,
+    render: (h) => h(App),
+  }).$mount("#app");
+});

@@ -13,8 +13,8 @@ RSpec.describe Service, type: :model do
   end
 
   describe 'finders' do
-    let(:category1) { create(:category, name: 'AcceptCategory')}
-    let(:category2) { create(:category, name: 'BadCategory')}
+    let(:category1) { create(:category, name: 'AcceptCategory', supcategory: 'AcceptSupcategory')}
+    let(:category2) { create(:category, name: 'BadCategory', supcategory: 'BadSupcategory')}
     let(:service1) { create(:service, category: category1) }
     let(:service2) { create(:service, category: category2) }
 
@@ -42,6 +42,30 @@ RSpec.describe Service, type: :model do
       end
     end
 
+    describe 'find_by_category_supcategory' do
+
+      before(:each) do
+        service1
+        service2
+      end
+
+      it 'with no param returns all' do
+        expect(Service.find_by_category_supcategory.to_a).to eql([service1, service2])
+      end
+
+      it 'with nil return all' do
+        expect(Service.find_by_category_supcategory(nil).to_a).to eql([service1, service2])
+      end
+
+      it 'find by complete name' do
+        expect(Service.find_by_category_supcategory(category1.supcategory).to_a).to eq([service1])
+      end
+
+      it 'find by portion of category name' do
+        expect(Service.find_by_category_supcategory('Category').to_a).to eq([service1, service2])
+      end
+    end
+
     describe 'services_not_made_by' do
 
       before(:each) do
@@ -61,5 +85,107 @@ RSpec.describe Service, type: :model do
         expect(services).to eq([service1, service2])
       end
     end
+
+    describe 'search_by_name' do
+      let(:service) {create(:service, name: 'This is the first service name')}
+      let(:service2) {create(:service, name: 'Name for the service')}
+
+      let(:init_services) { [service, service2]}
+      let(:expectBoth) { [service, service2] }
+      let(:expectFirst) { [service] }
+      let(:expectLast) { [service2] }
+      let(:expectNone) { [] }
+
+      before(:each) do
+        init_services
+      end
+
+      it 'get all services when search string is an empty string' do
+        expect(Service.search_by_name('').to_a).to eql(expectBoth)
+      end
+
+      it 'get no service when string is not in service name'  do
+        expect(Service.search_by_name('This line is not in the name').to_a).to eql(expectNone)
+      end
+
+      it 'get all services when search string is nil' do
+        expect(Service.search_by_name(nil).to_a).to eql(expectBoth)
+      end
+
+      it 'get service with search string as part of the name' do
+        expect(Service.search_by_name('service').to_a).to eql(expectBoth)
+      end
+
+      it 'get service with case-insensitive' do
+        expect(Service.search_by_name('this').to_a).to eql(expectFirst)
+      end
+
+      it 'get service ignoring whitespaces in name' do
+        expect(Service.search_by_name('fortheser').to_a).to eql(expectLast)
+      end
+
+      it 'get service with whitespaces in search string' do
+        expect(Service.search_by_name('first service').to_a).to eql(expectFirst)
+      end
+    end
+  end
+
+  describe "pagination" do
+    let(:service1) { create(:service) }
+    let(:service2) { create(:service) }
+    let(:service3) { create(:service) }
+    let(:service4) { create(:service) }
+    let(:service5) { create(:service) }
+    let(:service6) { create(:service) }
+
+    before(:each) do
+      service1
+      service2
+      service3
+      service4
+      service5
+      service6
+      Service.set_default_page_size 5
+    end
+
+    it "can get a fixed amount" do
+      expect(Service.all.amount(limit: 2).to_a).to eql([service1, service2])
+    end
+
+    it "can get a fixed amount with offset" do
+      expect(Service.all.amount(limit: 2, offset: 1).to_a).to eql([service2, service3])
+    end
+
+    it "last page returns the last records" do
+      expect(Service.all.pagination(page: 2).to_a).to eql([service6])
+    end
+
+    it "out of bound pages returns no record" do
+      expect(Service.all.pagination(page: 3).to_a).to eql([])
+      expect(Service.all.pagination(page: -1).to_a).to eql([])
+    end
+
+    it 'page 0 should return content of page 1' do
+      expect(Service.all.pagination(page: 0).to_a).to eql([service1, service2, service3, service4, service5])
+    end
+
+    it "nil page return page 1" do
+      expect(Service.all.pagination(page: nil).to_a).to eql([service1, service2, service3, service4, service5])
+    end
+
+    it "get the total of pages when the last page is not filled" do
+      expect(Service.all.page_count).to eq(2)
+    end
+
+    it "get the total of pages when the last page is empty" do
+      service6.destroy!
+      expect(Service.all.page_count).to eq(1)
+    end
+
+    it "get the total of pages when there is no records" do
+      Service.destroy_all
+      expect(Service.all.page_count).to eq(1)
+    end
+
   end
 end
