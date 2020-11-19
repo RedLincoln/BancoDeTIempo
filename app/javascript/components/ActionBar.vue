@@ -16,10 +16,18 @@
         <v-btn :to="{ name: 'users' }" text>Miembros</v-btn>
       </v-tab>
       <v-tab>
-        <v-btn :to="{ name: 'services' }" text exact>Servicios Ofertados</v-btn>
+        <v-btn
+          :to="{ name: 'services', query: { service_type: 'offer', page: 1 } }"
+          text
+          exact
+          >Servicios Ofertados</v-btn
+        >
       </v-tab>
       <v-tab>
-        <v-btn :to="{ name: 'services-demand' }" text exact
+        <v-btn
+          :to="{ name: 'services', query: { service_type: 'demand' } }"
+          text
+          exact
           >Servicios Demandados</v-btn
         >
       </v-tab>

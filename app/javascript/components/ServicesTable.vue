@@ -1,122 +1,147 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="filteredServices"
-    :items-per-page="itemsPerPage"
-    :page.sync="page"
-    hide-default-footer
-    class="elevation-1"
-    :search="search"
-    @page-count="pageCount = $event"
-  >
-    <template v-slot:top>
-      <v-row justify="center">
-        <v-col cols="8" md="6">
-          <v-text-field
-            prepend-inner-icon="mdi-magnify"
-            v-model="search"
-            placeholder="Buscar Servicio"
-            filled
-            rounded
-          ></v-text-field>
-          <v-btn text @click="tools = !tools"
-            ><v-icon>mdi-tools</v-icon>Herramientas</v-btn
-          >
-          <v-scroll-y-transition>
-            <v-sheet v-if="tools">
-              <v-text-field
-                v-model="categoryFilter"
-                placeholder="Filtrar Categoría"
-                solo
-                clearable
-                @keyup="filterByCategory"
-                @click:clear="filterByCategory"
-              ></v-text-field>
-            </v-sheet>
-          </v-scroll-y-transition>
-        </v-col>
-      </v-row>
-      <v-pagination v-model="page" :length="pageCount"></v-pagination>
-    </template>
-    <template v-slot:item.name="{ item }">
-      <router-link
-        v-if="loggedIn"
-        :to="{ name: 'service-profile', params: { id: item.id } }"
-        >{{ item.name }}
-      </router-link>
-      <span v-else>{{ item.name }}</span>
-    </template>
-    <template v-slot:item.owner="{ item }">
-      <router-link
-        v-if="loggedIn"
-        :to="{ name: 'user-profile', params: { id: item.owner.id } }"
-        >{{ item.owner.name }}
-      </router-link>
-      <span v-else>{{ item.owner.name }}</span>
-    </template>
-    <template v-slot:item.category="{ item }">
-      {{ item.category }}
-    </template>
-  </v-data-table>
+  <div>
+    <BaseCenter>
+      <BaseSearchField
+        v-model="search"
+        placeholder="Buscar Servicio"
+        @search="fetchServices"
+      ></BaseSearchField>
+      <BaseTools>
+        <v-row>
+          <v-col cols="6">
+            <BaseSelect
+              :items="categories"
+              item-text="name"
+              @change="selectedCategory = $event"
+              label="Filtrar Por Categoría"
+              clearable
+            />
+          </v-col>
+          <v-col cols="6">
+            <BaseSelect
+              :items="orderList"
+              item-text="key"
+              @change="sortOrder = $event"
+              label="Ordenar"
+            />
+          </v-col>
+        </v-row>
+      </BaseTools>
+    </BaseCenter>
+    <v-pagination
+      @input="navigateToPage"
+      v-model="page"
+      :length="totalPages"
+    ></v-pagination>
+    <p class="text-center">{{ first }}-{{ last }} de {{ totalServices }}</p>
+    <v-simple-table class="m-5 elevation-2">
+      <thead dark>
+        <tr>
+          <th>Nombre del Servicio</th>
+          <th>Categoría</th>
+          <th>Propietario</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(service, index) in services" :key="index">
+          <td>
+            <router-link
+              :to="{ name: 'service-profile', params: { id: service.id } }"
+              >{{ service.name }}</router-link
+            >
+          </td>
+          <td>{{ service.category }}</td>
+          <td>
+            <router-link
+              :to="{ name: 'user-profile', params: { id: service.owner.id } }"
+              >{{ service.owner.name }}</router-link
+            >
+          </td>
+          <td>{{ service.description }}</td>
+        </tr>
+      </tbody>
+    </v-simple-table>
+    <v-pagination
+      @input="navigateToPage"
+      v-model="page"
+      :length="totalPages"
+    ></v-pagination>
+  </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 
 export default {
-  props: {
-    services: {
-      type: Array,
-      required: true,
-    },
-  },
   data() {
     return {
-      categoryFilter: "",
-      lastCategoryFilter: "",
-      filteredServices: this.services,
-      tools: false,
-      categoryFilter: "",
-      page: 1,
-      itemsPerPage: 10,
-      pageCount: 0,
       search: "",
-      headers: [
-        {
-          text: "Nombre de Servicio",
-          align: "start",
-          sortable: false,
-          value: "name",
-        },
-        { text: "Propietario", align: "start", value: "owner" },
-        { text: "Categoría", value: "category" },
-        { text: "Descripción", value: "description" },
+      page: 1,
+      service_type: "",
+      selectedCategory: undefined,
+      sortOrder: { key: "Sin Orden", value: "updated_at" },
+      orderList: [
+        { key: "Sin Orden", value: "updated_at" },
+        { key: "Categoría", value: "category" },
+        { key: "Propietario", value: "owner_name" },
       ],
     };
   },
   computed: {
-    ...mapState("session", ["loggedIn"]),
+    first() {
+      return 1 + (this.page - 1) * this.perPage;
+    },
+    last() {
+      return this.first + this.services.length - 1;
+    },
+    totalPages() {
+      return Math.ceil(this.totalServices / this.perPage);
+    },
+    ...mapState("services", [
+      "services",
+      "totalServices",
+      "perPage",
+      "categories",
+    ]),
+  },
+  watch: {
+    sortOrder(val) {
+      this.fetchServices();
+    },
+    selectedCategory(val) {
+      this.fetchServices();
+    },
   },
   created() {
-    this.categoryFilter = !!this.$route.query.category
-      ? this.$route.query.category
-      : "";
-    this.filterByCategoryInput(this.categoryFilter);
+    this.setServiceType();
+    this.setPage();
+    this.fetchServices();
   },
   methods: {
-    filterByCategoryInput(input) {
-      const toFilter =
-        input.length > this.lastCategoryFilter.length
-          ? this.filteredServices
-          : this.services;
-      this.filteredServices = toFilter.filter((service) =>
-        service.category.toLowerCase().includes(input.toLowerCase())
-      );
-      this.lastCategoryFilter = input;
+    navigateToPage(page) {
+      this.$router.push({
+        name: "services",
+        query: { service_type: this.service_type, page: page },
+      });
     },
-    filterByCategory(event) {
-      const input = event.target.value;
-      this.filterByCategoryInput(input);
+    setServiceType() {
+      this.service_type = this.$route.query.service_type;
+    },
+    setPage() {
+      const page = this.$route.query.page;
+      if (page && Number.isInteger(parseInt(page))) {
+        this.page = parseInt(page);
+      }
+    },
+    fetchServices() {
+      this.$store.dispatch("services/fetch", {
+        page: this.page - 1,
+        q: this.search,
+        service_type: this.service_type,
+        sort_order: this.sortOrder.value,
+        category: !!this.selectedCategory ? this.selectedCategory.name : "",
+      });
     },
   },
 };

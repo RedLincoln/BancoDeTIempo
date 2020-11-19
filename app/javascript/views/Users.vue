@@ -9,23 +9,18 @@
         />
         <v-row>
           <v-col>
-            <v-subheader>Filtrar por rol</v-subheader>
-          </v-col>
-          <v-col>
-            <v-select
+            <BaseSelect
               :items="roles"
-              solo
               label="Filtrar por rol"
-              v-model="selectedRole"
               item-text="es"
-              item-value="value"
-              return-object
-            ></v-select>
+              @change="selectedRole = $event"
+            />
           </v-col>
         </v-row>
       </div>
     </BaseCenter>
     <v-pagination v-model="page" :length="paginationLength"></v-pagination>
+    <p class="text-center">{{ first }}-{{ last }} de {{ total }}</p>
     <v-row>
       <v-col cols="6" v-for="(user, index) in users" :key="index">
         <UserCard
@@ -38,6 +33,7 @@
         />
       </v-col>
     </v-row>
+    <v-pagination v-model="page" :length="paginationLength"></v-pagination>
   </v-container>
 </template>
 
@@ -51,9 +47,9 @@ export default {
   },
   data() {
     return {
-      selectedRole: { es: "Todos", value: "" },
+      selectedRole: { es: "Todos los Usuarios", value: "" },
       roles: [
-        { es: "Todos", value: "" },
+        { es: "Todos los Usuarios", value: "" },
         { es: "Usuario", value: "standard" },
         { es: "Administrador", value: "admin" },
       ],
@@ -70,6 +66,12 @@ export default {
     },
   },
   computed: {
+    first() {
+      return 1 + (this.page - 1) * this.perPage;
+    },
+    last() {
+      return this.first + this.users.length - 1;
+    },
     paginationLength() {
       return Math.ceil(this.total / this.perPage);
     },

@@ -17,12 +17,11 @@ import EditServicePetition from "../views/EditServicePetition.vue";
 import Petitions from "../views/Petitions.vue";
 
 import ServiceService from "../services/services";
-import UserService from "../services/user";
 import PetitionService from "../services/petitions";
 import { alert } from "../utils";
 
-const { getAll: getAllPetitions, getPetition } = PetitionService;
-const { getOffers, getDemand, getService } = ServiceService;
+const { getPetition, getPetitions } = PetitionService;
+const { getDemand, getService } = ServiceService;
 
 Vue.use(VueRouter);
 
@@ -43,14 +42,8 @@ const routes = [
     path: "/services",
     name: "services",
     component: ServicesOffer,
-    props: true,
     beforeEnter(to, from, next) {
-      store.dispatch("setLoading", true);
-      getOffers().then((data) => {
-        to.params.services = data.services;
-        store.dispatch("setLoading", false);
-        next();
-      });
+      store.dispatch("services/fetchCategories").then(() => next());
     },
   },
   {
@@ -165,17 +158,7 @@ const routes = [
     component: Petitions,
     props: true,
     beforeEnter(to, from, next) {
-      store.dispatch("setLoading", true);
-      getAllPetitions()
-        .then((data) => {
-          to.params.petitions = data.petitions;
-          store.dispatch("setLoading", false);
-          next();
-        })
-        .catch(() => {
-          store.dispatch("setLoading", false);
-          next();
-        });
+      store.dispatch("petitions/fetch", { q: "" }).then(() => next());
     },
   },
   {

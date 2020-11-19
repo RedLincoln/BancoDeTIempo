@@ -6,6 +6,11 @@ export default {
       .get("/api/services/petition.json")
       .then((response) => response.data);
   },
+  getPetitions({ q }) {
+    return axios
+      .get("/api/services/petition.json")
+      .then((response) => response.data);
+  },
   getPetition(id) {
     return axios.get(`/api/services/petition/${id}.json`);
   },

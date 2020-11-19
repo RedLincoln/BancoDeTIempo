@@ -10,7 +10,7 @@
       Crear Servicio</v-btn
     >
 
-    <ServicesTable :services="services" />
+    <ServicesTable />
   </div>
 </template>
 
@@ -19,12 +19,6 @@ import { mapState } from "vuex";
 import ServicesTable from "../components/ServicesTable";
 
 export default {
-  props: {
-    services: {
-      type: Array,
-      required: true,
-    },
-  },
   components: {
     ServicesTable,
   },

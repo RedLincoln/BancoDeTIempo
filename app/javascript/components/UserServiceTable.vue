@@ -3,7 +3,7 @@
     :headers="headers"
     :items="services"
     :items-per-page="5"
-    class="elevation-1"
+    class="elevation-1 m-5"
     :search="search"
   >
     <template v-slot:top>

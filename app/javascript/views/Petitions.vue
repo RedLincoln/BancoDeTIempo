@@ -7,13 +7,13 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <PetitionsTable :inputPetitions="petitions" />
+        <PetitionsTable />
       </v-tab-item>
       <v-tab-item>
-        <PetitionsTable :inputPetitions="clientPetitions" />
+        <PetitionsTable :client="true" />
       </v-tab-item>
       <v-tab-item>
-        <PetitionsTable :inputPetitions="ownerPetitions"></PetitionsTable>
+        <PetitionsTable :owner="true" />
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -24,12 +24,6 @@ import PetitionsTable from "../components/PetitionsTable";
 import { mapState } from "vuex";
 
 export default {
-  props: {
-    petitions: {
-      type: Array,
-      required: true,
-    },
-  },
   components: {
     PetitionsTable,
   },

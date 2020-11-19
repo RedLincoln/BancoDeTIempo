@@ -37,7 +37,7 @@ class Api::TransactionController < ApplicationController
     login_guard
     transaction = Transaction.find(params[:id])
 
-    rate = transaction.build_client_rate(rate_params)
+    rate = transaction.client_rate.build(rate_params)
     if rate.save
       transaction.update(status: 'done')
       render json: { message: 'Valoración del cliente realizada' }, status: :ok
@@ -50,9 +50,11 @@ class Api::TransactionController < ApplicationController
     login_guard
     transaction = Transaction.find(params[:id])
 
-    rate = transaction.build_owner_rate(rate_params)
+    rate = transaction.owner_rate.build(rate_params)
     if rate.save
       transaction.update(status: 'valued')
+      transaction.client.update(balance: transaction.client.balance - transaction.duration)
+      transaction.service.user.update(balance: transaction.service.user.balance + transaction.duration)
       render json: { message: 'Valoración del propietario realizada' }, status: :ok
     else
       render json: { errors: rate.errors }, status: :bad_request

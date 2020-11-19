@@ -4,6 +4,8 @@ import * as session from "./modules/session";
 import * as flash from "./modules/flash";
 import * as users from "./modules/users";
 import * as service from "./modules/service";
+import * as services from "./modules/services";
+import * as petitions from "./modules/petitions";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
@@ -19,6 +21,8 @@ const store = new Vuex.Store({
     flash,
     users,
     service,
+    services,
+    petitions,
   },
   state: {
     loading: false,

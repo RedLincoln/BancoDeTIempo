@@ -1,12 +1,32 @@
 class Api::ServicesController < ApplicationController
 
   def index
-    @services = !!params[:service_type] ?
-                    Service.where(service_type: params[:service_type]) :
-                    Service.all
+    service_type = !!params[:service_type] ? params[:service_type] : ''
+    q = !!params[:q] ? params[:q] : ''
+    category = !!params[:category] ? params[:category] : ''
 
-    if logged_in?
-      @services = @services.services_not_made_by(@user)
+    @services = Service.joins(:category).
+        where('services.service_type LIKE ?', "%#{service_type}%").
+        where('services.name ILIKE ?', "%#{q}%").
+        where('categories.name ILIKE ?', "%#{category}%")
+
+
+    @services = @services.services_not_made_by(@user) if logged_in?
+    @total = @services.count
+
+    @services = @services.
+        limit(params[:limit]).
+        offset(params[:offset])
+
+    if params[:sort_order]
+      case params[:sort_order]
+      when 'category'
+        @services = @services.sort { |a, b| a.category.name <=> b.category.name }
+      when 'owner_name'
+        @services = @services.sort { |a, b| a.user.name <=> b.user.name }
+      else
+        @services.order("updated_at")
+      end
     end
   end
 

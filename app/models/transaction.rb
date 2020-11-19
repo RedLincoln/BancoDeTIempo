@@ -10,8 +10,8 @@ class Transaction < ApplicationRecord
   belongs_to :client, class_name: :User
   belongs_to :service
 
-  has_one :client_rate, foreign_key: 'client_rate_id', class_name: 'Rate'
-  has_one :owner_rate, foreign_key: 'owner_rate_id', class_name: 'Rate'
+  has_many :client_rate, class_name: 'Rate'
+  has_many :owner_rate, class_name: 'Rate'
 
   validate :service_owner_can_not_be_the_client
 

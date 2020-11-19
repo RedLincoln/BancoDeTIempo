@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_23_023417) do
+ActiveRecord::Schema.define(version: 2020_10_30_032707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,8 +129,12 @@ ActiveRecord::Schema.define(version: 2020_10_23_023417) do
     t.integer "duration"
     t.datetime "datetime"
     t.text "additional_information"
+    t.bigint "client_rate_id"
+    t.bigint "owner_rate_id"
     t.index ["client_id", "service_id"], name: "index_transactions_on_client_id_and_service_id", unique: true
     t.index ["client_id"], name: "index_transactions_on_client_id"
+    t.index ["client_rate_id"], name: "index_transactions_on_client_rate_id"
+    t.index ["owner_rate_id"], name: "index_transactions_on_owner_rate_id"
     t.index ["service_id"], name: "index_transactions_on_service_id"
   end
 
@@ -160,5 +164,7 @@ ActiveRecord::Schema.define(version: 2020_10_23_023417) do
   add_foreign_key "notifications", "users"
   add_foreign_key "rates", "transactions"
   add_foreign_key "services", "categories"
+  add_foreign_key "transactions", "rates", column: "client_rate_id"
+  add_foreign_key "transactions", "rates", column: "owner_rate_id"
   add_foreign_key "transactions", "users", column: "client_id"
 end
